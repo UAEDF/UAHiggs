@@ -98,12 +98,19 @@ process.eleIsoDepositEcalFromHits = cms.EDProducer("CandIsoDepositProducer",
 process.load("RecoEgamma.EgammaIsolationAlgos.eleIsoFromDepsModules_cff")
 process.load("RecoEgamma.EgammaIsolationAlgos.eleIsoDepositTk_cff")
 
+# HWW Preselection ------------------------------------------------------------------
 
+process.load("HiggsAnalysis.HiggsToWW2Leptons.HWWPreselectionSequence_cff")
 
-# My Code ---------------------------------------------------------------------------
-process.GenPartAna = cms.EDAnalyzer('HWWGenPart'
+# K-Factor Producer -----------------------------------------------------------------
 
-  , fileName = cms.untracked.string('HWWGenPart.root')
+process.load("HiggsAnalysis.HiggsToWW2Leptons.HWWKFactorProducer_cfi")
+process.KFactorProducer.inputFilename = cms.untracked.string('HiggsAnalysis/HiggsToWW2Leptons/data/160_7TeV.dat')
+
+# UAHiggsTree Code ------------------------------------------------------------------
+process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
+
+  , fileName = cms.untracked.string('UAHiggsTree.root')
 
 # Modules to execute
   , StoreGenPart = cms.bool(True)
@@ -130,14 +137,16 @@ process.out = cms.OutputModule("PoolOutputModule",
 process.path = cms.Path(
 #                        process.l1GtUnpack *
 #                        process.l1extraParticles *
-                         process.GenPartDecay * 
+#                        process.GenPartDecay * 
 #                        process.GenPartTree *
 #                        process.GenPartList *  
 #                        process.genJetParticles*process.recoGenJets*
+                         process.KFactorProducer *
+		         process.higgsToWW2LeptonsPreselectionSequence *
                          process.eleIsoDepositEcalFromHits *
                          process.eleIsoFromDepsEcalFromHits *
-                         process.eleIsoDepositTk *
-                         process.GenPartAna   
+                         process.eleIsoDepositTk  
+#                        process.UAHiggsTree   
                        )
 
 # EndPath (what to store) ------------------------------------------------------------
