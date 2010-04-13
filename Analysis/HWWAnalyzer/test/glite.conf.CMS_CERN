@@ -1,0 +1,35 @@
+[
+    WmsClient = [
+        virtualorganisation = "cms";
+        requirements = other.GlueCEStateStatus == "Production";
+        MyProxyServer = "prod-px.cern.ch";
+        WMProxyEndpoints = {
+# dismissed    "https://wms009.cnaf.infn.it:7443/glite_wms_wmproxy_server",
+# dismissed    "https://egee-rb-04.cnaf.infn.it:7443/glite_wms_wmproxy_server",
+               "https://wms002.cnaf.infn.it:7443/glite_wms_wmproxy_server",
+               "https://wms003.cnaf.infn.it:7443/glite_wms_wmproxy_server",
+#drainForDown12.1.07 "https://wms005.cnaf.infn.it:7443/glite_wms_wmproxy_server",
+# auth-problems (VM,17.12.08)     "https://wms011.cnaf.infn.it:7443/glite_wms_wmproxy_server",
+# MCprod       "https://wms012.cnaf.infn.it:7443/glite_wms_wmproxy_server",
+               "https://wms015.cnaf.infn.it:7443/glite_wms_wmproxy_server",
+               "https://wms017.cnaf.infn.it:7443/glite_wms_wmproxy_server",
+# MCprod       "https://wms014.cnaf.infn.it:7443/glite_wms_wmproxy_server",
+# Test-JR      "https://devel07.cnaf.infn.it:7443/glite_wms_wmproxy_server",
+               "https://wms102.cern.ch:7443/glite_wms_wmproxy_server",
+# MCprod       "https://wms104.cern.ch:7443/glite_wms_wmproxy_server",
+# MCprod       "https://wms107.cern.ch:7443/glite_wms_wmproxy_server",
+               "https://wms115.cern.ch:7443/glite_wms_wmproxy_server",
+               "https://wms117.cern.ch:7443/glite_wms_wmproxy_server",
+               "https://cms-wms.desy.de:7443/glite_wms_wmproxy_server"
+        };
+        ListenerStorage = "/tmp";
+        ErrorStorage = "/tmp";
+        ShallowRetryCount = 0;
+        AllowZippedISB = true;
+        PerusalFileEnable = false;
+        rank =- other.GlueCEStateEstimatedResponseTime;
+        OutputStorage = "/tmp";
+        RetryCount = 0;
+        EnableServiceDiscovery = false; 
+    ];
+]

@@ -1,0 +1,168 @@
+2009-11-27 17:48:29.524018:
+Executed:	edg-gridftp-mkdir  gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_05v7fd
+Done with exit code:	0
+and output:
+
+
+2009-11-27 17:48:30.573811:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/share/default.tgz gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_05v7fd/default.tgz
+Done with exit code:	0
+and output:
+
+
+2009-11-27 17:48:31.601804:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/share/arguments.xml gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_05v7fd/arguments.xml
+Done with exit code:	0
+and output:
+
+
+2009-11-27 17:48:32.632855:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/job/CMSSW.sh gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_05v7fd/CMSSW.sh
+Done with exit code:	0
+and output:
+
+
+2009-11-28 09:06:07.756134:
+Executed:	edg-gridftp-mkdir  gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_q1nl07
+Done with exit code:	0
+and output:
+
+
+2009-11-28 09:06:08.798475:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/share/default.tgz gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_q1nl07/default.tgz
+Done with exit code:	0
+and output:
+
+
+2009-11-28 09:06:09.824674:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/share/arguments.xml gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_q1nl07/arguments.xml
+Done with exit code:	0
+and output:
+
+
+2009-11-28 09:06:10.850272:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/job/CMSSW.sh gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_q1nl07/CMSSW.sh
+Done with exit code:	0
+and output:
+
+
+2009-11-28 23:18:37.235227:
+Executed:	edg-gridftp-mkdir  gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_07ers2
+Done with exit code:	0
+and output:
+
+
+2009-11-28 23:18:38.276131:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/share/default.tgz gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_07ers2/default.tgz
+Done with exit code:	0
+and output:
+
+
+2009-11-28 23:18:39.302017:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/share/arguments.xml gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_07ers2/arguments.xml
+Done with exit code:	0
+and output:
+
+
+2009-11-28 23:18:40.327917:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/job/CMSSW.sh gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_07ers2/CMSSW.sh
+Done with exit code:	0
+and output:
+
+
+2009-11-29 00:05:46.725711:
+Executed:	edg-gridftp-mkdir  gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_8bf23c
+Done with exit code:	0
+and output:
+
+
+2009-11-29 00:05:47.755623:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/share/default.tgz gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_8bf23c/default.tgz
+Done with exit code:	0
+and output:
+
+
+2009-11-29 00:05:48.781307:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/share/arguments.xml gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_8bf23c/arguments.xml
+Done with exit code:	0
+and output:
+
+
+2009-11-29 00:05:49.807575:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/job/CMSSW.sh gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_8bf23c/CMSSW.sh
+Done with exit code:	0
+and output:
+
+
+2009-11-30 13:35:07.131407:
+Executed:	edg-gridftp-mkdir  gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_7fv9e1
+Done with exit code:	0
+and output:
+
+
+2009-11-30 13:35:08.180565:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/share/default.tgz gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_7fv9e1/default.tgz
+Done with exit code:	0
+and output:
+
+
+2009-11-30 13:35:09.211408:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/share/arguments.xml gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_7fv9e1/arguments.xml
+Done with exit code:	0
+and output:
+
+
+2009-11-30 13:35:10.244418:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/job/CMSSW.sh gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_7fv9e1/CMSSW.sh
+Done with exit code:	0
+and output:
+
+
+2009-12-01 11:18:48.286913:
+Executed:	edg-gridftp-mkdir  gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_70se2o
+Done with exit code:	0
+and output:
+
+
+2009-12-01 11:18:49.349935:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/share/default.tgz gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_70se2o/default.tgz
+Done with exit code:	0
+and output:
+
+
+2009-12-01 11:18:50.381804:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/share/arguments.xml gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_70se2o/arguments.xml
+Done with exit code:	0
+and output:
+
+
+2009-12-01 11:18:51.425876:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/job/CMSSW.sh gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_70se2o/CMSSW.sh
+Done with exit code:	0
+and output:
+
+
+2009-12-01 13:39:20.813454:
+Executed:	edg-gridftp-mkdir  gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_478eqr
+Done with exit code:	0
+and output:
+
+
+2009-12-01 13:39:21.850214:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/share/default.tgz gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_478eqr/default.tgz
+Done with exit code:	0
+and output:
+
+
+2009-12-01 13:39:22.881445:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/share/arguments.xml gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_478eqr/arguments.xml
+Done with exit code:	0
+and output:
+
+
+2009-12-01 13:39:23.914078:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/job/CMSSW.sh gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_HWWGenPart_478eqr/CMSSW.sh
+Done with exit code:	0
+and output:
+
+

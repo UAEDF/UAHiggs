@@ -1,0 +1,93 @@
+091117_181707: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg copy_crab.cfg
+091117_181735: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/gridCopy/
+091117_181739: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/gridCopy/
+091117_181744: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/gridCopy/
+091117_181750: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/gridCopy/
+091117_181842: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/gridCopy/
+091117_181844: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/gridCopy/
+091117_181848: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/gridCopy/
+091118_094121: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg copy_crab.cfg
+091118_094345: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg copy_crab.cfg
+091118_094425: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg copy_crab.cfg
+091118_094507: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui
+091118_094947: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui
+091118_094951: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui
+091118_095000: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui
+091118_101516: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg copy_crab.cfg
+091118_101541: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -getoutput -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui
+091118_101552: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui
+091118_103139: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui
+091118_103145: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui
+091118_103156: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui
+091118_103733: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui
+091118_103737: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui
+091118_104423: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui
+091118_104427: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui
+091118_110322: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui
+091118_111109: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui
+091118_135146: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -cfg copy_crab.cfg
+091118_135241: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -submit -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui/
+091118_135301: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui/
+091118_140541: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui/
+091118_175228: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg copy_pnfs.cfg
+091118_175255: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg copy_pnfs.cfg
+091118_175542: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy
+091118_175546: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy
+091118_175623: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy
+091118_175628: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy
+091118_175816: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy
+091118_175823: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy
+091118_175902: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy
+091118_175909: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy
+091118_175912: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy
+091118_180120: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy
+091118_180123: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy
+091118_220213: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg copy_pnfs.cfg
+091118_220250: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy
+091118_220259: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy
+091118_220306: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy
+091118_220447: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy
+091118_221502: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy
+091118_221506: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy
+091118_222353: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy
+091129_113940: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg copy_pnfsWW.cfg
+091129_114133: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg copy_pnfsWW.cfg
+091129_114228: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/
+091129_114351: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/
+091129_114603: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/
+091129_114842: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/
+091129_115658: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/
+091130_113138: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -kill -c /user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/
+091130_113150: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -kill all -c /user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/
+091130_113608: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg copy_pnfsWW.cfg
+091130_113711: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/
+091130_113739: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy
+091130_113746: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy_cern
+091130_113750: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy
+091130_113859: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/
+091130_114124: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/
+091130_114920: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg copy_pnfsWW.cfg
+091130_115002: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg copy_pnfsWW.cfg
+091130_115055: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/
+091130_115214: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg copy_pnfsWW.cfg
+091130_115314: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg copy_pnfsWW.cfg
+091130_115335: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/
+091130_115544: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/
+091130_121430: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg copy_pnfsWW.cfg
+091130_121635: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg copy_pnfsWW.cfg
+091130_121819: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg copy_pnfsWW.cfg
+091130_132908: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -cfg /user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__TEST/auto/HWWGenPart__CMSSW_3_2_6__TEST.cfg
+091130_133252: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -cfg /user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__TEST__TEST__TEST/auto/HWWGenPart__CMSSW_3_2_6__TEST__TEST__TEST.cfg
+091130_133634: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/
+091130_133638: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/
+091130_134257: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/CMSSW_3_2_6/HWWGenPart/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_HWWGenPart/
+091130_152215: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg copy_pnfsWW.cfg
+091130_152250: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/
+091130_152254: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/
+091130_152259: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/
+091130_162422: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -status -c /user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/
+091201_110605: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg /user/xjanssen/data/CMSSW_3_2_6/DataCopy/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO2/auto/DataCopy__CMSSW_3_2_6__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO2.cfg
+091201_110708: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg /user/xjanssen/data/CMSSW_3_2_6/DataCopy/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/auto/DataCopy__CMSSW_3_2_6__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO.cfg
+091201_110816: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg /user/xjanssen/data/CMSSW_3_2_6/DataCopy/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO2/auto/DataCopy__CMSSW_3_2_6__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO2.cfg
+091201_110822: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg /user/xjanssen/data/CMSSW_3_2_6/DataCopy/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/auto/DataCopy__CMSSW_3_2_6__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO.cfg
+091201_153903: /user/cmssoft/crab/CRAB_2_6_3_patch_2/python/crab.py -create -submit -cfg /user/xjanssen/autosub/workdir/CMSSW_3_2_6/DataCopy/__H160_2W_2lnu_wbf_10TeV__Summer09-MC_31X_V3_156BxLumiPileUp-v1__GEN-SIM-RECO/auto/DataCopy__CMSSW_3_2_6__H160_2W_2lnu_wbf_10TeV__Summer09-MC_31X_V3_156BxLumiPileUp-v1__GEN-SIM-RECO.cfg

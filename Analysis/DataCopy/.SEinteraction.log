@@ -1,0 +1,264 @@
+2009-11-17 18:17:15.204560:
+Executed:	edg-gridftp-mkdir  gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_gridCopy_s6kv81
+Done with exit code:	0
+and output:
+
+
+2009-11-17 18:17:16.238980:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/gridCopy/share/default.tgz gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_gridCopy_s6kv81/default.tgz
+Done with exit code:	0
+and output:
+
+
+2009-11-17 18:17:17.269527:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/gridCopy/share/arguments.xml gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_gridCopy_s6kv81/arguments.xml
+Done with exit code:	0
+and output:
+
+
+2009-11-17 18:17:18.303069:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/gridCopy/job/CMSSW.sh gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_gridCopy_s6kv81/CMSSW.sh
+Done with exit code:	0
+and output:
+
+
+2009-11-18 09:44:32.409651:
+Executed:	edg-gridftp-mkdir  gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_g138uz
+Done with exit code:	0
+and output:
+
+
+2009-11-18 09:44:33.462989:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui/share/default.tgz gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_g138uz/default.tgz
+Done with exit code:	0
+and output:
+
+
+2009-11-18 09:44:34.488873:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui/share/arguments.xml gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_g138uz/arguments.xml
+Done with exit code:	0
+and output:
+
+
+2009-11-18 09:44:35.514891:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui/job/CMSSW.sh gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_g138uz/CMSSW.sh
+Done with exit code:	0
+and output:
+
+
+2009-11-18 10:15:22.674980:
+Executed:	edg-gridftp-mkdir  gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_v1b6u8
+Done with exit code:	0
+and output:
+
+
+2009-11-18 10:15:23.703898:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui/share/default.tgz gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_v1b6u8/default.tgz
+Done with exit code:	0
+and output:
+
+
+2009-11-18 10:15:24.729730:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui/share/arguments.xml gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_v1b6u8/arguments.xml
+Done with exit code:	0
+and output:
+
+
+2009-11-18 10:15:25.756094:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui/job/CMSSW.sh gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_v1b6u8/CMSSW.sh
+Done with exit code:	0
+and output:
+
+
+2009-11-18 13:52:46.030073:
+Executed:	edg-gridftp-mkdir  gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_1nzq52
+Done with exit code:	0
+and output:
+
+
+2009-11-18 13:52:47.064784:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui/share/default.tgz gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_1nzq52/default.tgz
+Done with exit code:	0
+and output:
+
+
+2009-11-18 13:52:48.091935:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui/share/arguments.xml gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_1nzq52/arguments.xml
+Done with exit code:	0
+and output:
+
+
+2009-11-18 13:52:49.118996:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/ui/job/CMSSW.sh gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_1nzq52/CMSSW.sh
+Done with exit code:	0
+and output:
+
+
+2009-11-18 17:53:01.615863:
+Executed:	edg-gridftp-mkdir  gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_DataCopy_wb7v35
+Done with exit code:	0
+and output:
+
+
+2009-11-18 17:53:02.653529:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/share/default.tgz gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_DataCopy_wb7v35/default.tgz
+Done with exit code:	0
+and output:
+
+
+2009-11-18 17:53:03.682123:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/share/arguments.xml gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_DataCopy_wb7v35/arguments.xml
+Done with exit code:	0
+and output:
+
+
+2009-11-18 17:53:04.709624:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/job/CMSSW.sh gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_DataCopy_wb7v35/CMSSW.sh
+Done with exit code:	0
+and output:
+
+
+2009-11-18 22:02:21.803383:
+Executed:	edg-gridftp-mkdir  gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_DataCopy_34x0af
+Done with exit code:	0
+and output:
+
+
+2009-11-18 22:02:22.832308:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/share/default.tgz gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_DataCopy_34x0af/default.tgz
+Done with exit code:	0
+and output:
+
+
+2009-11-18 22:02:23.858243:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/share/arguments.xml gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_DataCopy_34x0af/arguments.xml
+Done with exit code:	0
+and output:
+
+
+2009-11-18 22:02:24.885300:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__H160_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/job/CMSSW.sh gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_DataCopy_34x0af/CMSSW.sh
+Done with exit code:	0
+and output:
+
+
+2009-11-29 11:41:41.781183:
+Executed:	edg-gridftp-mkdir  gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_DataCopy_h6pb45
+Done with exit code:	0
+and output:
+
+
+2009-11-29 11:41:42.823103:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/share/default.tgz gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_DataCopy_h6pb45/default.tgz
+Done with exit code:	0
+and output:
+
+
+2009-11-29 11:41:43.849254:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/share/arguments.xml gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_DataCopy_h6pb45/arguments.xml
+Done with exit code:	0
+and output:
+
+
+2009-11-29 11:41:44.878266:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/job/CMSSW.sh gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_DataCopy_h6pb45/CMSSW.sh
+Done with exit code:	0
+and output:
+
+
+2009-11-30 11:53:23.477863:
+Executed:	edg-gridftp-mkdir  gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_DataCopy_j46q1e
+Done with exit code:	0
+and output:
+
+
+2009-11-30 11:53:24.524216:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/share/default.tgz gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_DataCopy_j46q1e/default.tgz
+Done with exit code:	0
+and output:
+
+
+2009-11-30 11:53:25.555555:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/share/arguments.xml gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_DataCopy_j46q1e/arguments.xml
+Done with exit code:	0
+and output:
+
+
+2009-11-30 11:53:26.591939:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/job/CMSSW.sh gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_DataCopy_j46q1e/CMSSW.sh
+Done with exit code:	0
+and output:
+
+
+2009-11-30 15:22:33.268623:
+Executed:	edg-gridftp-mkdir  gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_DataCopy_9wv3z4
+Done with exit code:	0
+and output:
+
+
+2009-11-30 15:22:34.314668:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/share/default.tgz gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_DataCopy_9wv3z4/default.tgz
+Done with exit code:	0
+and output:
+
+
+2009-11-30 15:22:35.345931:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/share/arguments.xml gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_DataCopy_9wv3z4/arguments.xml
+Done with exit code:	0
+and output:
+
+
+2009-11-30 15:22:36.377835:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/hww/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/DataCopy/job/CMSSW.sh gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_DataCopy_9wv3z4/CMSSW.sh
+Done with exit code:	0
+and output:
+
+
+2009-12-01 11:08:31.008128:
+Executed:	edg-gridftp-mkdir  gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_DataCopy_8jrw62
+Done with exit code:	0
+and output:
+
+
+2009-12-01 11:08:34.059301:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/DataCopy/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_DataCopy/share/default.tgz gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_DataCopy_8jrw62/default.tgz
+Done with exit code:	0
+and output:
+
+
+2009-12-01 11:08:36.091929:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/DataCopy/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_DataCopy/share/arguments.xml gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_DataCopy_8jrw62/arguments.xml
+Done with exit code:	0
+and output:
+
+
+2009-12-01 11:08:37.124581:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/data/CMSSW_3_2_6/DataCopy/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/ui_DataCopy/job/CMSSW.sh gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_DataCopy_8jrw62/CMSSW.sh
+Done with exit code:	0
+and output:
+
+
+2009-12-01 15:39:09.662450:
+Executed:	edg-gridftp-mkdir  gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_DataCopy_p70ky5
+Done with exit code:	0
+and output:
+
+
+2009-12-01 15:39:10.697127:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/autosub/workdir/CMSSW_3_2_6/DataCopy/__H160_2W_2lnu_wbf_10TeV__Summer09-MC_31X_V3_156BxLumiPileUp-v1__GEN-SIM-RECO/ui_DataCopy/share/default.tgz gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_DataCopy_p70ky5/default.tgz
+Done with exit code:	0
+and output:
+
+
+2009-12-01 15:39:11.728296:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/autosub/workdir/CMSSW_3_2_6/DataCopy/__H160_2W_2lnu_wbf_10TeV__Summer09-MC_31X_V3_156BxLumiPileUp-v1__GEN-SIM-RECO/ui_DataCopy/share/arguments.xml gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_DataCopy_p70ky5/arguments.xml
+Done with exit code:	0
+and output:
+
+
+2009-12-01 15:39:12.759763:
+Executed:	 lcg-cp  -t 600  --vo cms file:///user/xjanssen/autosub/workdir/CMSSW_3_2_6/DataCopy/__H160_2W_2lnu_wbf_10TeV__Summer09-MC_31X_V3_156BxLumiPileUp-v1__GEN-SIM-RECO/ui_DataCopy/job/CMSSW.sh gsiftp://vocms58.cern.ch/data/CSstoragePath/xjanssen_ui_DataCopy_p70ky5/CMSSW.sh
+Done with exit code:	0
+and output:
+
+
