@@ -91,7 +91,7 @@ void UAHiggsTree::GetRecoCaloJet(const edm::Event& iEvent , const edm::EventSetu
      myjet.alpha          = alpha;
      myjet.beta           = beta;
   
-     if(&bjet!=0 && bjet->second>0.001 && bjet->second<1000) {
+     if(bjet->second>0.001 && bjet->second<1000) {
      discriminator=bjet->second;
      bjet++;
      }
