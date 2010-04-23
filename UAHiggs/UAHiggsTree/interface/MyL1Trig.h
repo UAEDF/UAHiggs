@@ -2,7 +2,8 @@
 #define __MyL1Trig_H__
 
 #include "TObject.h"
-
+#include <map>
+using namespace std;
 
 class MyL1Trig : public TObject {
 
@@ -12,6 +13,8 @@ class MyL1Trig : public TObject {
 
   bool PhysTrigWord[128];
   bool TechTrigWord[64];
+  
+  map<string,bool> L1map;
 
 //  void Reset();
  

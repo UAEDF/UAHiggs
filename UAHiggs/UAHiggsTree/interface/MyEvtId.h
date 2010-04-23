@@ -22,6 +22,7 @@ class MyEvtId : public TObject {
   UInt_t       ExpType;
   Int_t        Bunch;
   Int_t        Orbit;   
+  Bool_t       PreselMarker;
   // Int_t        Store; 
 
   private:

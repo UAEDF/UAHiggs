@@ -21,7 +21,12 @@
 <use name=DataFormats/GsfTrackReco>
 <use name=DataFormats/MuonReco>
 <use name=DataFormats/L1Trigger>
+<use name=DataFormats/JetReco>
+<use name=DataFormats/BTauReco>
+
 <export>
+   
+   
    <lib name=AnalysisHWWGenPart>
    <use name=FWCore/Framework>
    <use name=FWCore/PluginManager>
@@ -46,5 +51,9 @@
    <use name=DataFormats/GsfTrackReco>
    <use name=DataFormats/L1Trigger>
    <use name=DataFormats/MuonReco>
+   <use name=DataFormats/JetReco>
+   <use name=DataFormats/BTauReco>
+
+
 </export>
 <flags EDM_PLUGIN=1>

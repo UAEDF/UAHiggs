@@ -6,7 +6,7 @@
 
 #pragma link C++ class MyEvtId+;
 #pragma link C++ class MyL1Trig+;
-
+#pragma link C++ class MyHLTrig+;
 #pragma link C++ class MyPart+;
 
 #pragma link C++ class MyGenKin+;
@@ -30,6 +30,15 @@
 
 #pragma link C++ class MyMuon+;
 #pragma link C++ class vector<MyMuon>+;
+
+#pragma link C++ class MyMET+;
+#pragma link C++ class vector<MyMET>+;
+
+#pragma link C++ class MyGenMET+;
+#pragma link C++ class vector<MyGenMET>+;
+
+#pragma link C++ class MyJet+;
+#pragma link C++ class vector<MyJet>+;
 
 
 #endif

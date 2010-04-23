@@ -27,6 +27,10 @@ class MyGenKin : public TObject {
   Double_t MetY; 
   Double_t MetPhi; 
 
+  // Kfactor for Signal
+  
+  Double_t kfactor;
+  
   // GenMet form GenPart Collection (status 1 and 3)
   TLorentzVector MetGP1 ;
   TLorentzVector MetGP3 ;

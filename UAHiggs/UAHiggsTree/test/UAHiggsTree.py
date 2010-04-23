@@ -4,12 +4,15 @@ import FWCore.ParameterSet.Config as cms
 #from Configuration.StandardSequences.Generator_cff import *
 
 # set up process
-process = cms.Process("GetGenPart")
+process = cms.Process("UAHiggs")
 
 # initialize MessageLogger and output report ----------------------------------------
+
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
 process.MessageLogger.cerr.threshold = 'INFO'
+#process.MessageLogger.cout.placeholder = cms.untracked.bool(False)
 #process.MessageLogger.cerr.FwkReport.reportEvery = 1000
+
 
 #Geometry --------------------------------------------------------------------------
 process.load("Configuration.StandardSequences.Geometry_cff")
@@ -18,11 +21,13 @@ process.load("Configuration.StandardSequences.MagneticField_cff")
 
 # Data source -----------------------------------------------------------------------
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('file:/user/selvaggi/DataCopy__CMSSW_3_2_6__H120_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO_1.root')
+      fileNames = cms.untracked.vstring(' ')
+ #    fileNames = cms.untracked.vstring('file:/user/selvaggi/DataCopy__CMSSW_3_2_6__H120_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO_1.root')
+ #   fileNames = cms.untracked.vstring('file:/user/selvaggi/DataCopy__CMSSW_3_2_8__H160_2W_2lnu_gluonfusion_7TeV__Summer09-MC_31X_V3_156BxLumiPileUp-v1__GEN-SIM-RECO_1.root')
 #    fileNames = cms.untracked.vstring('file:///user/xjanssen/outCopy/MYCOPY_1.root')
 #   fileNames = cms.untracked.vstring('file:////user/xjanssen/data/CMSSW_3_2_6/DataCopy/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/data/DataCopy__CMSSW_3_2_6__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO_1.root')
 )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 # L1 extra --------------------------------------------------------------------------
 #process.load("L1Trigger.L1ExtraFromDigis.l1extra_cff")
@@ -98,6 +103,57 @@ process.eleIsoDepositEcalFromHits = cms.EDProducer("CandIsoDepositProducer",
 process.load("RecoEgamma.EgammaIsolationAlgos.eleIsoFromDepsModules_cff")
 process.load("RecoEgamma.EgammaIsolationAlgos.eleIsoDepositTk_cff")
 
+# Jet Vertex Alpha  ------------------------------------------------------------
+
+## REMEMBER TO ADD NEW JV PRODUCER IF OTHER CALO JET COLLECTIONS ARE ADDED
+
+
+process.jetvertexalpha = cms.EDFilter("JetVertexAssociation",
+    JV_deltaZ = cms.double(0.3),
+    TRACK_ALGO = cms.string('generalTracks'),
+    JV_alpha_threshold = cms.double(0.0),
+    JET_ALGO = cms.string(''),
+    JV_type_Algo = cms.int32(0),
+    JV_cone_size = cms.double(0.5),
+    VERTEX_ALGO = cms.string('offlinePrimaryVertices'),
+    JV_cutType = cms.string('delta'),
+    JV_sigmaZ = cms.double(9.5)
+)
+
+process.JVAantikt5              = process.jetvertexalpha.clone()
+process.JVAantikt5.JET_ALGO     = cms.string('antikt5CaloJets')
+process.JVAantikt5.JV_type_Algo = cms.int32(1)
+process.JVBantikt5               = process.jetvertexalpha.clone()
+process.JVBantikt5.JET_ALGO      = cms.string('antikt5CaloJets')
+process.JVBantikt5.JV_type_Algo  = cms.int32(2)
+
+process.JVAiterativeCone5              = process.jetvertexalpha.clone()
+process.JVAiterativeCone5.JET_ALGO     = cms.string('iterativeCone5CaloJets')
+process.JVAiterativeCone5.JV_type_Algo = cms.int32(1)
+process.JVBiterativeCone5               = process.jetvertexalpha.clone()
+process.JVBiterativeCone5.JET_ALGO      = cms.string('iterativeCone5CaloJets')
+process.JVBiterativeCone5.JV_type_Algo  = cms.int32(2)
+
+process.JVAsisCone5              = process.jetvertexalpha.clone()
+process.JVAsisCone5.JET_ALGO     = cms.string('sisCone5CaloJets')
+process.JVAsisCone5.JV_type_Algo = cms.int32(1)
+process.JVBsisCone5               = process.jetvertexalpha.clone()
+process.JVBsisCone5.JET_ALGO      = cms.string('sisCone5CaloJets')
+process.JVBsisCone5.JV_type_Algo  = cms.int32(2)
+
+
+
+process.jetvertexassociation = cms.Sequence(process.JVAantikt5 + process.JVBantikt5 +
+			                    process.JVAiterativeCone5 + process.JVBiterativeCone5 +
+                                            process.JVAsisCone5 + process.JVBsisCone5
+                                            )
+
+
+# Track Jets --------------------------------------------------------------
+
+#  for > 3_4_2 process.load("RecoJets.Configuration.RecoTrackJets_cff")
+
+
 # HWW Preselection ------------------------------------------------------------------
 
 process.load("HiggsAnalysis.HiggsToWW2Leptons.HWWPreselectionSequence_cff")
@@ -113,40 +169,61 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
   , fileName = cms.untracked.string('UAHiggsTree.root')
 
 # Modules to execute
-  , StoreGenPart = cms.bool(True)
-  , StoreGenKine = cms.bool(True)
-
+  , StoreGenPart     = cms.bool(True)
+  , StoreGenKine     = cms.bool(True)
+  , doJetVertexAlpha = cms.bool(True)
 # Define DATA Collections
   , genPartColl   = cms.InputTag("genParticles") 
   , hepMCColl     = cms.InputTag("generator")
-  , gsfelectrons  = cms.InputTag("gsfElectrons") 
   , hcalIsolation = cms.InputTag("egammaTowerIsolation")
   , trckIsolation = cms.InputTag("egammaElectronTkRelIsolation")
-  , muons         = cms.InputTag("muons") 
+  , bjets         = cms.InputTag("trackCountingHighPurBJetTags")
+ 
+ 
+# Trial for vstring collections --------------------
+
+  , requested_gsfelectrons = cms.vstring('gsfElectrons','isolatedElectrons','selectedElectrons')
+  , requested_muons        = cms.vstring('muons','isolatedMuons','selectedMuons')
+  
+  , requested_genmets      = cms.vstring('genMetTrue')
+  , requested_calomets     = cms.vstring('met')
+  , requested_pfmets       = cms.vstring('pfMet')
+  , requested_tcmets       = cms.vstring('tcMet')
+
+  , requested_genjets      = cms.vstring('iterativeCone5GenJets','sisCone5GenJets','antikt5GenJets')
+  , requested_calojets     = cms.vstring('iterativeCone5CaloJets','sisCone5CaloJets','antikt5CaloJets')
+  , requested_pfjets       = cms.vstring('iterativeCone5PFJets','sisCone5PFJets','antikt5PFJets')
+  , requested_trackjets    = cms.vstring('')
+
+  , requested_hlt_bits     = cms.vstring('HLT_IsoEle15_L1I','HLT_IsoEle18_L1R','HLT_IsoEle15_LW_L1I','HLT_LooseIsoEle15_LW_L1R','HLT_Ele10_SW_L1R','HLT_Ele15_SW_L1R','HLT_Ele15_LW_L1R','HLT_IsoMu9', 'HLT_IsoMu11','HLT_IsoMu13', 'HLT_IsoMu15','HLT_Mu3','HLT_Mu5','HLT_Mu7','HLT_Mu9','HLT_Mu11','HLT_Mu13', 'HLT_Ele10_LW_EleId_L1R', 'HLT_Mu15' ,)
+  , requested_L1_bits      = cms.vstring('L1_SingleEG1','L1_SingleEG2','L1_SingleEG5','L1_SingleEG8','L1_SingleEG10','L1_SingleEG12','L1_SingleEG15','L1_SingleEG20','L1_SingleIsoEG5','L1_SingleIsoEG8','L1_SingleIsoEG10','L1_SingleIsoEG12','L1_SingleIsoEG15','L1_DoubleEG1','L1_DoubleEG5','L1_SingleMu0','L1_SingleMu3','L1_SingleMu5','L1_SingleMu7','L1_SingleMu10','L1_SingleMu14','L1_SingleMu20','L1_SingleMuBeamHalo','L1_SingleMuOpen','L1_Mu3QE8_EG5','L1_DoubleMu3','L1_DoubleMuOpen')
+
 )
 
 
 # Data output ----------------------------------------------------------------------- 
-process.out = cms.OutputModule("PoolOutputModule",
-    verbose = cms.untracked.bool(False),
-    fileName = cms.untracked.string('cmsdata.root')
-)
+#process.out = cms.OutputModule("PoolOutputModule",
+#    verbose = cms.untracked.bool(False),
+#    fileName = cms.untracked.string('cmsdata.root')
+#)
 
 
 # PAth (what to do) ------------------------------------------------------------------
 process.path = cms.Path(
 #                        process.l1GtUnpack *
 #                        process.l1extraParticles *
-#                        process.GenPartDecay * 
-#                        process.GenPartTree *
-#                        process.GenPartList *  
-#                        process.genJetParticles*process.recoGenJets*
+#                         process.GenPartDecay * 
+#                         process.GenPartTree *
+#                         process.GenPartList *  
+#                         process.genJetParticles*process.recoGenJets*
                          process.KFactorProducer *
 		         process.higgsToWW2LeptonsPreselectionSequence *
-                         process.eleIsoDepositEcalFromHits *
+#                         process.recoAllTrackJets *
+			 process.jetvertexassociation *
+			 process.eleIsoDepositEcalFromHits *
                          process.eleIsoFromDepsEcalFromHits *
-                         process.eleIsoDepositTk  
-#                        process.UAHiggsTree   
+                         process.eleIsoDepositTk  *
+                         process.UAHiggsTree   
                        )
 
 # EndPath (what to store) ------------------------------------------------------------
