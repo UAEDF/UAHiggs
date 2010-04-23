@@ -66,6 +66,21 @@ void UAHiggsTree::GetL1Trig(const edm::Event& iEvent, const edm::EventSetup& iSe
 
    // L1 Trigger bits
 
+   
+   
+   edm::ESHandle<L1GtTriggerMenu> menuRcd;
+   iSetup.get<L1GtTriggerMenuRcd>().get(menuRcd) ;
+   const L1GtTriggerMenu* menu = menuRcd.product();
+   
+  
+   if(fill_L1_map){
+     for(CItAlgo algo = menu->gtAlgorithmMap().begin();algo!=menu->gtAlgorithmMap().end();++algo){
+        L1_map[(algo->second).algoBitNumber()] =(algo->second).algoName(); 
+        }
+     fill_L1_map=false;
+   }
+  
+  
    edm::Handle<L1GlobalTriggerReadoutRecord> L1GTRR;
    iEvent.getByLabel("gtDigis",L1GTRR);
    for (int i=0 ; i <128 ; i++) 
@@ -78,6 +93,20 @@ void UAHiggsTree::GetL1Trig(const edm::Event& iEvent, const edm::EventSetup& iSe
     if (L1TrigDebug) cout << "technicalTriggerWord :" << i << " " << L1GTRR->technicalTriggerWord()[i] << endl;
     L1Trig.TechTrigWord[i] = L1GTRR->technicalTriggerWord()[i]; 
    }
+
+
+   for(vector<string>::iterator requested_L1_bit=L1_bits.begin();requested_L1_bit!=L1_bits.end();requested_L1_bit++){
+      for(map<int,string>::iterator itmap=L1_map.begin();itmap!=L1_map.end();itmap++){
+         if(itmap->second == *requested_L1_bit){
+	 //  cout << *requested_L1_bit << " = " << L1GTRR->decisionWord()[itmap->first] << endl;
+	   L1Trig.L1map[*requested_L1_bit] = L1GTRR->decisionWord()[itmap->first];
+           }
+         }    
+      }
+
+
+
+
 
 /*
    // L1 extra particles 
