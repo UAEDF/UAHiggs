@@ -53,7 +53,7 @@
 
 
 void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetup& iSetup,
-                                                           vector<MyElectron>& ElecVector )
+                                                          const string GsfElectronCollection_ ,vector<MyElectron>& ElecVector )
 {
    using namespace std;
    using namespace edm;
@@ -100,7 +100,7 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
      printf("Can't get tracker isolation product\n");
    }
 
-   // Tracker Isolation handle (Majid)
+ /*  // Tracker Isolation handle (Majid)
    edm::Handle< edm::ValueMap<reco::IsoDeposit> > tkIsolationHandleMajid;
    try { iEvent.getByLabel("eleIsoDepositTk", tkIsolationHandleMajid); }
    catch ( cms::Exception& ex ) { printf("Can't get tracker isolation product\n"); }
@@ -108,7 +108,8 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
 
    // eidHandle (Majid) 
    edm::Handle< edm::ValueMap<float> > eidHandle;
-   iEvent.getByLabel("eidTight",eidHandle);
+   try {iEvent.getByLabel("eidTight",eidHandle);}
+   catch ( cms::Exception& ex ) { printf("Can't get electron identification product\n"); }
    const edm::ValueMap<float>& eidVal = *eidHandle;
 
    // EcalIsolationHandle (Majid)
@@ -116,6 +117,10 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
    try { iEvent.getByLabel("eleIsoFromDepsEcalFromHits", EcalIsolationHandle); }
    catch ( cms::Exception& ex ) { printf("Can't get ecal Jurassic isolation product\n"); }
    const edm::ValueMap<double>& EcalIsolationVal = *EcalIsolationHandle;
+
+*/
+
+
 
 
 
@@ -223,8 +228,25 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
 
     // Extra Idolation Majid:
 
-    cout << "itr: " << iElectron->eta() << " " <<  iElectron->phi() << endl; 
-    cout << "RAW: " << electronRAWRef->eta() << " " << electronRAWRef->phi() <<endl ;
+    try{
+    
+    edm::Handle< edm::ValueMap<reco::IsoDeposit> > tkIsolationHandleMajid;
+    iEvent.getByLabel("eleIsoDepositTk", tkIsolationHandleMajid); 
+   const edm::ValueMap<reco::IsoDeposit>& tkIsolationVal = *tkIsolationHandleMajid;
+
+   // eidHandle (Majid) 
+   edm::Handle< edm::ValueMap<float> > eidHandle;
+   iEvent.getByLabel("eidTight",eidHandle);
+   const edm::ValueMap<float>& eidVal = *eidHandle;
+
+   // EcalIsolationHandle (Majid)
+   edm::Handle< edm::ValueMap<double> > EcalIsolationHandle;
+   iEvent.getByLabel("eleIsoFromDepsEcalFromHits", EcalIsolationHandle); 
+   const edm::ValueMap<double>& EcalIsolationVal = *EcalIsolationHandle;
+    
+    
+  //  cout << "itr: " << iElectron->eta() << " " <<  iElectron->phi() << endl; 
+  //  cout << "RAW: " << electronRAWRef->eta() << " " << electronRAWRef->phi() <<endl ;
 
     // ... TrackerIsolation (Majid)
     reco::SuperClusterRef sc = iElectron->get<reco::SuperClusterRef> () ;
@@ -241,8 +263,10 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
 
     // ... ecal jurassic isolation (Majid)
     electron.EcalJurassicIsolation= EcalIsolationVal[electronRAWRef];
- 
-
+    }
+    catch ( cms::Exception& ex ) {
+     printf("Can't store Tk isolation variables from Majid\n");
+   }
      // Extra Isolation variables
 
 
@@ -276,3 +300,23 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
 
 
 }
+
+void UAHiggsTree::InitRecoElectron( vector<string> gsfelectrons, TTree* tree )
+{
+  int i=0;
+  for (vector<string>::iterator icoll = gsfelectrons.begin(); icoll!= gsfelectrons.end();icoll++){
+      tree->Branch( icoll->c_str(), &(allElectrons[i]) );
+      i++;
+      }
+
+}
+
+
+void UAHiggsTree::GetAllElectrons( const edm::Event& iEvent, const edm::EventSetup& iSetup, const vector<string> gsfelectrons, vector<MyElectron> allElectrons[5] )
+{
+  for (unsigned int i=0; i!= gsfelectrons.size(); i++){
+       GetRecoElectron(iEvent,iSetup,gsfelectrons.at(i),allElectrons[i]);
+       }
+
+}
+

@@ -51,6 +51,16 @@ void UAHiggsTree::GetGenKin(const edm::Event& iEvent)
 
 */
 
+   //K Factor For Signal
+   edm::Handle<double> KFactor;
+   try {
+    iEvent.getByLabel("KFactorProducer",KFactor);
+    double kfactor = *KFactor;
+    GenKin.kfactor=kfactor;
+   }
+   catch (...){;}
+
+
    // MC Process Id and PtHat for RECO
    Handle<HepMCProduct> hepMCHandle;
    iEvent.getByLabel(hepMCColl_, hepMCHandle ) ;

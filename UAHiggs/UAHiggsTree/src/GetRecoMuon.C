@@ -38,7 +38,7 @@
 
 
 void UAHiggsTree::GetRecoMuon(const edm::Event& iEvent, const edm::EventSetup& iSetup,
-                                                           vector<MyMuon>& MuonVector )
+                                                       const string globalMuonCollection_, vector<MyMuon>& MuonVector )
 {
    using namespace std;
    using namespace edm;
@@ -210,5 +210,24 @@ void UAHiggsTree::GetRecoMuon(const edm::Event& iEvent, const edm::EventSetup& i
      MuonVector.push_back(muon);
 
    } // end for MuonCollection 
+
+}
+
+void UAHiggsTree::InitRecoMuon( vector<string> muons, TTree* tree )
+{
+  int i=0;
+  for (vector<string>::iterator icoll = muons.begin(); icoll!= muons.end();icoll++){
+      tree->Branch( icoll->c_str(), &(allMuons[i]) );
+      i++;
+      }
+
+}
+
+
+void UAHiggsTree::GetAllMuons( const edm::Event& iEvent, const edm::EventSetup& iSetup, const vector<string> muons, vector<MyMuon> allMuons[5] )
+{
+  for (unsigned int i=0; i!= muons.size(); i++){
+       GetRecoMuon(iEvent,iSetup,muons.at(i),allMuons[i]);
+       }
 
 }

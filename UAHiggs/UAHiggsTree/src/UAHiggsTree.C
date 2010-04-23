@@ -13,7 +13,7 @@
 //
 // Original Author:  "local user"
 //         Created:  Wed Nov 18 10:39:03 CET 2009
-// $Id$
+// $Id: UAHiggsTree.C,v 1.1.1.1 2010/04/13 13:35:42 xjanssen Exp $
 //
 //
 
@@ -77,10 +77,28 @@ UAHiggsTree::UAHiggsTree(const edm::ParameterSet& iConfig)
    // Define DATA Collection
    genPartColl_             = iConfig.getParameter<edm::InputTag>("genPartColl") ; 
    hepMCColl_               = iConfig.getParameter<edm::InputTag>("hepMCColl") ;
-   GsfElectronCollection_   = iConfig.getParameter<edm::InputTag>("gsfelectrons");
+   
    HcalIsolationProducer_   = iConfig.getParameter<edm::InputTag>("hcalIsolation"); 
    trckIsolationProducer_   = iConfig.getParameter<edm::InputTag>("trckIsolation");
-   globalMuonCollection_    = iConfig.getParameter<edm::InputTag>("muons");
+   
+   BJetCollection_          = iConfig.getParameter<edm::InputTag>("bjets");
+   
+   gsfelectrons             = iConfig.getParameter<vector<string> >("requested_gsfelectrons");
+   muons                    = iConfig.getParameter<vector<string> >("requested_muons");
+   
+   genmets                   = iConfig.getParameter<vector<string> >("requested_genmets");
+   calomets                  = iConfig.getParameter<vector<string> >("requested_calomets");
+   pfmets                    = iConfig.getParameter<vector<string> >("requested_pfmets");
+   tcmets                    = iConfig.getParameter<vector<string> >("requested_tcmets");
+
+   genjets                   = iConfig.getParameter<vector<string> >("requested_genjets");
+   calojets                  = iConfig.getParameter<vector<string> >("requested_calojets");
+   pfjets                    = iConfig.getParameter<vector<string> >("requested_pfjets");
+ //  trackjets                    = iConfig.getParameter<vector<string> >("requested_tcjets");
+
+   //Trigger inputs
+   hlt_bits   = iConfig.getParameter<vector<string> >("requested_hlt_bits");
+   L1_bits    = iConfig.getParameter<vector<string> >("requested_L1_bits");
 
 }
 
@@ -107,12 +125,14 @@ UAHiggsTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    // EvtId and L1 trig
    GetEvtId(iEvent); 
    GetL1Trig(iEvent,iSetup);
-
+   GetHLTrig(iEvent,iSetup);
+   
    // Generator level
    if (StoreGenPart) GetGenPart(iEvent,iSetup);
    if (StoreGenKine) GetGenKin (iEvent);
-   if (StoreGenPart) GetGenJet (iEvent,iSetup,"antikt5GenJets",GenJet); 
-
+   if (StoreGenPart) GetAllGenJets(iEvent,iSetup,genjets,allGenJets); 
+   if (StoreGenPart) GetAllGenMETs(iEvent,iSetup,genmets,allGenMETs);
+   
    // Reset vtx id and vector
    vtxid = 0;
    vtxid_xyz.clear();
@@ -149,15 +169,25 @@ UAHiggsTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    GetRecoTracks(iEvent,iSetup,"generalTracks",generalTracks);
 
    // ... Electron
-   GetRecoElectron(iEvent,iSetup,gsfElec);
-
+   GetAllElectrons(iEvent,iSetup,gsfelectrons,allElectrons);
+   
    // ... Muon
-   GetRecoMuon(iEvent,iSetup,globalMuon);
-
+   GetAllMuons(iEvent,iSetup,muons,allMuons);
+   
+   // ... Jet
+   GetAllCaloJets(iEvent,iSetup,calojets,allCaloJets);
+   GetAllPFJets  (iEvent,iSetup,pfjets,  allPFJets);
+   
+   //    MET
+   
+   GetAllCaloMETs(iEvent,iSetup,calomets,allCaloMETs);
+   GetAllPFMETs(iEvent,iSetup,pfmets,allPFMETs);
+   GetAllTcMETs(iEvent,iSetup,tcmets,allTcMETs);
 /*
    // Tests
   
    edm::ESHandle<L1GtTriggerMenu> menuRcd;
+   
    iSetup.get<L1GtTriggerMenuRcd>().get(menuRcd) ;
    const L1GtTriggerMenu* menu = menuRcd.product();
 
@@ -207,20 +237,32 @@ UAHiggsTree::beginJob()
    if (StoreGenPart) tree->Branch("GenElec",&GenElec);
    if (StoreGenPart) tree->Branch("GenMu",&GenMu);
    if (StoreGenPart) tree->Branch("GenNu",&GenNu);
-   
    if (StoreGenPart) tree->Branch("GenJet",&GenJet);
    
-
+   if (StoreGenPart) InitGenMET(genmets,tree);
+   if (StoreGenPart) InitGenJet(genjets,tree);
 
    // MC Vertex (Sim and Gen) ??? 
 
    // RECO Information
 
+   InitRecoElectron(gsfelectrons,tree);
+   InitRecoMuon(muons,tree);
+   
+   InitRecoCaloMET(calomets,tree);
+   InitRecoTcMET  (tcmets,tree);
+   InitRecoPFMET  (pfmets,tree);
+   
+   InitRecoCaloJet(calojets,tree);
+   InitRecoPFJet  (pfjets,tree);
+   
+   
    tree->Branch("beamSpot",&beamSpot);
    tree->Branch("primaryVertex",&primaryVertex);
    tree->Branch("generalTracks",&generalTracks);
-   tree->Branch("gsfElec",&gsfElec);
-   tree->Branch("globalMuon",&globalMuon);
+  
+   // fill L1 map only once
+   fill_L1_map = true;
    
 
 }

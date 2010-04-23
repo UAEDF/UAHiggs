@@ -33,7 +33,7 @@
 bool GenJetDebug = false;
 
 void UAHiggsTree::GetGenJet(const edm::Event& iEvent , const edm::EventSetup& iSetup,
-                            const char collName[60] , vector<MyGenJet>& JetVector )
+                            const string GenJetCollection_ , vector<MyGenJet>& JetVector )
 {
    using namespace std;
    using namespace edm;
@@ -41,7 +41,7 @@ void UAHiggsTree::GetGenJet(const edm::Event& iEvent , const edm::EventSetup& iS
 
    // Clear
 
-   GenJet.clear();
+   JetVector.clear();
    
 
    // Handle to access PDG data from iSetup
@@ -51,12 +51,12 @@ void UAHiggsTree::GetGenJet(const edm::Event& iEvent , const edm::EventSetup& iS
 
    // get gen jet collection
    Handle<GenJetCollection> genjets;
-   iEvent.getByLabel(collName, genjets);
-
-   for(GenJetCollection::const_iterator genjet=genjets->begin();genjet!=genjets->end();genjet++){ 
+   iEvent.getByLabel(GenJetCollection_, genjets);
    
+   for(GenJetCollection::const_iterator genjet=genjets->begin();genjet!=genjets->end();genjet++){ 
+     
       MyGenJet Jet;
-
+      
       Jet.et  = genjet->et();
       Jet.pt  = genjet->pt();
       Jet.eta = genjet->eta();
@@ -112,4 +112,25 @@ void UAHiggsTree::GetGenJet(const edm::Event& iEvent , const edm::EventSetup& iS
       JetVector.push_back(Jet);
 
    }
+
+}
+
+
+void UAHiggsTree::InitGenJet( vector<string> GenJets, TTree* tree )
+{
+  int i=0;
+  for (vector<string>::iterator icoll = GenJets.begin(); icoll!= GenJets.end();icoll++){
+      tree->Branch( icoll->c_str(), &(allGenJets[i]) );
+      i++;
+      }
+
+}
+
+
+void UAHiggsTree::GetAllGenJets( const edm::Event& iEvent, const edm::EventSetup& iSetup, const vector<string> GenJets, vector<MyGenJet> allGenJets[5] )
+{
+  for (unsigned int i=0; i!= GenJets.size(); i++){
+       GetGenJet(iEvent,iSetup,GenJets.at(i),allGenJets[i]);
+       }
+
 }
