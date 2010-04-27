@@ -67,8 +67,7 @@ void UAHiggsTree::GetRecoCaloJet(const edm::Event& iEvent , const edm::EventSetu
    Handle<CaloJetCollection> CaloJets;
    iEvent.getByLabel(CaloJetCollection_,CaloJets);
   
-   cout<<"============================================================================="<<endl;
-   for(CaloJetCollection::const_iterator jet=CaloJets->begin();jet!=CaloJets->end();jet++,it_alpha++,it_beta++){
+    for(CaloJetCollection::const_iterator jet=CaloJets->begin();jet!=CaloJets->end();jet++,it_alpha++,it_beta++){
   //   for(CaloJetCollection::const_iterator jet=CaloJets->begin();jet!=CaloJets->end();jet++,it_alpha++,it_beta++){ 
     
      double alpha=0;

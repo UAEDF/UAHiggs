@@ -13,7 +13,7 @@
 //
 // Original Author:  "local user"
 //         Created:  Wed Nov 18 10:39:03 CET 2009
-// $Id: UAHiggsTree.C,v 1.1.1.1 2010/04/13 13:35:42 xjanssen Exp $
+// $Id: UAHiggsTree.C,v 1.2 2010/04/23 13:37:12 selvaggi Exp $
 //
 //
 
@@ -94,7 +94,7 @@ UAHiggsTree::UAHiggsTree(const edm::ParameterSet& iConfig)
    genjets                   = iConfig.getParameter<vector<string> >("requested_genjets");
    calojets                  = iConfig.getParameter<vector<string> >("requested_calojets");
    pfjets                    = iConfig.getParameter<vector<string> >("requested_pfjets");
- //  trackjets                    = iConfig.getParameter<vector<string> >("requested_tcjets");
+   trackjets                 = iConfig.getParameter<vector<string> >("requested_trackjets");
 
    //Trigger inputs
    hlt_bits   = iConfig.getParameter<vector<string> >("requested_hlt_bits");
@@ -175,14 +175,15 @@ UAHiggsTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    GetAllMuons(iEvent,iSetup,muons,allMuons);
    
    // ... Jet
-   GetAllCaloJets(iEvent,iSetup,calojets,allCaloJets);
-   GetAllPFJets  (iEvent,iSetup,pfjets,  allPFJets);
-   
+   GetAllCaloJets  (iEvent,iSetup,calojets,allCaloJets);
+   GetAllPFJets    (iEvent,iSetup,pfjets,  allPFJets);
+   GetAllTrackJets (iEvent,iSetup,trackjets,allTrackJets);
    //    MET
    
    GetAllCaloMETs(iEvent,iSetup,calomets,allCaloMETs);
    GetAllPFMETs(iEvent,iSetup,pfmets,allPFMETs);
    GetAllTcMETs(iEvent,iSetup,tcmets,allTcMETs);
+
 /*
    // Tests
   
@@ -237,7 +238,7 @@ UAHiggsTree::beginJob()
    if (StoreGenPart) tree->Branch("GenElec",&GenElec);
    if (StoreGenPart) tree->Branch("GenMu",&GenMu);
    if (StoreGenPart) tree->Branch("GenNu",&GenNu);
-   if (StoreGenPart) tree->Branch("GenJet",&GenJet);
+   //if (StoreGenPart) tree->Branch("GenJet",&GenJet);
    
    if (StoreGenPart) InitGenMET(genmets,tree);
    if (StoreGenPart) InitGenJet(genjets,tree);
@@ -253,9 +254,9 @@ UAHiggsTree::beginJob()
    InitRecoTcMET  (tcmets,tree);
    InitRecoPFMET  (pfmets,tree);
    
-   InitRecoCaloJet(calojets,tree);
-   InitRecoPFJet  (pfjets,tree);
-   
+   InitRecoCaloJet (calojets,tree);
+   InitRecoPFJet   (pfjets,tree);
+   InitRecoTrackJet(trackjets,tree);
    
    tree->Branch("beamSpot",&beamSpot);
    tree->Branch("primaryVertex",&primaryVertex);

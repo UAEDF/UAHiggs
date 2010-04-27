@@ -45,11 +45,12 @@ void UAHiggsTree::GetRecoPFJet(const edm::Event& iEvent , const edm::EventSetup&
    iEvent.getByLabel(PFJetCollection_,PFJets);
   
 
-   for(PFJetCollection::const_iterator jet=PFJets->begin();jet!=PFJets->end(),bjet!=bjets.end();jet++,bjet++){
-          
+   for(PFJetCollection::const_iterator jet=PFJets->begin();jet!=PFJets->end();jet++,bjet++){
+   //for(PFJetCollection::const_iterator jet=PFJets->begin();jet!=PFJets->end();jet++){
+         
     
      double discriminator=0;
-     discriminator=bjet->second;
+ //    discriminator=bjet->second;
      
      MyJet myjet;
      
@@ -60,6 +61,13 @@ void UAHiggsTree::GetRecoPFJet(const edm::Event& iEvent , const edm::EventSetup&
      myjet.px             = jet->px();
      myjet.py             = jet->py();
      myjet.pz             = jet->pz();
+   
+     if(bjet->second>0.001 && bjet->second<1000) {
+     discriminator=bjet->second;
+     bjet++;
+     }
+     else{discriminator=-100;bjet++;}
+    
      myjet.discriminator  = discriminator;
   
      JetVector.push_back(myjet);
