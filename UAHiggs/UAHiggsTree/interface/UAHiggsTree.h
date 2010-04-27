@@ -103,7 +103,7 @@ class UAHiggsTree : public edm::EDAnalyzer {
      
       virtual void InitRecoCaloJet( vector<string>, TTree*); 
       virtual void InitRecoPFJet( vector<string>, TTree*); 
-   //   virtual void InitRecoTrackJet( vector<string>, TTree*); 
+      virtual void InitRecoTrackJet( vector<string>, TTree*); 
       virtual void InitGenJet( vector<string>, TTree*); 
      
      
@@ -156,8 +156,8 @@ class UAHiggsTree : public edm::EDAnalyzer {
                                                  const string ,  vector<MyJet>&);
 
      
-   //   virtual void GetRecoTrackJet(const edm::Event& , const edm::EventSetup& ,
-   //                                              const string ,  vector<MyJet>&);
+      virtual void GetRecoTrackJet(const edm::Event& , const edm::EventSetup& ,
+                                                 const string ,  vector<MyJet>&);
 
      
        
@@ -174,7 +174,7 @@ class UAHiggsTree : public edm::EDAnalyzer {
       
       virtual void GetAllCaloJets  (const edm::Event&, const edm::EventSetup& , const vector<string>, vector<MyJet>   allCaloJets[5]);
       virtual void GetAllPFJets    (const edm::Event&, const edm::EventSetup& , const vector<string>, vector<MyJet>   allPFJets[5]);
-   //   virtual void GetAllTrackJets (const edm::Event&, const edm::EventSetup& , const vector<string>, vector<MyJet>   allTrackJets[5]);
+      virtual void GetAllTrackJets (const edm::Event&, const edm::EventSetup& , const vector<string>, vector<MyJet>   allTrackJets[5]);
       virtual void GetAllGenJets   (const edm::Event&, const edm::EventSetup& ,const vector<string>, vector<MyGenJet> allGenJets[5]);
       
      
@@ -254,8 +254,8 @@ class UAHiggsTree : public edm::EDAnalyzer {
 
       vector<MyElectron> gsfElec;
       
-      vector<MyElectron>  allElectrons[5];
-      vector<MyMuon>      allMuons[5];
+      vector<MyElectron> allElectrons[5];
+      vector<MyMuon>     allMuons[5];
       
       vector<MyMET>      allCaloMETs[5];
       vector<MyMET>      allPFMETs[5];
@@ -264,7 +264,7 @@ class UAHiggsTree : public edm::EDAnalyzer {
       
       vector<MyJet>      allCaloJets[5];
       vector<MyJet>      allPFJets[5];
-     // vector<MyJet>      allTrackJets[5];
+      vector<MyJet>      allTrackJets[5];
       vector<MyGenJet>   allGenJets[5];
     
       vector<MyMuon>     globalMuon;
