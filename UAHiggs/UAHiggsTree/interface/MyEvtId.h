@@ -9,10 +9,19 @@ typedef unsigned long long TimeValue_t;
 class MyEvtId : public TObject {
 
   public :
-  MyEvtId();
-  virtual ~MyEvtId();
+  MyEvtId(){;}
+  ~MyEvtId(){;}
 
-  void Reset();
+  void Reset(){
+  	Run =      0;
+  	Evt =      0;
+  	LumiSect = 0;
+  	Time     = -1;
+  	IsData   = false;
+  	ExpType  = 0;
+  	Bunch    = -1;
+  	Orbit    = -1;
+  	};
  
   UInt_t       Run ;
   UInt_t       Evt ;

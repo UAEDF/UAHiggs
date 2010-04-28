@@ -3,15 +3,15 @@
 
 #include <vector>
 #include "TObject.h"
-#include "UAHiggs/UAHiggsTree/interface/MyPart.h"
-#include "UAHiggs/UAHiggsTree/interface/MyTracks.h"
+#include "MyPart.h"
+#include "MyTracks.h"
 //#include "UAHiggs/UAHiggsTree/interface/MySupClus.h"
 
 class MyMuon : public TObject {
 
   public :
-    MyMuon();
-    virtual ~MyMuon();
+    MyMuon(){;}
+    ~MyMuon(){;}
 
 
     MyPart      Part;

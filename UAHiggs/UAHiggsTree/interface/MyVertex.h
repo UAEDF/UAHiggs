@@ -6,8 +6,8 @@
 class MyVertex : public TObject {
 
   public :
-    MyVertex();
-    virtual ~MyVertex();
+    MyVertex(){;}
+    ~MyVertex(){;}
 
     Int_t    id;
 

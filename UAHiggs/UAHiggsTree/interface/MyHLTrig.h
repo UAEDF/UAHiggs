@@ -8,14 +8,14 @@ using namespace std;
 class MyHLTrig : public TObject {
 
   public :
-  MyHLTrig();
-  virtual ~MyHLTrig();
+  MyHLTrig(){;}
+  ~MyHLTrig(){;}
 
  
   
   map<string,bool> HLTmap;
 
-//  void Reset();
+
  
 
   private:

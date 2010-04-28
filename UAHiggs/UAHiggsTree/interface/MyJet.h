@@ -3,15 +3,15 @@
 
 #include <vector>
 #include "TObject.h"
-#include "UAHiggs/UAHiggsTree/interface/MyPart.h"
-#include "UAHiggs/UAHiggsTree/interface/MyTracks.h"
+#include "MyPart.h"
+#include "MyTracks.h"
 
 
 class MyJet : public TObject {
 
   public :
-    MyJet();
-    virtual ~MyJet();
+    MyJet(){;}
+    ~MyJet(){;}
     Double_t e,pt,eta,phi,px,py,pz;
     Double_t alpha,beta,discriminator;
 

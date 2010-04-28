@@ -3,15 +3,15 @@
 
 #include <vector>
 #include "TObject.h"
-#include "UAHiggs/UAHiggsTree/interface/MyPart.h"
-#include "UAHiggs/UAHiggsTree/interface/MyTracks.h"
+#include "MyPart.h"
+#include "MyTracks.h"
 //#include "UAHiggs/UAHiggsTree/interface/MySupClus.h"
 
 class MyElectron : public TObject {
 
   public :
-    MyElectron();
-    virtual ~MyElectron();
+    MyElectron(){;}
+    ~MyElectron(){;}
     Double_t e,pt,eta,phi,px,py,pz;
 
 

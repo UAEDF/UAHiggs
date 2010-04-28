@@ -6,14 +6,14 @@
 #include <vector>
 
 // UAHiggsTree UAHiggs class declaration
-#include "UAHiggs/UAHiggsTree/interface/MyGenPart.h"
+#include "MyGenPart.h"
 
 
 class MyGenMET : public TObject {
 
   public :
-  MyGenMET();
-  virtual ~MyGenMET();
+  MyGenMET(){;}
+  ~MyGenMET(){;}
 
   // Filler
   // GetGenMET(  vector<MyGenMET> *GenMET );

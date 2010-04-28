@@ -3,13 +3,13 @@
 
 #include <vector>
 #include "TObject.h"
-#include "UAHiggs/UAHiggsTree/interface/MyPart.h"
+#include "MyPart.h"
 
 class MyTracks : public TObject {
 
   public :
-    MyTracks();
-    virtual ~MyTracks();
+    MyTracks(){;}
+    ~MyTracks(){;}
 
     //Double_t px,py,pz,eta;
 

@@ -7,15 +7,20 @@
 class MyPart : public TObject {
 
   public :
-    MyPart();
-    virtual ~MyPart();
+    MyPart(){;}
+    ~MyPart(){;}
 
   // private:
 
     Double_t       charge;
     TLorentzVector v;
 
-    TLorentzVector vmpi();
+    TLorentzVector vmpi(){
+    	Double_t mpion = 139.57018;
+        TLorentzVector vm;
+        vm.SetPtEtaPhiM( this->v.Pt() , this->v.Eta() , this->v.Phi() , mpion );
+        return vm;
+        };
 
   private:
 

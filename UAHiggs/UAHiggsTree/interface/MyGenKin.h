@@ -7,8 +7,8 @@
 class MyGenKin : public TObject {
 
   public :
-  MyGenKin();
-  virtual ~MyGenKin();
+  MyGenKin(){;}
+  ~MyGenKin(){;}
 
   // General Info
   Int_t    MCProcId ;   

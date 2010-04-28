@@ -6,8 +6,8 @@
 class MyBeamSpot : public TObject {
 
   public :
-    MyBeamSpot();
-    virtual ~MyBeamSpot();
+    MyBeamSpot(){;}
+    ~MyBeamSpot(){;}
 
     Double_t x,y,z;
     Double_t ex,ey,ez;

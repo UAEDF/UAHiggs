@@ -9,8 +9,8 @@
 class MyGenPart : public TObject {
 
   public :
-  MyGenPart();
-  virtual ~MyGenPart();
+  MyGenPart(){;}
+  ~MyGenPart(){;}
 
   Double_t pt,eta,phi,charge,e,px,py,pz,m; 
   TLorentzVector v;
