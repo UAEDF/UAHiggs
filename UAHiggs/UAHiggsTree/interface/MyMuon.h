@@ -13,7 +13,8 @@ class MyMuon : public TObject {
     MyMuon(){;}
     ~MyMuon(){;}
 
-
+    Double_t e,pt,eta,phi,px,py,pz;
+    
     MyPart      Part;
     MyTracks    globalTrack;    // Track reconstructed in both tracked and muon detector
     MyTracks    innerTrack;     // Track reconstructed in the tracker only
@@ -44,6 +45,11 @@ class MyMuon : public TObject {
     Bool_t     TMOneStationLoose      ;  
     Bool_t     TM2DCompatibilityLoose ; 
     Bool_t     PromptTight            ;
+
+    // Isolation
+    
+    Double_t   sumPt_over_Pt;
+
 
   private:
 

@@ -60,6 +60,16 @@ void UAHiggsTree::GetRecoMuon(const edm::Event& iEvent, const edm::EventSetup& i
      MyMuon muon;     
      
      // Global Muon
+   
+     muon.pt  = iMuon->pt(); 
+     muon.px  = iMuon->px(); 
+     muon.py  = iMuon->py(); 
+     muon.pz  = iMuon->pz(); 
+     muon.e   = sqrt(iMuon->momentum().mag2()+MASS_MU*MASS_MU); 
+     muon.eta = iMuon->eta(); 
+     muon.phi = iMuon->phi(); 
+     
+     
      muon.Part.v.SetPxPyPzE(iMuon->px(),
                             iMuon->py(),
                             iMuon->pz(), 
@@ -93,7 +103,9 @@ void UAHiggsTree::GetRecoMuon(const edm::Event& iEvent, const edm::EventSetup& i
      muon.calEnergyHadS9= iMuon->calEnergy().hadS9;
      muon.calEnergyHoS9 = iMuon->calEnergy().hoS9 ;
 
-
+     //Muon Isolation
+     
+     muon.sumPt_over_Pt = iMuon->isolationR03().sumPt / iMuon->pt();
 
      // Global Muon Track
      //reco::TrackRef glTrack = iMuon->globalTrack();

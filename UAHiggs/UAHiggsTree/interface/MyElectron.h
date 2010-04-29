@@ -27,11 +27,22 @@ class MyElectron : public TObject {
     Double_t    dPhiSupClusTrVtx   ; 
     Double_t    dPhiSeedClusTrCalo ; 
     Double_t    hadronicOverEm     ; 
+    Double_t    sigmaIetaIeta      ;  
+    
+    Bool_t      isBarrel           ; 
+    Bool_t      isEndCap           ;
+    
     Bool_t      isEScaleCorr       ; 
     Bool_t      isMomentumCorr     ; 
     //Int_t       nClus              ; 
     Int_t       classification     ; 
 
+    
+    //Preselection Iso variable
+    
+    Double_t    sumPt_over_Pt      ;
+    
+    
     // Extra Isolation variables (Majid)
     Double_t    TrackerIsolationMajid;
     Float_t     eidTight;

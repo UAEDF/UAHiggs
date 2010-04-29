@@ -164,6 +164,12 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
      // Majid:
      Ref<reco::GsfElectronCollection> electronRAWRef(gsfElectronsHandle,iEl);
 
+     
+     
+     
+     
+     
+     
      // Gsf Electron General 
 
      electron.pt  = iElectron->pt(); 
@@ -187,6 +193,9 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
      electron.dPhiSupClusTrVtx   = iElectron->deltaPhiSuperClusterTrackAtVtx()  ; 
      electron.dPhiSeedClusTrCalo = iElectron->deltaPhiSeedClusterTrackAtCalo()  ; 
      electron.hadronicOverEm     = iElectron->hadronicOverEm()                  ; 
+     electron.sigmaIetaIeta      = iElectron->sigmaIetaIeta()                 ;
+     electron.isBarrel           = iElectron->isEB()				;
+     electron.isEndCap           = iElectron->isEE()				;
      electron.isEScaleCorr       = iElectron->isEnergyScaleCorrected()          ; 
      electron.isMomentumCorr     = iElectron->isMomentumCorrected()             ; 
      //electron.nClus              = iElectron->numberOfClusters()                ; 
@@ -219,6 +228,13 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
      electron.GsfTrack.vtxdxy.clear();
      electron.GsfTrack.vtxdz.clear();
 
+    
+     
+     //Isolation Variables
+     
+      electron.sumPt_over_Pt = iElectron->dr04TkSumPt() / iElectron->pt();
+    
+    
      for ( int i = 0 ; i != vtxid ; i++ )
      {
         electron.GsfTrack.vtxid.push_back( i ); 
@@ -226,7 +242,7 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
         electron.GsfTrack.vtxdz.push_back(  etrack->dz( vtxid_xyz[i] )  );
      }
 
-    // Extra Idolation Majid:
+    // Extra Isolation Majid:
 
     try{
     
