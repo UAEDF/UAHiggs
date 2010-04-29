@@ -31,7 +31,7 @@
 bool RecoVtxDebug = false;
 
 void UAHiggsTree::GetRecoVertex(const edm::Event& iEvent, const edm::EventSetup& iSetup,
-                               const char VertexCollName[60] , vector<MyVertex>& VertexVector )
+                               const string VertexCollection_ , vector<MyVertex>& VertexVector )
 {
    using namespace std;
    using namespace edm;
@@ -41,9 +41,9 @@ void UAHiggsTree::GetRecoVertex(const edm::Event& iEvent, const edm::EventSetup&
    MyVertex myvertex;
 
    Handle<reco::VertexCollection> vtxcoll ;
-   iEvent.getByLabel(VertexCollName,vtxcoll);
+   iEvent.getByLabel(VertexCollection_,vtxcoll);
 
-   if (RecoVtxDebug) cout  << VertexCollName << " : Id  position "<< endl ;
+   if (RecoVtxDebug) cout  << VertexCollection_ << " : Id  position "<< endl ;
 
    for(VertexCollection::const_iterator p=vtxcoll->begin(); p!= vtxcoll->end() ; ++p)
    {
@@ -74,3 +74,22 @@ void UAHiggsTree::GetRecoVertex(const edm::Event& iEvent, const edm::EventSetup&
 
 }
 
+
+void UAHiggsTree::InitRecoVertex( vector<string> Vertexs, TTree* tree )
+{
+  int i=0;
+  for (vector<string>::iterator icoll = Vertexs.begin(); icoll!= Vertexs.end();icoll++){
+      tree->Branch( icoll->c_str(), &(allVertexs[i]) );
+      i++;
+      }
+
+}
+
+
+void UAHiggsTree::GetAllVertexs( const edm::Event& iEvent, const edm::EventSetup& iSetup, const vector<string> Vertexs, vector<MyVertex> allVertexs[5] )
+{
+  for (unsigned int i=0; i!= Vertexs.size(); i++){
+       GetRecoVertex(iEvent,iSetup,Vertexs.at(i),allVertexs[i]);
+       }
+
+}

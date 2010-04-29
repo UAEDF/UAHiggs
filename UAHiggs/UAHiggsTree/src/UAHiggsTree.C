@@ -13,7 +13,7 @@
 //
 // Original Author:  "local user"
 //         Created:  Wed Nov 18 10:39:03 CET 2009
-// $Id: UAHiggsTree.C,v 1.2 2010/04/23 13:37:12 selvaggi Exp $
+// $Id: UAHiggsTree.C,v 1.3 2010/04/27 13:58:43 selvaggi Exp $
 //
 //
 
@@ -100,6 +100,11 @@ UAHiggsTree::UAHiggsTree(const edm::ParameterSet& iConfig)
    hlt_bits   = iConfig.getParameter<vector<string> >("requested_hlt_bits");
    L1_bits    = iConfig.getParameter<vector<string> >("requested_L1_bits");
 
+   //Vertex, Tracks
+   
+   vertexs                 = iConfig.getParameter<vector<string> >("requested_vertexs");
+   tracks                  = iConfig.getParameter<vector<string> >("requested_tracks");
+
 }
 
 
@@ -122,7 +127,7 @@ UAHiggsTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
    using namespace edm;
 
-   // EvtId and L1 trig
+   // EvtId and L1,HLT trig
    GetEvtId(iEvent); 
    GetL1Trig(iEvent,iSetup);
    GetHLTrig(iEvent,iSetup);
@@ -164,9 +169,9 @@ UAHiggsTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    vtxid_xyz.push_back(theBeamSpot->position());
 
    // ... Vertex
-   GetRecoVertex(iEvent,iSetup,"offlinePrimaryVertices",primaryVertex);
+   GetAllVertexs(iEvent,iSetup,vertexs,allVertexs);
    // ... Tracks
-   GetRecoTracks(iEvent,iSetup,"generalTracks",generalTracks);
+   GetAllTracks(iEvent,iSetup,tracks,allTracks);
 
    // ... Electron
    GetAllElectrons(iEvent,iSetup,gsfelectrons,allElectrons);
@@ -184,35 +189,6 @@ UAHiggsTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    GetAllPFMETs(iEvent,iSetup,pfmets,allPFMETs);
    GetAllTcMETs(iEvent,iSetup,tcmets,allTcMETs);
 
-/*
-   // Tests
-  
-   edm::ESHandle<L1GtTriggerMenu> menuRcd;
-   
-   iSetup.get<L1GtTriggerMenuRcd>().get(menuRcd) ;
-   const L1GtTriggerMenu* menu = menuRcd.product();
-
-   for (CItAlgo algo = menu->gtAlgorithmMap().begin(); 
-                algo!=menu->gtAlgorithmMap().end(); 
-                ++algo) 
-   {
-     cout << "Name: " << (algo->second).algoName() 
-          << " Alias: " << (algo->second).algoAlias() 
-          << " Bit: " << (algo->second).algoBitNumber()
-           << " Result: " << l1AlgorithmResult(iEvent, iSetup, (algo->second).algoName() )
-          << std::endl;
-   }
-  
-   // cout << l1AlgorithmResult(iEvent, iSetup,"L1_SingleEG15") << endl;
-
-   edm::Handle<L1GlobalTriggerReadoutRecord> L1GTRR;
-   iEvent.getByLabel("gtDigis",L1GTRR);
-   for (int i=0 ; i <128 ; i++) 
-     cout << "PhysicsTriggerWord :" << i << " " << L1GTRR->decisionWord()[i] << endl;
-   for (int i=0 ; i <64  ; i++)
-     cout << "technicalTriggerWord :" << i << " " << L1GTRR->technicalTriggerWord()[i] << endl;
-
-*/
 
    tree->Fill();
 
@@ -259,9 +235,9 @@ UAHiggsTree::beginJob()
    InitRecoTrackJet(trackjets,tree);
    
    tree->Branch("beamSpot",&beamSpot);
-   tree->Branch("primaryVertex",&primaryVertex);
-   tree->Branch("generalTracks",&generalTracks);
-  
+   InitRecoVertex  (vertexs,tree);
+   InitRecoTrack (tracks,tree);
+   
    // fill L1 map only once
    fill_L1_map = true;
    

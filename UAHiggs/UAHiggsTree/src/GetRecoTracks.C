@@ -30,8 +30,8 @@
 
 //bool L1TrigDebug = false;
 
-void UAHiggsTree::GetRecoTracks(const edm::Event& iEvent, const edm::EventSetup& iSetup,
-                               const char TrackCollName[60] , vector<MyTracks>& TrackVector )
+void UAHiggsTree::GetRecoTrack(const edm::Event& iEvent, const edm::EventSetup& iSetup,
+                               const string TrackCollection_ , vector<MyTracks>& TrackVector )
 {
    using namespace std;
    using namespace edm;
@@ -47,7 +47,7 @@ void UAHiggsTree::GetRecoTracks(const edm::Event& iEvent, const edm::EventSetup&
    //iEvent.getByLabel(trackTags_,tracks);
 
 //   iEvent.getByLabel("generalTracks",tracks);
-   iEvent.getByLabel(TrackCollName,tracks);
+   iEvent.getByLabel(TrackCollection_,tracks);
 
    for(TrackCollection::const_iterator tr = tracks->begin(); tr!=tracks->end(); ++tr)
    {
@@ -106,3 +106,23 @@ void UAHiggsTree::GetRecoTracks(const edm::Event& iEvent, const edm::EventSetup&
 
 }
 
+
+
+void UAHiggsTree::InitRecoTrack( vector<string> Tracks, TTree* tree )
+{
+  int i=0;
+  for (vector<string>::iterator icoll = Tracks.begin(); icoll!= Tracks.end();icoll++){
+      tree->Branch( icoll->c_str(), &(allTracks[i]) );
+      i++;
+      }
+
+}
+
+
+void UAHiggsTree::GetAllTracks( const edm::Event& iEvent, const edm::EventSetup& iSetup, const vector<string> Tracks, vector<MyTracks> allTracks[5] )
+{
+  for (unsigned int i=0; i!= Tracks.size(); i++){
+       GetRecoTrack(iEvent,iSetup,Tracks.at(i),allTracks[i]);
+       }
+
+}

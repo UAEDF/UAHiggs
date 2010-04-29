@@ -106,8 +106,10 @@ class UAHiggsTree : public edm::EDAnalyzer {
       virtual void InitRecoTrackJet( vector<string>, TTree*); 
       virtual void InitGenJet( vector<string>, TTree*); 
      
-     
-     
+      virtual void InitRecoVertex( vector<string>, TTree*); 
+      virtual void InitRecoTrack ( vector<string>, TTree*); 
+      
+      
       // ----------Functions------------------------------
 
           
@@ -125,10 +127,10 @@ class UAHiggsTree : public edm::EDAnalyzer {
       virtual void GetL1Trig(const edm::Event&, const edm::EventSetup& );
       virtual void GetHLTrig(const edm::Event&, const edm::EventSetup& );
       virtual void GetRecoVertex(const edm::Event& , const edm::EventSetup& ,
-                                 const char[60]    , vector<MyVertex>& );
+                                 const string    , vector<MyVertex>& );
 
-      virtual void GetRecoTracks(const edm::Event& , const edm::EventSetup& ,
-                                 const char[60]    , vector<MyTracks>& );
+      virtual void GetRecoTrack(const edm::Event& , const edm::EventSetup& ,
+                                 const string    , vector<MyTracks>& );
 
       virtual void GetRecoElectron(const edm::Event& , const edm::EventSetup& ,
                                                      const string , vector<MyElectron>&); 
@@ -177,6 +179,9 @@ class UAHiggsTree : public edm::EDAnalyzer {
       virtual void GetAllTrackJets (const edm::Event&, const edm::EventSetup& , const vector<string>, vector<MyJet>   allTrackJets[5]);
       virtual void GetAllGenJets   (const edm::Event&, const edm::EventSetup& ,const vector<string>, vector<MyGenJet> allGenJets[5]);
       
+      virtual void GetAllVertexs (const edm::Event&, const edm::EventSetup& ,const vector<string>, vector<MyVertex> allVertexs[5]);
+      virtual void GetAllTracks  (const edm::Event&, const edm::EventSetup& ,const vector<string>, vector<MyTracks> allTracks[5]);
+     
      
       // ----------member data ---------------------------
 
@@ -200,10 +205,12 @@ class UAHiggsTree : public edm::EDAnalyzer {
       vector<string> calojets;
       vector<string> pfjets;
       vector<string> trackjets;
-      
+       
       vector<string> hlt_bits;
       vector<string> L1_bits;
       
+      vector<string> vertexs;
+      vector<string> tracks;
       
       // Data Collection
       edm::InputTag genPartColl_ ;
@@ -267,6 +274,9 @@ class UAHiggsTree : public edm::EDAnalyzer {
       vector<MyJet>      allTrackJets[5];
       vector<MyGenJet>   allGenJets[5];
     
+      vector<MyVertex>   allVertexs[5];
+      vector<MyTracks>   allTracks[5];
+      
       vector<MyMuon>     globalMuon;
 
       vector<MyJet>      caloJetAK5;
@@ -277,6 +287,7 @@ class UAHiggsTree : public edm::EDAnalyzer {
       Int_t vtxid;
       vector<math::XYZPoint> vtxid_xyz;
       bool fill_L1_map;
+      
       map<int,string> L1_map;
       map<int,string> HLT_map;
 };
