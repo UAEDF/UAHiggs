@@ -201,8 +201,8 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
  
 # Data Collections --------------------
 
-  , requested_gsfelectrons = cms.vstring('gsfElectrons','isolatedElectrons','selectedElectrons')
-  , requested_muons        = cms.vstring('muons','isolatedMuons','selectedMuons')
+  , requested_gsfelectrons = cms.vstring('gsfElectrons')#),'isolatedElectrons','selectedElectrons')
+  , requested_muons        = cms.vstring('muons')#,'isolatedMuons','selectedMuons')
   
   , requested_genmets      = cms.vstring('genMetTrue')
   , requested_calomets     = cms.vstring('met')
@@ -217,14 +217,18 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
   , requested_hlt_bits     = cms.vstring('HLT_L1MuOpen','HLT_L1Mu','HLT_Mu5','HLT_Mu9','HLT_L1DoubleMuOpen','HLT_DoubleMu0','HLT_DoubleMu3','HLT_L1SingleEG5','HLT_Ele15_SiStrip_L1R')
   , requested_L1_bits      = cms.vstring('L1_SingleMuOpen','L1_SingleMu0','L1_SingleMu7','L1_DoubleMu3','L1_SingleMu20','L1_SingleMu3','L1_DoubleMuOpen','L1_SingleEG1','L1_SingleEG2','L1_SingleEG5','L1_SingleEG8','L1_SingleEG20','L1_DoubleEG5')
 
+  , requested_vertexs      = cms.vstring('offlinePrimaryVertices')#,'pixelVertices')
+  , requested_tracks       = cms.vstring('generalTracks')#,'pixelTracks')
+ 
+
 )
 
 
 # Data output ----------------------------------------------------------------------- 
-#process.out = cms.OutputModule("PoolOutputModule",
- #    verbose = cms.untracked.bool(False),
-#    fileName = cms.untracked.string('cmsdata.root')
-#)
+process.out = cms.OutputModule("PoolOutputModule",
+     verbose = cms.untracked.bool(False),
+    fileName = cms.untracked.string('cmsdata.root')
+)
 
 
 # PAth (what to do) ------------------------------------------------------------------
@@ -240,12 +244,12 @@ process.path = cms.Path(
 		         process.higgsToWW2LeptonsPreselectionSequence *
                          process.recoAllTrackJets *
 			 process.jetvertexassociation *
-			 process.eleIsoDepositEcalFromHits *
-                         process.eleIsoFromDepsEcalFromHits *
-                         process.eleIsoDepositTk * 
+#			 process.eleIsoDepositEcalFromHits *
+#                         process.eleIsoFromDepsEcalFromHits *
+#                         process.eleIsoDepositTk * 
                          process.UAHiggsTree   
                        )
 
 # EndPath (what to store) ------------------------------------------------------------
-#process.outpath = cms.EndPath(process.out)
+process.outpath = cms.EndPath(process.out)
 

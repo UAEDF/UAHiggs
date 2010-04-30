@@ -33,7 +33,7 @@ process.source = cms.Source("PoolSource",
 #    fileNames = cms.untracked.vstring('file:///user/xjanssen/outCopy/MYCOPY_1.root')
 #   fileNames = cms.untracked.vstring('file:////user/xjanssen/data/CMSSW_3_2_6/DataCopy/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/data/DataCopy__CMSSW_3_2_6__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO_1.root')
 )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(5) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 # L1 extra --------------------------------------------------------------------------
 #process.load("L1Trigger.L1ExtraFromDigis.l1extra_cff")
@@ -201,8 +201,8 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
  
 # Data Collections --------------------
 
-  , requested_gsfelectrons = cms.vstring('gsfElectrons','isolatedElectrons','selectedElectrons')
-  , requested_muons        = cms.vstring('muons','isolatedMuons','selectedMuons')
+  , requested_gsfelectrons = cms.vstring('gsfElectrons')#),'isolatedElectrons','selectedElectrons')
+  , requested_muons        = cms.vstring('muons')#,'isolatedMuons','selectedMuons')
   
   , requested_genmets      = cms.vstring('genMetTrue')
   , requested_calomets     = cms.vstring('met')
@@ -216,6 +216,10 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
 
   , requested_hlt_bits     = cms.vstring('HLT_L1MuOpen','HLT_L1Mu','HLT_Mu5','HLT_Mu9','HLT_L1DoubleMuOpen','HLT_DoubleMu0','HLT_DoubleMu3','HLT_L1SingleEG5','HLT_Ele15_SiStrip_L1R')
   , requested_L1_bits      = cms.vstring('L1_SingleMuOpen','L1_SingleMu0','L1_SingleMu7','L1_DoubleMu3','L1_SingleMu20','L1_SingleMu3','L1_DoubleMuOpen','L1_SingleEG1','L1_SingleEG2','L1_SingleEG5','L1_SingleEG8','L1_SingleEG20','L1_DoubleEG5')
+
+  , requested_vertexs      = cms.vstring('offlinePrimaryVertices')#,'pixelVertices')
+  , requested_tracks       = cms.vstring('generalTracks')#,'pixelTracks')
+ 
 
 )
 
@@ -240,9 +244,9 @@ process.path = cms.Path(
 		         process.higgsToWW2LeptonsPreselectionSequence *
                          process.recoAllTrackJets *
 			 process.jetvertexassociation *
-			 process.eleIsoDepositEcalFromHits *
-                         process.eleIsoFromDepsEcalFromHits *
-                         process.eleIsoDepositTk * 
+#			 process.eleIsoDepositEcalFromHits *
+#                         process.eleIsoFromDepsEcalFromHits *
+#                         process.eleIsoDepositTk * 
                          process.UAHiggsTree   
                        )
 
