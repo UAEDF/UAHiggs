@@ -19,7 +19,7 @@ class MyBeamSpot : public TObject {
 
   private:
 
-  ClassDef (MyBeamSpot,1)
+  ClassDef (MyBeamSpot,1)	
 };
 
 #endif

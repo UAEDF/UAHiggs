@@ -78,9 +78,31 @@ void UAHiggsTree::GetRecoMuon(const edm::Event& iEvent, const edm::EventSetup& i
 
      // Global Properties
 
-     muon.TMOneStationLoose      =  muon::isGoodMuon(*iMuon,muon::GlobalMuonPromptTight) ;
-     muon.TM2DCompatibilityLoose =  muon::isGoodMuon(*iMuon,muon::TMOneStationLoose) ;
-     muon.PromptTight            =  muon::isGoodMuon(*iMuon,muon::TM2DCompatibilityLoose);
+    
+     muon.AllGlobalMuons                          =  muon::isGoodMuon(*iMuon,muon::AllGlobalMuons);
+     muon.AllStandAloneMuons                      =  muon::isGoodMuon(*iMuon,muon::AllStandAloneMuons);
+     muon.AllTrackerMuons                         =  muon::isGoodMuon(*iMuon,muon::AllTrackerMuons);
+     muon.TrackerMuonArbitrated                   =  muon::isGoodMuon(*iMuon,muon::TrackerMuonArbitrated);
+     muon.AllArbitrated                           =  muon::isGoodMuon(*iMuon,muon::AllArbitrated);
+     muon.GlobalMuonPromptTight                   =  muon::isGoodMuon(*iMuon,muon::GlobalMuonPromptTight);
+     muon.TMLastStationLoose                      =  muon::isGoodMuon(*iMuon,muon::TMLastStationLoose);
+     muon.TMLastStationTight                      =  muon::isGoodMuon(*iMuon,muon::TMLastStationTight);
+     muon.TM2DCompatibilityLoose                  =  muon::isGoodMuon(*iMuon,muon::TM2DCompatibilityLoose);
+     muon.TM2DCompatibilityTight                  =  muon::isGoodMuon(*iMuon,muon::TM2DCompatibilityTight);
+     muon.TMOneStationLoose                       =  muon::isGoodMuon(*iMuon,muon::TMOneStationLoose);
+     muon.TMOneStationTight                       =  muon::isGoodMuon(*iMuon,muon::TMOneStationTight);
+     muon.TMLastStationOptimizedLowPtLoose        =  muon::isGoodMuon(*iMuon,muon::TMLastStationOptimizedLowPtLoose);
+     muon.TMLastStationOptimizedLowPtTight        =  muon::isGoodMuon(*iMuon,muon::TMLastStationOptimizedLowPtTight);
+     muon.GMTkChiCompatibility                    =  muon::isGoodMuon(*iMuon,muon::GMTkChiCompatibility);
+     muon.GMStaChiCompatibility                   =  muon::isGoodMuon(*iMuon,muon::GMStaChiCompatibility);
+     muon.GMTkKinkTight                           =  muon::isGoodMuon(*iMuon,muon::GMTkKinkTight);
+     muon.TMLastStationAngLoose                   =  muon::isGoodMuon(*iMuon,muon::TMLastStationAngLoose);
+     muon.TMLastStationAngTight                   =  muon::isGoodMuon(*iMuon,muon::TMLastStationAngTight);
+     muon.TMOneStationAngLoose                    =  muon::isGoodMuon(*iMuon,muon::TMOneStationAngLoose);
+     muon.TMOneStationAngTight                    =  muon::isGoodMuon(*iMuon,muon::TMOneStationAngTight);
+     muon.TMLastStationOptimizedBarrelLowPtLoose  =  muon::isGoodMuon(*iMuon,muon::TMLastStationOptimizedBarrelLowPtLoose);
+     muon.TMLastStationOptimizedBarrelLowPtTight  =  muon::isGoodMuon(*iMuon,muon::TMLastStationOptimizedBarrelLowPtTight);
+     
  
      muon.isoR03sumPt   = iMuon->isolationR03().sumPt   ;
      muon.isoR03emEt    = iMuon->isolationR03().emEt    ;
@@ -103,17 +125,22 @@ void UAHiggsTree::GetRecoMuon(const edm::Event& iEvent, const edm::EventSetup& i
      muon.calEnergyHadS9= iMuon->calEnergy().hadS9;
      muon.calEnergyHoS9 = iMuon->calEnergy().hoS9 ;
 
-     //Muon Isolation
+     muon.IsGlobalMuon      = iMuon->isGlobalMuon()     ;
+     muon.IsTrackerMuon     = iMuon->isTrackerMuon()    ;
+     muon.IsStandaloneMuon  = iMuon->isStandAloneMuon() ;
+     muon.IsCaloMuon        = iMuon->isCaloMuon()       ;
+
      
-     muon.sumPt_over_Pt = iMuon->isolationR03().sumPt / iMuon->pt();
+     
+ 
 
      // Global Muon Track
-     //reco::TrackRef glTrack = iMuon->globalTrack();
-     
-
-//     cout << iMuon->globalTrack()->d0() << endl;
-/*
-     muon.globalTrack.Part.v.SetPxPyPzE(glTrack->momentum().x(),
+   
+   if(iMuon->globalTrack().isAvailable()){
+    
+    reco::TrackRef glTrack = iMuon->globalTrack();
+   
+    muon.globalTrack.Part.v.SetPxPyPzE(glTrack->momentum().x(),
                                          glTrack->momentum().y(),
                                          glTrack->momentum().z(),
                                          sqrt(glTrack->momentum().mag2()+MASS_MU*MASS_MU));
@@ -123,9 +150,9 @@ void UAHiggsTree::GetRecoMuon(const edm::Event& iEvent, const edm::EventSetup& i
      muon.globalTrack.nhit  =  glTrack->recHitsSize();
      muon.globalTrack.chi2n =  glTrack->normalizedChi2();
      muon.globalTrack.dz    =  glTrack->dz();
-*/
-//     muon.globalTrack.d0    =  glTrack->d0();
-/*
+
+     muon.globalTrack.d0    =  glTrack->d0();
+
      muon.globalTrack.edz   =  glTrack->dzError();
      muon.globalTrack.ed0   =  glTrack->d0Error();
      muon.globalTrack.ept   =  glTrack->ptError();
@@ -149,8 +176,26 @@ void UAHiggsTree::GetRecoMuon(const edm::Event& iEvent, const edm::EventSetup& i
         muon.globalTrack.vtxdz.push_back(  glTrack->dz( vtxid_xyz[i] )  );
      }
 
-
-     // Global Muon Track
+    }
+    
+    else {
+     
+      muon.globalTrack.d0 = -999;
+      for ( int i = 0 ; i != vtxid ; i++ )
+       {
+         
+	  muon.globalTrack.vtxid.push_back( i );
+          muon.globalTrack.vtxdxy.push_back( -999 );
+          muon.globalTrack.vtxdz.push_back( -999 );
+       }
+     
+    }
+    
+    
+     // Inner Muon Track
+     
+   if(iMuon->innerTrack().isAvailable()){
+     
      reco::TrackRef inTrack = iMuon->innerTrack();
      muon.innerTrack.Part.v.SetPxPyPzE(inTrack->momentum().x(),
                                          inTrack->momentum().y(),
@@ -184,7 +229,24 @@ void UAHiggsTree::GetRecoMuon(const edm::Event& iEvent, const edm::EventSetup& i
         muon.innerTrack.vtxdz.push_back(  inTrack->dz( vtxid_xyz[i] )  );
      }
 
-     // Global Muon Track
+    }
+     
+     else {
+     
+      muon.innerTrack.d0 = -999;
+      for ( int i = 0 ; i != vtxid ; i++ )
+       {
+          muon.innerTrack.vtxid.push_back( i );
+          muon.innerTrack.vtxdxy.push_back( -999 ) ;
+          muon.innerTrack.vtxdz.push_back( -999 );
+       }
+     
+    }
+     
+     // Outer Muon Track
+     
+   if(iMuon->outerTrack().isAvailable()){
+     
      reco::TrackRef outTrack = iMuon->outerTrack();
      muon.outerTrack.Part.v.SetPxPyPzE(outTrack->momentum().x(),
                                          outTrack->momentum().y(),
@@ -217,8 +279,22 @@ void UAHiggsTree::GetRecoMuon(const edm::Event& iEvent, const edm::EventSetup& i
         muon.outerTrack.vtxdxy.push_back( outTrack->dxy( vtxid_xyz[i] ) );
         muon.outerTrack.vtxdz.push_back(  outTrack->dz( vtxid_xyz[i] )  );
      }
-*/
+    }
 
+    else {
+      
+      muon.outerTrack.d0 = -999;
+      for ( int i = 0 ; i != vtxid ; i++ )
+       {
+          muon.outerTrack.vtxid.push_back( i );
+          muon.outerTrack.vtxdxy.push_back( -999 );
+          muon.outerTrack.vtxdz.push_back( -999 );
+       }
+     
+    }
+     
+     
+     
      MuonVector.push_back(muon);
 
    } // end for MuonCollection 

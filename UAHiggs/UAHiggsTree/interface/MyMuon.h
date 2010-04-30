@@ -42,14 +42,41 @@ class MyMuon : public TObject {
     Double_t   calEnergyHadS9;
     Double_t   calEnergyHoS9 ;
 
-    Bool_t     TMOneStationLoose      ;  
-    Bool_t     TM2DCompatibilityLoose ; 
-    Bool_t     PromptTight            ;
-
-    // Isolation
+    Bool_t     IsGlobalMuon       ;
+    Bool_t     IsTrackerMuon      ;
+    Bool_t     IsStandaloneMuon   ;
+    Bool_t     IsCaloMuon         ;
     
-    Double_t   sumPt_over_Pt;
-
+    // Muon Id
+    
+     
+     Bool_t   AllGlobalMuons                           ;
+     Bool_t   AllStandAloneMuons                       ;
+     Bool_t   AllTrackerMuons                          ;
+     Bool_t   TrackerMuonArbitrated                    ;
+     Bool_t   AllArbitrated                            ;
+     Bool_t   GlobalMuonPromptTight                    ;
+     Bool_t   TMLastStationLoose                       ;
+     Bool_t   TMLastStationTight                       ;
+     Bool_t   TM2DCompatibilityLoose                   ;
+     Bool_t   TM2DCompatibilityTight                   ;
+     Bool_t   TMOneStationLoose                        ;
+     Bool_t   TMOneStationTight                        ;
+     Bool_t   TMLastStationOptimizedLowPtLoose         ;
+     Bool_t   TMLastStationOptimizedLowPtTight         ;
+     Bool_t   GMTkChiCompatibility                     ;
+     Bool_t   GMStaChiCompatibility                    ;
+     Bool_t   GMTkKinkTight                            ;
+     Bool_t   TMLastStationAngLoose                    ;
+     Bool_t   TMLastStationAngTight                    ;
+     Bool_t   TMOneStationAngLoose                     ;
+     Bool_t   TMOneStationAngTight                     ;
+     Bool_t   TMLastStationOptimizedBarrelLowPtLoose   ;
+     Bool_t   TMLastStationOptimizedBarrelLowPtTight   ;
+     
+    
+   
+ 
 
   private:
 

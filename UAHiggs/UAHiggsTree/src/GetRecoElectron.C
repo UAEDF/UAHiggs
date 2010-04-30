@@ -35,6 +35,7 @@
 #include "DataFormats/EgammaReco/interface/ClusterShape.h"
 #include "DataFormats/EgammaReco/interface/BasicClusterShapeAssociation.h"
 #include "DataFormats/GsfTrackReco/interface/GsfTrack.h"
+#include "DataFormats/Common/interface/ValueMap.h"
 
 // Candidates
 #include "DataFormats/Candidate/interface/CandAssociation.h"
@@ -79,17 +80,6 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
    }
    const reco::BasicClusterShapeAssociationCollection& barrelClShpMap = *barrelClShpHandle ;
 
-/*
-   // get the association of the clusters to their shapes for EE
-   edm::Handle<reco::BasicClusterShapeAssociationCollection> endcapClShpHandle ;
-   try {
-     iEvent.getByLabel ("islandBasicClusters","islandEndcapShapeAssoc", endcapClShpHandle);
-   }
-   catch ( cms::Exception& ex ) {
-     printf("Can't get ECAL endcap Cluster Shape Collection\n");
-   }
-   const reco::BasicClusterShapeAssociationCollection& endcapClShpMap = *endcapClShpHandle ;
-*/
 
    // Tracker Isolation handle (Guillelmo)
    edm::Handle< reco::GsfElectronIsoCollection > tkIsolationHandle;
@@ -100,47 +90,6 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
      printf("Can't get tracker isolation product\n");
    }
 
- /*  // Tracker Isolation handle (Majid)
-   edm::Handle< edm::ValueMap<reco::IsoDeposit> > tkIsolationHandleMajid;
-   try { iEvent.getByLabel("eleIsoDepositTk", tkIsolationHandleMajid); }
-   catch ( cms::Exception& ex ) { printf("Can't get tracker isolation product\n"); }
-   const edm::ValueMap<reco::IsoDeposit>& tkIsolationVal = *tkIsolationHandleMajid;
-
-   // eidHandle (Majid) 
-   edm::Handle< edm::ValueMap<float> > eidHandle;
-   try {iEvent.getByLabel("eidTight",eidHandle);}
-   catch ( cms::Exception& ex ) { printf("Can't get electron identification product\n"); }
-   const edm::ValueMap<float>& eidVal = *eidHandle;
-
-   // EcalIsolationHandle (Majid)
-   edm::Handle< edm::ValueMap<double> > EcalIsolationHandle;
-   try { iEvent.getByLabel("eleIsoFromDepsEcalFromHits", EcalIsolationHandle); }
-   catch ( cms::Exception& ex ) { printf("Can't get ecal Jurassic isolation product\n"); }
-   const edm::ValueMap<double>& EcalIsolationVal = *EcalIsolationHandle;
-
-*/
-
-
-
-
-
-/* 
-   // Get the association vector
-   edm::Handle< reco::CandViewDoubleAssociations > hcalIsolationHandle;
-   try {
-     iEvent.getByLabel(HcalIsolationProducer_,hcalIsolationHandle);
-   }
-   catch ( cms::Exception& ex ) {
-     printf("Can't get hcalIsolationHandle Collection\n");
-   }
-
- 
-   if(hcalIsolationHandle->size() != tkIsolationHandle->size()){
-     printf("hcalIsolationHandle and tkIsolationHandle have different sizes");
-     printf("(%d vs. %d)\n",hcalIsolationHandle->size(),tkIsolationHandle->size());
-     assert(0);
-   }
-*/
 
    // Another way of getting electron info
    edm::Handle< edm::View<reco::Candidate> > emObjectHandle;
@@ -151,25 +100,20 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
      printf("Can't get emObjectHandle Collection\n");
    }
  
-
+   
 
    int iEl = 0;
-
+   
    // Loop on Gsf Electron
    for (reco::GsfElectronCollection::const_iterator iElectron = gsfElectrons.begin();
         iElectron!= gsfElectrons.end();iElectron++) {
- 
+    
+   
      MyElectron electron;
 
      // Majid:
      Ref<reco::GsfElectronCollection> electronRAWRef(gsfElectronsHandle,iEl);
-
-     
-     
-     
-     
-     
-     
+ 
      // Gsf Electron General 
 
      electron.pt  = iElectron->pt(); 
@@ -192,15 +136,35 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
      electron.dEtaSeedClusTrCalo = iElectron->deltaEtaSeedClusterTrackAtCalo()  ; 
      electron.dPhiSupClusTrVtx   = iElectron->deltaPhiSuperClusterTrackAtVtx()  ; 
      electron.dPhiSeedClusTrCalo = iElectron->deltaPhiSeedClusterTrackAtCalo()  ; 
-     electron.hadronicOverEm     = iElectron->hadronicOverEm()                  ; 
-     electron.sigmaIetaIeta      = iElectron->sigmaIetaIeta()                 ;
      electron.isBarrel           = iElectron->isEB()				;
      electron.isEndCap           = iElectron->isEE()				;
+     electron.isEcalDriven       = iElectron->ecalDrivenSeed()                  ;
+     electron.isTrackerDriven    = iElectron->trackerDrivenSeed()               ;
      electron.isEScaleCorr       = iElectron->isEnergyScaleCorrected()          ; 
      electron.isMomentumCorr     = iElectron->isMomentumCorrected()             ; 
      //electron.nClus              = iElectron->numberOfClusters()                ; 
      electron.classification     = iElectron->classification()                  ; 
+     electron.fbrem              = iElectron->fbrem()                           ; 
+     
+      
+      
+     // Shower Shape variables
+     
+     
+    electron.E15                     = iElectron->e1x5();
+    electron.E25Max                  = iElectron->e2x5Max();
+    electron.E55                     = iElectron->e5x5();
+    electron.CovEtaEta               = iElectron->sigmaEtaEta();
+    electron.CoviEtaiEta             = iElectron->sigmaIetaIeta();
+    electron.HadronicOverEm          = iElectron->hcalOverEcal();
+    electron.HcalDepth1OverEcal      = iElectron->hcalDepth1OverEcal();
+    electron.HcalDepth2OverEcal      = iElectron->hcalDepth2OverEcal();
 
+     
+     
+     
+     
+     
      // Gsf Track Info
      reco::GsfTrackRef etrack =(*iElectron).gsfTrack();
      electron.GsfTrack.Part.v.SetPxPyPzE(etrack->momentum().x(),
@@ -232,9 +196,14 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
      
      //Isolation Variables
      
-      electron.sumPt_over_Pt = iElectron->dr04TkSumPt() / iElectron->pt();
+     
+      electron.TrackIsolationDr04      = iElectron->dr04TkSumPt();
+      electron.EcalIsolationDr03       = iElectron->dr03EcalRecHitSumEt();
+      electron.HcalIsolationDr03       = iElectron->dr03HcalTowerSumEt();
+      
     
-    
+     
+     
      for ( int i = 0 ; i != vtxid ; i++ )
      {
         electron.GsfTrack.vtxid.push_back( i ); 
@@ -242,73 +211,43 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
         electron.GsfTrack.vtxdz.push_back(  etrack->dz( vtxid_xyz[i] )  );
      }
 
-    // Extra Isolation Majid:
+    // Id boolean (don't use them now)
 
     try{
     
-    edm::Handle< edm::ValueMap<reco::IsoDeposit> > tkIsolationHandleMajid;
-    iEvent.getByLabel("eleIsoDepositTk", tkIsolationHandleMajid); 
-   const edm::ValueMap<reco::IsoDeposit>& tkIsolationVal = *tkIsolationHandleMajid;
-
-   // eidHandle (Majid) 
-   edm::Handle< edm::ValueMap<float> > eidHandle;
-   iEvent.getByLabel("eidTight",eidHandle);
-   const edm::ValueMap<float>& eidVal = *eidHandle;
-
-   // EcalIsolationHandle (Majid)
-   edm::Handle< edm::ValueMap<double> > EcalIsolationHandle;
-   iEvent.getByLabel("eleIsoFromDepsEcalFromHits", EcalIsolationHandle); 
-   const edm::ValueMap<double>& EcalIsolationVal = *EcalIsolationHandle;
+     //Read eID results
+      std::vector<edm::Handle<edm::ValueMap<float> > > eIDValueMap(4); 
+      //Robust-Loose 
+      iEvent.getByLabel( "eidRobustLoose" , eIDValueMap[0] ); 
+      const edm::ValueMap<float> & eIDmapRL = * eIDValueMap[0] ;
+      //Robust-Tight 
+      iEvent.getByLabel( "eidRobustTight" , eIDValueMap[1] ); 
+      const edm::ValueMap<float> & eIDmapRT = * eIDValueMap[1] ;
+      //Loose 
+      iEvent.getByLabel( "eidLoose" , eIDValueMap[2] ); 
+      const edm::ValueMap<float> & eIDmapL = * eIDValueMap[2] ;
+     //Tight 
+      iEvent.getByLabel( "eidTight" , eIDValueMap[3] ); 
+      const edm::ValueMap<float> & eIDmapT = * eIDValueMap[3] ;
+ 
+   
+     
+       electron.eidRobustLoose =        eIDmapRL[electronRAWRef] ;
+       electron.eidRobustTight =        eIDmapRT[electronRAWRef] ;
+       electron.eidLoose       =        eIDmapL[electronRAWRef]  ;
+       electron.eidTight       =        eIDmapT[electronRAWRef] ;
+            
+     
     
-    
-  //  cout << "itr: " << iElectron->eta() << " " <<  iElectron->phi() << endl; 
-  //  cout << "RAW: " << electronRAWRef->eta() << " " << electronRAWRef->phi() <<endl ;
-
-    // ... TrackerIsolation (Majid)
-    reco::SuperClusterRef sc = iElectron->get<reco::SuperClusterRef> () ;
-    reco::isodeposit::Direction electronDir(iElectron->eta(), iElectron->phi());
-    reco::IsoDeposit::Veto EleVeto;
-    EleVeto.vetoDir = electronDir;
-    EleVeto.dR = 0.015;
-    reco::IsoDeposit::Vetos AllVetos;
-    AllVetos.push_back(EleVeto);
-    electron.TrackerIsolationMajid = tkIsolationVal[electronRAWRef].depositAndCountWithin(0.4,AllVetos,0.).first;
-
-    // ... eidTight (Majid)
-    electron.eidTight = eidVal[electronRAWRef];
-
-    // ... ecal jurassic isolation (Majid)
-    electron.EcalJurassicIsolation= EcalIsolationVal[electronRAWRef];
     }
     catch ( cms::Exception& ex ) {
-     printf("Can't store Tk isolation variables from Majid\n");
+   //  printf("Can't store Tk isolation variables from Majid\n");
    }
-     // Extra Isolation variables
-
-
-     // Extra shape variables
-/*
-     bool hasBarrel=true ;
-     bool hasEndcap=true ;
-     reco::SuperClusterRef sclusRef = iElectron->get<reco::SuperClusterRef> () ;
-     reco::BasicClusterShapeAssociationCollection::const_iterator seedShpItr ;
-     seedShpItr = barrelClShpMap.find (sclusRef->seed ()) ;
-     if ( seedShpItr==barrelClShpMap.end ())  {
-	hasBarrel=false ;
-	seedShpItr=endcapClShpMap.find (sclusRef->seed ()) ;
-	if ( seedShpItr==endcapClShpMap.end () ) hasEndcap=false;
-     }
-     if (hasBarrel || hasEndcap) {
-	const reco::ClusterShapeRef& sClShape = seedShpItr->val;
-        electron.e3x3  = sClShape->e3x3()   ;
-        electron.e5x5  = sClShape->e5x5()   ;
-     } else {
-        electron.e3x3  = -999.0 ;
-        electron.e5x5  = -999.0 ;
-     }
-*/
-
-     // Store electron
+     
+     
+    
+ 
+     
      ElecVector.push_back(electron);
      ++iEl;
 
@@ -335,4 +274,3 @@ void UAHiggsTree::GetAllElectrons( const edm::Event& iEvent, const edm::EventSet
        }
 
 }
-
