@@ -13,7 +13,7 @@
 //
 // Original Author:  "local user"
 //         Created:  Wed Nov 18 10:39:03 CET 2009
-// $Id: UAHiggsTree.C,v 1.3 2010/04/27 13:58:43 selvaggi Exp $
+// $Id: UAHiggsTree.C,v 1.4 2010/04/29 11:54:43 selvaggi Exp $
 //
 //
 
@@ -207,7 +207,8 @@ UAHiggsTree::beginJob()
    // General Event Info 
    tree->Branch("EvtId",&EvtId);   
    tree->Branch("L1Trig",&L1Trig);
-
+   tree->Branch("HLTrig",&HLTrig);
+   
    // MC Informations
    if (StoreGenPart) tree->Branch("GenPart",&GenPart);
    if (StoreGenKine) tree->Branch("GenKin",&GenKin);
