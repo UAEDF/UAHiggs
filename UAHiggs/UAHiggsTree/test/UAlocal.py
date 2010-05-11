@@ -27,7 +27,8 @@ process.load("Configuration.StandardSequences.MagneticField_cff")
 
 # Data source -----------------------------------------------------------------------
 process.source = cms.Source("PoolSource",
-      fileNames = cms.untracked.vstring('file:/user/selvaggi/DataCopy__CMSSW_3_5_6__H160_2W_2lnu_gluonfusion_7TeV__Spring09-MC_31X_V26_S09-v1__GEN-SIM-RECO_1.root ')
+ #     fileNames = cms.untracked.vstring('file:/user/selvaggi/DataCopy__CMSSW_3_5_6__H160_2W_2lnu_gluonfusion_7TeV__Spring09-MC_31X_V26_S09-v1__GEN-SIM-RECO_1.root ')
+  fileNames = cms.untracked.vstring('dcap://maite.iihe.ac.be/pnfs/iihe/cms/ph/sc4/store/mc/Spring10/WJets-madgraph/GEN-SIM-RECO/START3X_V26_S09-v1/0000/0250080D-FA44-DF11-B003-001D0967D5F8.root')
  #    fileNames = cms.untracked.vstring('file:/user/selvaggi/DataCopy__CMSSW_3_2_6__H120_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO_1.root')
  #   fileNames = cms.untracked.vstring('file:/user/selvaggi/DataCopy__CMSSW_3_2_8__H160_2W_2lnu_gluonfusion_7TeV__Summer09-MC_31X_V3_156BxLumiPileUp-v1__GEN-SIM-RECO_1.root')
 #    fileNames = cms.untracked.vstring('file:///user/xjanssen/outCopy/MYCOPY_1.root')
@@ -180,7 +181,7 @@ process.KFactorProducer.inputFilename = cms.untracked.string('HiggsAnalysis/Higg
 
 #HLT filter from PreSelection 
 
-process.higgsToWW2LeptonsHLTFilter.HLTPaths = ['HLT_L1MuOpen','HLT_L1Mu','HLT_Mu5','HLT_Mu9','HLT_L1DoubleMuOpen','HLT_DoubleMu0','HLT_DoubleMu3','HLT_L1SingleEG5','HLT_Ele15_SiStrip_L1R']
+process.higgsToWW2LeptonsHLTFilter.HLTPaths = ['HLT_L1MuOpen','HLT_L1Mu','HLT_Mu5','HLT_Mu9','HLT_L1DoubleMuOpen','HLT_DoubleMu0','HLT_DoubleMu3','HLT_L1SingleEG5','HLT_Ele15_SW_EleId_L1R','HLT_Ele15_SiStrip_L1R']
 
 # UAHiggsTree Code ------------------------------------------------------------------
 process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
@@ -214,7 +215,7 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
   , requested_pfjets       = cms.vstring('iterativeCone5PFJets','sisCone5PFJets','ak5PFJets')
   , requested_trackjets    = cms.vstring('iterativeCone5TrackJets','sisCone5TrackJets','ak5TrackJets')
 
-  , requested_hlt_bits     = cms.vstring('HLT_L1MuOpen','HLT_L1Mu','HLT_Mu5','HLT_Mu9','HLT_L1DoubleMuOpen','HLT_DoubleMu0','HLT_DoubleMu3','HLT_L1SingleEG5','HLT_Ele15_SiStrip_L1R')
+  , requested_hlt_bits     = cms.vstring('HLT_L1MuOpen','HLT_L1Mu','HLT_Mu5','HLT_Mu9','HLT_L1DoubleMuOpen','HLT_DoubleMu0','HLT_DoubleMu3','HLT_L1SingleEG5','HLT_Ele15_SW_EleId_L1R','HLT_Ele15_SiStrip_L1R')
   , requested_L1_bits      = cms.vstring('L1_SingleMuOpen','L1_SingleMu0','L1_SingleMu7','L1_DoubleMu3','L1_SingleMu20','L1_SingleMu3','L1_DoubleMuOpen','L1_SingleEG1','L1_SingleEG2','L1_SingleEG5','L1_SingleEG8','L1_SingleEG20','L1_DoubleEG5')
 
   , requested_vertexs      = cms.vstring('offlinePrimaryVertices')#,'pixelVertices')
@@ -240,7 +241,7 @@ process.path = cms.Path(
 #                        process.GenPartList *  
 #                        process.genJetParticles*
 #			 process.recoGenJets*
-                         process.KFactorProducer *
+#                         process.KFactorProducer *
 		         process.higgsToWW2LeptonsPreselectionSequence *
                          process.recoAllTrackJets *
 			 process.jetvertexassociation *

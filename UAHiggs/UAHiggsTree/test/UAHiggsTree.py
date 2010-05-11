@@ -180,7 +180,7 @@ process.KFactorProducer.inputFilename = cms.untracked.string('HiggsAnalysis/Higg
 
 #HLT filter from PreSelection 
 
-process.higgsToWW2LeptonsHLTFilter.HLTPaths = ['HLT_L1MuOpen','HLT_L1Mu','HLT_Mu5','HLT_Mu9','HLT_L1DoubleMuOpen','HLT_DoubleMu0','HLT_DoubleMu3','HLT_L1SingleEG5','HLT_Ele15_SiStrip_L1R']
+process.higgsToWW2LeptonsHLTFilter.HLTPaths = ['HLT_L1MuOpen','HLT_L1Mu','HLT_Mu5','HLT_Mu9','HLT_L1DoubleMuOpen','HLT_DoubleMu0','HLT_DoubleMu3','HLT_L1SingleEG5','HLT_Ele15_SW_EleId_L1R','HLT_Ele15_SiStrip_L1R']
 
 # UAHiggsTree Code ------------------------------------------------------------------
 process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
@@ -214,7 +214,7 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
   , requested_pfjets       = cms.vstring('iterativeCone5PFJets','sisCone5PFJets','ak5PFJets')
   , requested_trackjets    = cms.vstring('iterativeCone5TrackJets','sisCone5TrackJets','ak5TrackJets')
 
-  , requested_hlt_bits     = cms.vstring('HLT_L1MuOpen','HLT_L1Mu','HLT_Mu5','HLT_Mu9','HLT_L1DoubleMuOpen','HLT_DoubleMu0','HLT_DoubleMu3','HLT_L1SingleEG5','HLT_Ele15_SiStrip_L1R')
+  , requested_hlt_bits     = cms.vstring('HLT_L1MuOpen','HLT_L1Mu','HLT_Mu5','HLT_Mu9','HLT_L1DoubleMuOpen','HLT_DoubleMu0','HLT_DoubleMu3','HLT_L1SingleEG5','HLT_Ele15_SW_EleId_L1R','HLT_Ele15_SiStrip_L1R')
   , requested_L1_bits      = cms.vstring('L1_SingleMuOpen','L1_SingleMu0','L1_SingleMu7','L1_DoubleMu3','L1_SingleMu20','L1_SingleMu3','L1_DoubleMuOpen','L1_SingleEG1','L1_SingleEG2','L1_SingleEG5','L1_SingleEG8','L1_SingleEG20','L1_DoubleEG5')
 
   , requested_vertexs      = cms.vstring('offlinePrimaryVertices')#,'pixelVertices')
@@ -225,10 +225,10 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
 
 
 # Data output ----------------------------------------------------------------------- 
-process.out = cms.OutputModule("PoolOutputModule",
-     verbose = cms.untracked.bool(False),
-    fileName = cms.untracked.string('cmsdata.root')
-)
+#process.out = cms.OutputModule("PoolOutputModule",
+#     verbose = cms.untracked.bool(False),
+#    fileName = cms.untracked.string('cmsdata.root')
+#)
 
 
 # PAth (what to do) ------------------------------------------------------------------
@@ -251,5 +251,5 @@ process.path = cms.Path(
                        )
 
 # EndPath (what to store) ------------------------------------------------------------
-process.outpath = cms.EndPath(process.out)
+#process.outpath = cms.EndPath(process.out)
 
