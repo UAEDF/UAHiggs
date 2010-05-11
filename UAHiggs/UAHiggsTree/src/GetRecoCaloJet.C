@@ -58,11 +58,11 @@ void UAHiggsTree::GetRecoCaloJet(const edm::Event& iEvent , const edm::EventSetu
    vector<double>::const_iterator it_beta =  Jet_Beta.begin();  
   
   
-   Handle<JetTagCollection> bjetsHandle;
-   iEvent.getByLabel(BJetCollection_,bjetsHandle);
-   const JetTagCollection &bjets = *(bjetsHandle.product());
+ //  Handle<JetTagCollection> bjetsHandle;
+  // iEvent.getByLabel(BJetCollection_,bjetsHandle);
+ //  const JetTagCollection &bjets = *(bjetsHandle.product());
 
-   JetTagCollection::const_iterator bjet = bjets.begin(); 
+  // JetTagCollection::const_iterator bjet = bjets.begin(); 
 
    Handle<CaloJetCollection> CaloJets;
    iEvent.getByLabel(CaloJetCollection_,CaloJets);
@@ -72,7 +72,7 @@ void UAHiggsTree::GetRecoCaloJet(const edm::Event& iEvent , const edm::EventSetu
     
      double alpha=0;
      double beta=0;
-     double discriminator=0;
+     double discriminator=-100;
      
      alpha=*it_alpha;
      beta=*it_beta;
@@ -90,11 +90,11 @@ void UAHiggsTree::GetRecoCaloJet(const edm::Event& iEvent , const edm::EventSetu
      myjet.alpha          = alpha;
      myjet.beta           = beta;
   
-     if(bjet->second>0.001 && bjet->second<1000) {
-     discriminator=bjet->second;
-     bjet++;
-     }
-     else{discriminator=-100;bjet++;}
+   //  if(bjet->second>0.001 && bjet->second<1000) {
+  //   discriminator=bjet->second;
+  //   bjet++;
+  //   }
+  //   else{discriminator=-100;bjet++;}
     
      myjet.discriminator  = discriminator;
   

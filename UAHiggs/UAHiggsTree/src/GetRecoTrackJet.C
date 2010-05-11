@@ -37,20 +37,20 @@ void UAHiggsTree::GetRecoTrackJet(const edm::Event& iEvent , const edm::EventSet
 
   JetVector.clear();
    
-   Handle<JetTagCollection> bjetsHandle;
-   iEvent.getByLabel(BJetCollection_,bjetsHandle);
-   const JetTagCollection &bjets = *(bjetsHandle.product());
-   JetTagCollection::const_iterator bjet = bjets.begin(); 
+//   Handle<JetTagCollection> bjetsHandle;
+//   iEvent.getByLabel(BJetCollection_,bjetsHandle);
+ //  const JetTagCollection &bjets = *(bjetsHandle.product());
+ //  JetTagCollection::const_iterator bjet = bjets.begin(); 
 
    Handle<TrackJetCollection> TrackJets;
    iEvent.getByLabel(TrackJetCollection_,TrackJets);
   
 
-   for(TrackJetCollection::const_iterator jet=TrackJets->begin();jet!=TrackJets->end();jet++,bjet++){
- //  for(TrackJetCollection::const_iterator jet=TrackJets->begin();jet!=TrackJets->end();jet++){
+ //  for(TrackJetCollection::const_iterator jet=TrackJets->begin();jet!=TrackJets->end();jet++,bjet++){
+   for(TrackJetCollection::const_iterator jet=TrackJets->begin();jet!=TrackJets->end();jet++){
           
     
-     double discriminator=0;
+     double discriminator=-100;
     
      
      MyJet myjet;
@@ -64,11 +64,11 @@ void UAHiggsTree::GetRecoTrackJet(const edm::Event& iEvent , const edm::EventSet
      myjet.pz             = jet->pz();
      
   
-     if(bjet->second>0.001 && bjet->second<1000) {
-     discriminator=bjet->second;
-     bjet++;
-     }
-     else{discriminator=-100;bjet++;}
+   //  if(bjet->second>0.001 && bjet->second<1000) {
+   //  discriminator=bjet->second;
+   //  bjet++;
+   //  }
+   //  else{discriminator=-100;bjet++;}
     
      myjet.discriminator  = discriminator;
      

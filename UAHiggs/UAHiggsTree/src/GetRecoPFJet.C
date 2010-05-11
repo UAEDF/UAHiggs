@@ -35,23 +35,22 @@ void UAHiggsTree::GetRecoPFJet(const edm::Event& iEvent , const edm::EventSetup&
 
   JetVector.clear();
    
-   Handle<JetTagCollection> bjetsHandle;
-   iEvent.getByLabel(BJetCollection_,bjetsHandle);
-   const JetTagCollection &bjets = *(bjetsHandle.product());
+ //  Handle<JetTagCollection> bjetsHandle;
+ //  iEvent.getByLabel(BJetCollection_,bjetsHandle);
+ //  const JetTagCollection &bjets = *(bjetsHandle.product());
 
-   JetTagCollection::const_iterator bjet = bjets.begin(); 
+//   JetTagCollection::const_iterator bjet = bjets.begin(); 
 
    Handle<PFJetCollection> PFJets;
    iEvent.getByLabel(PFJetCollection_,PFJets);
   
 
-   for(PFJetCollection::const_iterator jet=PFJets->begin();jet!=PFJets->end();jet++,bjet++){
-   //for(PFJetCollection::const_iterator jet=PFJets->begin();jet!=PFJets->end();jet++){
+//   for(PFJetCollection::const_iterator jet=PFJets->begin();jet!=PFJets->end();jet++,bjet++){
+   for(PFJetCollection::const_iterator jet=PFJets->begin();jet!=PFJets->end();jet++){
          
     
-     double discriminator=0;
- //    discriminator=bjet->second;
-     
+     double discriminator=-100;
+      
      MyJet myjet;
      
      myjet.pt             = jet->pt();
@@ -62,11 +61,12 @@ void UAHiggsTree::GetRecoPFJet(const edm::Event& iEvent , const edm::EventSetup&
      myjet.py             = jet->py();
      myjet.pz             = jet->pz();
    
-     if(bjet->second>0.001 && bjet->second<1000) {
-     discriminator=bjet->second;
-     bjet++;
-     }
-     else{discriminator=-100;bjet++;}
+   
+ //  if(bjet->second>0.001 && bjet->second<1000) {
+ //    discriminator=bjet->second;
+ //    bjet++;
+ //    }
+ //    else{discriminator=-100;bjet++;}
     
      myjet.discriminator  = discriminator;
   
