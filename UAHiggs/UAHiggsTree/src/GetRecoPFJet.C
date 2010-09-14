@@ -61,7 +61,19 @@ void UAHiggsTree::GetRecoPFJet(const edm::Event& iEvent , const edm::EventSetup&
      myjet.py             = jet->py();
      myjet.pz             = jet->pz();
    
-   
+     myjet.ChargedHadronEnergy = jet->chargedHadronEnergy();
+     myjet.NeutralHadronEnergy = jet->neutralHadronEnergy();
+     myjet.ChargedEmEnergy = jet->chargedEmEnergy();
+     myjet.ChargedMuEnergy = jet->chargedMuEnergy();
+     myjet.NeutralEmEnergy = jet->neutralEmEnergy();
+     myjet.ChargedMultiplicity = jet->chargedMultiplicity();
+     myjet.NeutralMultiplicity = jet->neutralMultiplicity();
+     myjet.MuonMultiplicity = jet->muonMultiplicity();   
+
+
+
+
+
  //  if(bjet->second>0.001 && bjet->second<1000) {
  //    discriminator=bjet->second;
  //    bjet++;

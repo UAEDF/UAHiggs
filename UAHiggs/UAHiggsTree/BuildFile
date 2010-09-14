@@ -23,7 +23,7 @@
 <use name=DataFormats/L1Trigger>
 <use name=DataFormats/JetReco>
 <use name=DataFormats/BTauReco>
-
+<use name=RecoEgamma/EgammaTools>
 <export>
    
    
@@ -53,7 +53,7 @@
    <use name=DataFormats/MuonReco>
    <use name=DataFormats/JetReco>
    <use name=DataFormats/BTauReco>
-
+   <use name=RecoEgamma/EgammaTools>
 
 </export>
 <flags EDM_PLUGIN=1>

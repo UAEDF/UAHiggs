@@ -146,8 +146,22 @@ void UAHiggsTree::GetRecoMuon(const edm::Event& iEvent, const edm::EventSetup& i
                                          sqrt(glTrack->momentum().mag2()+MASS_MU*MASS_MU));
 
      muon.globalTrack.Part.charge = glTrack->charge();
-
-     muon.globalTrack.nhit  =  glTrack->recHitsSize();
+     muon.globalTrack.numberOfValidTkHits    =  glTrack->hitPattern().numberOfValidTrackerHits();
+     muon.globalTrack.numberOfValidMuonHits  =  glTrack->hitPattern().numberOfValidMuonHits();
+     
+   //  cout<<glTrack->hitPattern().numberOfValidTrackerHits()<<endl;
+   //  cout<<glTrack->hitPattern().numberOfValidMuonHits()<<endl;
+     
+     
+     muon.globalTrack.numberOfValidStripHits    =  glTrack->hitPattern().numberOfValidStripHits();
+     muon.globalTrack.numberOfValidPixelHits    =  glTrack->hitPattern().numberOfValidPixelHits();
+     muon.globalTrack.numberOfValidMuonRPCHits  =  glTrack->hitPattern().numberOfValidMuonRPCHits();
+     muon.globalTrack.numberOfValidMuonCSCHits  =  glTrack->hitPattern().numberOfValidMuonCSCHits();
+     muon.globalTrack.numberOfValidMuonDTHits   =  glTrack->hitPattern().numberOfValidMuonDTHits();
+     
+    
+    
+     muon.globalTrack.nhit  =  glTrack->hitPattern().numberOfValidHits();
      muon.globalTrack.chi2n =  glTrack->normalizedChi2();
      muon.globalTrack.dz    =  glTrack->dz();
 
@@ -192,6 +206,8 @@ void UAHiggsTree::GetRecoMuon(const edm::Event& iEvent, const edm::EventSetup& i
     }
     
     
+   
+    
      // Inner Muon Track
      
    if(iMuon->innerTrack().isAvailable()){
@@ -202,7 +218,17 @@ void UAHiggsTree::GetRecoMuon(const edm::Event& iEvent, const edm::EventSetup& i
                                          inTrack->momentum().z(),
                                          sqrt(inTrack->momentum().mag2()+MASS_MU*MASS_MU));
      muon.innerTrack.Part.charge = inTrack->charge();
-     muon.innerTrack.nhit  =  inTrack->recHitsSize();
+     
+     muon.innerTrack.numberOfValidTkHits    =  inTrack->hitPattern().numberOfValidTrackerHits();
+     muon.innerTrack.numberOfValidMuonHits  =  inTrack->hitPattern().numberOfValidMuonHits();
+    
+     muon.innerTrack.numberOfValidStripHits    =  inTrack->hitPattern().numberOfValidStripHits();
+     muon.innerTrack.numberOfValidPixelHits    =  inTrack->hitPattern().numberOfValidPixelHits();
+     muon.innerTrack.numberOfValidMuonRPCHits  =  inTrack->hitPattern().numberOfValidMuonRPCHits();
+     muon.innerTrack.numberOfValidMuonCSCHits  =  inTrack->hitPattern().numberOfValidMuonCSCHits();
+     muon.innerTrack.numberOfValidMuonDTHits   =  inTrack->hitPattern().numberOfValidMuonDTHits();
+     
+     muon.innerTrack.nhit  =  inTrack->hitPattern().numberOfValidHits();
      muon.innerTrack.chi2n =  inTrack->normalizedChi2();
      muon.innerTrack.dz    =  inTrack->dz();
      muon.innerTrack.d0    =  inTrack->d0();
@@ -253,7 +279,18 @@ void UAHiggsTree::GetRecoMuon(const edm::Event& iEvent, const edm::EventSetup& i
                                          outTrack->momentum().z(),
                                          sqrt(outTrack->momentum().mag2()+MASS_MU*MASS_MU));
      muon.outerTrack.Part.charge = outTrack->charge();
-     muon.outerTrack.nhit  =  outTrack->recHitsSize();
+     muon.outerTrack.numberOfValidTkHits    =  outTrack->hitPattern().numberOfValidTrackerHits();
+     muon.outerTrack.numberOfValidMuonHits  =  outTrack->hitPattern().numberOfValidMuonHits();
+     
+     muon.outerTrack.numberOfValidStripHits    =  outTrack->hitPattern().numberOfValidStripHits();
+     muon.outerTrack.numberOfValidPixelHits    =  outTrack->hitPattern().numberOfValidPixelHits();
+     muon.outerTrack.numberOfValidMuonRPCHits  =  outTrack->hitPattern().numberOfValidMuonRPCHits();
+     muon.outerTrack.numberOfValidMuonCSCHits  =  outTrack->hitPattern().numberOfValidMuonCSCHits();
+     muon.outerTrack.numberOfValidMuonDTHits   =  outTrack->hitPattern().numberOfValidMuonDTHits();
+     
+     
+     
+     muon.outerTrack.nhit  =  outTrack->hitPattern().numberOfValidHits();
      muon.outerTrack.chi2n =  outTrack->normalizedChi2();
      muon.outerTrack.dz    =  outTrack->dz();
      muon.outerTrack.d0    =  outTrack->d0();

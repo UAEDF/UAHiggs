@@ -17,11 +17,17 @@ class MyElectron : public TObject {
 
     MyPart      Part;
     MyTracks    GsfTrack;    
+    MyTracks    TrackerTrack;
+
 //    MySupClus   SupClus;
     
     // Basic properties            
     Double_t    eSupClusOverP      ;
     Double_t    eSeedClusOverPout  ; 
+    Double_t    PIn        ;
+    Double_t    POut        ;
+    
+    
     Double_t    dEtaSupClusTrVtx   ; 
     Double_t    dEtaSeedClusTrCalo ; 
     Double_t    dPhiSupClusTrVtx   ; 
@@ -36,7 +42,7 @@ class MyElectron : public TObject {
    
     Bool_t      isEScaleCorr       ; 
     Bool_t      isMomentumCorr     ; 
-    //Int_t       nClus              ; 
+    Int_t       nClus              ; 
     Int_t       classification     ; 
     
     
@@ -44,12 +50,21 @@ class MyElectron : public TObject {
     // Extra Isolation variables 
     
    
-    Double_t    EcalJurassicIsolation;
+    Double_t    EcalRecHitIsoDr04;
+    Double_t    HcalDepth1TowerSumEtDr04;
+    Double_t    HcalDepth2TowerSumEtDr04;
     Double_t    TrackIsolationDr04;
-    Double_t    EcalIsolationDr03;
-    Double_t    HcalIsolationDr03 ;
+    Double_t    EcalRecHitIsoDr03;
+    Double_t    HcalTowerSumEtDr03 ;
+    Double_t    HcalDepth1TowerSumEtDr03;
+    Double_t    HcalDepth2TowerSumEtDr03;
+    Double_t    TrackIsolationDr03;
     
     
+   
+   
+   
+   
     // Id variables
     
      Bool_t    eidRobustLoose       ; 
@@ -68,7 +83,10 @@ class MyElectron : public TObject {
     Double_t HcalDepth1OverEcal     ;    
     Double_t HcalDepth2OverEcal     ;
     
+    // conversion variables
     
+    Double_t dist_conv   ;
+    Double_t dcot_conv ;
     
    
   private:

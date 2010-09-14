@@ -27,8 +27,8 @@ process.load("Configuration.StandardSequences.MagneticField_cff")
 
 # Data source -----------------------------------------------------------------------
 process.source = cms.Source("PoolSource",
- #     fileNames = cms.untracked.vstring('file:/user/selvaggi/DataCopy__CMSSW_3_5_6__H160_2W_2lnu_gluonfusion_7TeV__Spring09-MC_31X_V26_S09-v1__GEN-SIM-RECO_1.root ')
-  fileNames = cms.untracked.vstring('dcap://maite.iihe.ac.be/pnfs/iihe/cms/ph/sc4/store/mc/Spring10/WJets-madgraph/GEN-SIM-RECO/START3X_V26_S09-v1/0000/0250080D-FA44-DF11-B003-001D0967D5F8.root')
+      fileNames = cms.untracked.vstring('file:/user/selvaggi/DataCopy__CMSSW_3_5_6__H160_2W_2lnu_gluonfusion_7TeV__Spring09-MC_31X_V26_S09-v1__GEN-SIM-RECO_1.root ')
+  #fileNames = cms.untracked.vstring('dcap://maite.iihe.ac.be/pnfs/iihe/cms/ph/sc4/store/mc/Spring10/WJets-madgraph/GEN-SIM-RECO/START3X_V26_S09-v1/0000/0250080D-FA44-DF11-B003-001D0967D5F8.root')
  #    fileNames = cms.untracked.vstring('file:/user/selvaggi/DataCopy__CMSSW_3_2_6__H120_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO_1.root')
  #   fileNames = cms.untracked.vstring('file:/user/selvaggi/DataCopy__CMSSW_3_2_8__H160_2W_2lnu_gluonfusion_7TeV__Summer09-MC_31X_V3_156BxLumiPileUp-v1__GEN-SIM-RECO_1.root')
 #    fileNames = cms.untracked.vstring('file:///user/xjanssen/outCopy/MYCOPY_1.root')
@@ -226,10 +226,10 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
 
 
 # Data output ----------------------------------------------------------------------- 
-process.out = cms.OutputModule("PoolOutputModule",
-     verbose = cms.untracked.bool(False),
-    fileName = cms.untracked.string('cmsdata.root')
-)
+#process.out = cms.OutputModule("PoolOutputModule",
+#     verbose = cms.untracked.bool(False),
+#    fileName = cms.untracked.string('cmsdata.root')
+#)
 
 
 # PAth (what to do) ------------------------------------------------------------------
@@ -241,7 +241,7 @@ process.path = cms.Path(
 #                        process.GenPartList *  
 #                        process.genJetParticles*
 #			 process.recoGenJets*
-#                         process.KFactorProducer *
+                         process.KFactorProducer *
 		         process.higgsToWW2LeptonsPreselectionSequence *
                          process.recoAllTrackJets *
 			 process.jetvertexassociation *
@@ -252,5 +252,5 @@ process.path = cms.Path(
                        )
 
 # EndPath (what to store) ------------------------------------------------------------
-process.outpath = cms.EndPath(process.out)
+#process.outpath = cms.EndPath(process.out)
 

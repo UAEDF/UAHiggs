@@ -14,6 +14,14 @@ class MyJet : public TObject {
     ~MyJet(){;}
     Double_t e,pt,eta,phi,px,py,pz;
     Double_t alpha,beta,discriminator;
+    Double_t ChargedHadronEnergy;
+    Double_t NeutralHadronEnergy;
+    Double_t ChargedEmEnergy;
+    Double_t ChargedMuEnergy;
+    Double_t NeutralEmEnergy;
+    Int_t    ChargedMultiplicity;
+    Int_t    NeutralMultiplicity;
+    Int_t    MuonMultiplicity;
 
 
   private:

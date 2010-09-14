@@ -1,3 +1,4 @@
+
 // Package:     UAHiggsTree
 // Class:       UAHiggsTree
 // author:      Xavier Janssen
@@ -52,6 +53,11 @@
 // UAHiggsTree UAHiggs class declaration
 #include "UAHiggs/UAHiggsTree/interface/UAHiggsTree.h"
 
+//Tracks and conversion
+
+#include "DataFormats/TrackReco/interface/Track.h"
+#include "RecoEgamma/EgammaTools/interface/ConversionFinder.h"
+#include "RecoEgamma/EgammaTools/interface/ConversionInfo.h"
 
 void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetup& iSetup,
                                                           const string GsfElectronCollection_ ,vector<MyElectron>& ElecVector )
@@ -132,21 +138,28 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
 
      electron.eSupClusOverP      = iElectron->eSuperClusterOverP()              ;
      electron.eSeedClusOverPout  = iElectron->eSeedClusterOverPout()            ;
+     electron.PIn                = iElectron->trackMomentumAtVtx().R();
+     electron.POut               = iElectron->trackMomentumOut().R();
+     
+     
      electron.dEtaSupClusTrVtx   = iElectron->deltaEtaSuperClusterTrackAtVtx()  ;
      electron.dEtaSeedClusTrCalo = iElectron->deltaEtaSeedClusterTrackAtCalo()  ; 
      electron.dPhiSupClusTrVtx   = iElectron->deltaPhiSuperClusterTrackAtVtx()  ; 
      electron.dPhiSeedClusTrCalo = iElectron->deltaPhiSeedClusterTrackAtCalo()  ; 
-     electron.isBarrel           = iElectron->isEB()				;
-     electron.isEndCap           = iElectron->isEE()				;
-     electron.isEcalDriven       = iElectron->ecalDrivenSeed()                  ;
-     electron.isTrackerDriven    = iElectron->trackerDrivenSeed()               ;
      electron.isEScaleCorr       = iElectron->isEnergyScaleCorrected()          ; 
      electron.isMomentumCorr     = iElectron->isMomentumCorrected()             ; 
-     //electron.nClus              = iElectron->numberOfClusters()                ; 
+     electron.isEcalDriven       = iElectron->ecalDrivenSeed()                  ;
+     electron.isTrackerDriven    = iElectron->trackerDrivenSeed()               ;
+     electron.nClus              = iElectron->basicClustersSize()                ; 
      electron.classification     = iElectron->classification()                  ; 
      electron.fbrem              = iElectron->fbrem()                           ; 
      
-      
+     
+     //fiducial
+     
+     electron.isBarrel           = iElectron->isEB()				;
+     electron.isEndCap           = iElectron->isEE()				;
+     
       
      // Shower Shape variables
      
@@ -166,13 +179,17 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
      
      
      // Gsf Track Info
+     
+     
+     if (iElectron->gsfTrack().isNonnull()){ 
+
      reco::GsfTrackRef etrack =(*iElectron).gsfTrack();
      electron.GsfTrack.Part.v.SetPxPyPzE(etrack->momentum().x(),
                                          etrack->momentum().y(),
                                          etrack->momentum().z(),
                                          sqrt(etrack->momentum().mag2()+MASS_EL*MASS_EL)); 
      electron.GsfTrack.Part.charge = etrack->charge(); 
-     electron.GsfTrack.nhit  =  etrack->recHitsSize();
+     electron.GsfTrack.nhit  =  etrack->hitPattern().numberOfValidHits();
      electron.GsfTrack.chi2n =  etrack->normalizedChi2();
      electron.GsfTrack.dz    =  etrack->dz();
      electron.GsfTrack.d0    =  etrack->d0();
@@ -191,18 +208,6 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
      electron.GsfTrack.vtxid.clear();
      electron.GsfTrack.vtxdxy.clear();
      electron.GsfTrack.vtxdz.clear();
-
-    
-     
-     //Isolation Variables
-     
-     
-      electron.TrackIsolationDr04      = iElectron->dr04TkSumPt();
-      electron.EcalIsolationDr03       = iElectron->dr03EcalRecHitSumEt();
-      electron.HcalIsolationDr03       = iElectron->dr03HcalTowerSumEt();
-      
-    
-     
      
      for ( int i = 0 ; i != vtxid ; i++ )
      {
@@ -211,6 +216,85 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
         electron.GsfTrack.vtxdz.push_back(  etrack->dz( vtxid_xyz[i] )  );
      }
 
+     
+     }
+
+    
+     // Closest CTF Track Info
+     
+     
+     if (iElectron->closestCtfTrackRef().isNonnull()){ 
+
+     reco::TrackRef ctftrack =(*iElectron).closestCtfTrackRef();
+     
+     electron.TrackerTrack.Part.v.SetPxPyPzE(ctftrack->momentum().x(),
+                                         ctftrack->momentum().y(),
+                                         ctftrack->momentum().z(),
+                                         sqrt(ctftrack->momentum().mag2()+MASS_EL*MASS_EL)); 
+     electron.TrackerTrack.Part.charge = ctftrack->charge(); 
+     electron.TrackerTrack.nhit  =  ctftrack->hitPattern().numberOfValidHits();
+     electron.TrackerTrack.chi2n =  ctftrack->normalizedChi2();
+     electron.TrackerTrack.dz    =  ctftrack->dz();
+     electron.TrackerTrack.d0    =  ctftrack->d0();
+     electron.TrackerTrack.edz   =  ctftrack->dzError();
+     electron.TrackerTrack.ed0   =  ctftrack->d0Error();
+     electron.TrackerTrack.ept   =  ctftrack->ptError();
+
+     electron.TrackerTrack.vx    =  ctftrack->vertex().x();
+     electron.TrackerTrack.vy    =  ctftrack->vertex().y();
+     electron.TrackerTrack.vz    =  ctftrack->vertex().z();
+
+     electron.TrackerTrack.quality[0] = ctftrack->quality(reco::TrackBase::qualityByName("loose"));
+     electron.TrackerTrack.quality[1] = ctftrack->quality(reco::TrackBase::qualityByName("tight"));
+     electron.TrackerTrack.quality[2] = ctftrack->quality(reco::TrackBase::qualityByName("highPurity"));
+ 
+     electron.TrackerTrack.vtxid.clear();
+     electron.TrackerTrack.vtxdxy.clear();
+     electron.TrackerTrack.vtxdz.clear();
+     
+     for ( int i = 0 ; i != vtxid ; i++ )
+     {
+        electron.TrackerTrack.vtxid.push_back( i ); 
+        electron.TrackerTrack.vtxdxy.push_back( ctftrack->dxy( vtxid_xyz[i] ) );
+        electron.TrackerTrack.vtxdz.push_back(  ctftrack->dz( vtxid_xyz[i] )  );
+     }
+
+     
+     }
+
+    
+    
+    
+    
+    
+    
+     //Isolation Variables
+     
+    electron.EcalRecHitIsoDr04           = iElectron ->dr04EcalRecHitSumEt();
+    electron.HcalDepth1TowerSumEtDr04    = iElectron ->dr04HcalDepth1TowerSumEt();
+    electron.HcalDepth2TowerSumEtDr04    = iElectron ->dr04HcalDepth2TowerSumEt();
+    electron.TrackIsolationDr04          = iElectron ->dr04TkSumPt();
+    electron.EcalRecHitIsoDr03           = iElectron ->dr03EcalRecHitSumEt();
+    electron.HcalTowerSumEtDr03          = iElectron ->dr03HcalTowerSumEt();
+    electron.HcalDepth1TowerSumEtDr03    = iElectron ->dr03HcalDepth1TowerSumEt();
+    electron.HcalDepth2TowerSumEtDr03    = iElectron ->dr03HcalDepth2TowerSumEt();
+    electron.TrackIsolationDr03          = iElectron ->dr03TkSumPt();
+         
+    
+     // Conversion variables
+     
+     
+     edm::Handle<reco::TrackCollection> tracks;
+     iEvent.getByLabel("generalTracks", tracks);
+     ConversionFinder convFinder;
+     
+     ConversionInfo convInfo = convFinder.getConversionInfo(*iElectron, tracks, 3.8112);
+     electron.dist_conv   = convInfo.dist();
+     electron.dcot_conv   = convInfo.dcot();
+     cout<<convInfo.dist()<<"    "<<convInfo.dcot()<<endl;
+     
+     
+     
     // Id boolean (don't use them now)
 
     try{
