@@ -126,6 +126,10 @@ class UAHiggsTree : public edm::EDAnalyzer {
       virtual void GetEvtId(const edm::Event&);
       virtual void GetL1Trig(const edm::Event&, const edm::EventSetup& );
       virtual void GetHLTrig(const edm::Event&, const edm::EventSetup& );
+      bool hasFired(const std::string& triggerName,
+   		const edm::TriggerNames& triggerNames,
+  		const edm::TriggerResults& triggerResults) const;
+      
       virtual void GetRecoVertex(const edm::Event& , const edm::EventSetup& ,
                                  const string    , vector<MyVertex>& );
 

@@ -10,8 +10,9 @@
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 
 // Trigger Inclides
+#include "DataFormats/HLTReco/interface/TriggerEvent.h"
 #include "DataFormats/Common/interface/TriggerResults.h"
-#include "FWCore/Framework/interface/TriggerNames.h"
+#include "FWCore/Common/interface/TriggerNames.h"
 
 
 // UAHiggsTree UAHiggs class decleration
@@ -24,7 +25,36 @@ void UAHiggsTree::GetHLTrig(const edm::Event& iEvent, const edm::EventSetup& iSe
   using namespace std;
   using namespace edm;
   
-  vector<Handle<TriggerResults> > trhv;
+
+edm::InputTag srcTriggerResults_("TriggerResults"); 
+  if (srcTriggerResults_.process().empty()) {
+    edm::InputTag srcTriggerEvent("hltTriggerSummaryAOD");
+    edm::Handle<trigger::TriggerEvent> triggerEvent;
+    iEvent.getByLabel(srcTriggerEvent,triggerEvent);
+    string hltProcName = triggerEvent.provenance()->processName();
+    // cout<<"HLTriggerAnalyzer::analyze() INFO: HLT process="<<hltProcName<<endl;
+    srcTriggerResults_ = edm::InputTag(srcTriggerResults_.label()+"::"+hltProcName);
+  }
+  // cout << srcTriggerResults_ << endl;
+  // Fetch HLT Data Object
+  edm::Handle<edm::TriggerResults> trgResults;
+  iEvent.getByLabel(srcTriggerResults_,trgResults);
+  const edm::TriggerNames& trgNames = iEvent.triggerNames(*trgResults);
+ 
+  // Loop on requested triggers by user (config file)
+  for(vector<string>::iterator requested_hlt_bit=hlt_bits.begin() ; requested_hlt_bit!=hlt_bits.end();requested_hlt_bit++){
+    HLTrig.HLTmap[*requested_hlt_bit]= hasFired(*requested_hlt_bit, trgNames,*trgResults);
+    // cout << (*requested_hlt_bit).c_str() << " = " << hasFired(*requested_hlt_bit, trgNames,*trgResults) << endl ;
+  }
+
+
+
+
+
+
+
+
+/*  vector<Handle<TriggerResults> > trhv;
   iEvent.getManyByType(trhv);
   const int nt(trhv.size());
   
@@ -47,10 +77,29 @@ void UAHiggsTree::GetHLTrig(const edm::Event& iEvent, const edm::EventSetup& iSe
       n++;
     }//for i 
   }//for ntt
-
+*/
   try{Handle<bool> pm;
   iEvent.getByLabel("preselectionMarker",pm);
   EvtId.PreselMarker=*pm;}
   catch(...){;}
    
+}
+
+
+bool UAHiggsTree::hasFired(const std::string& triggerName,
+				 const edm::TriggerNames& triggerNames,
+				 const edm::TriggerResults& triggerResults) const
+{
+  unsigned index = triggerNames.triggerIndex(triggerName);
+  if (index>=triggerNames.size()) {
+/*    if (unknownTriggers_.find(triggerName)==unknownTriggers_.end()) {
+      cout<<"HLTriggerAnalyzer::hasFired() ERROR: "
+	  <<"unknown trigger name "<<triggerName<<endl;
+      unknownTriggers_.insert(triggerName);
+    }
+*/
+    return false;
+  }
+
+  return triggerResults.accept(index);
 }

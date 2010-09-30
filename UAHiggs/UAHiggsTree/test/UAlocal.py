@@ -241,8 +241,8 @@ process.path = cms.Path(
 #                        process.GenPartList *  
 #                        process.genJetParticles*
 #			 process.recoGenJets*
-                         process.KFactorProducer *
-		         process.higgsToWW2LeptonsPreselectionSequence *
+#                         process.KFactorProducer *
+#		         process.higgsToWW2LeptonsPreselectionSequence *
                          process.recoAllTrackJets *
 			 process.jetvertexassociation *
 #			 process.eleIsoDepositEcalFromHits *
