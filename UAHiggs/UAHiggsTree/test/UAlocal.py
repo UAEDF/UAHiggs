@@ -27,12 +27,16 @@ process.load("Configuration.StandardSequences.MagneticField_cff")
 
 # Data source -----------------------------------------------------------------------
 process.source = cms.Source("PoolSource",
-      fileNames = cms.untracked.vstring('file:/user/selvaggi/DataCopy__CMSSW_3_5_6__H160_2W_2lnu_gluonfusion_7TeV__Spring09-MC_31X_V26_S09-v1__GEN-SIM-RECO_1.root ')
-  #fileNames = cms.untracked.vstring('dcap://maite.iihe.ac.be/pnfs/iihe/cms/ph/sc4/store/mc/Spring10/WJets-madgraph/GEN-SIM-RECO/START3X_V26_S09-v1/0000/0250080D-FA44-DF11-B003-001D0967D5F8.root')
+   #   fileNames = cms.untracked.vstring('file:/user/selvaggi/DataCopy__CMSSW_3_5_6__H160_2W_2lnu_gluonfusion_7TeV__Spring09-MC_31X_V26_S09-v1__GEN-SIM-RECO_1.root ')
+  #fileNames = cms.untracked.vstring('store/mc/Spring10/WJets-madgraph/GEN-SIM-RECO/START3X_V26_S09-v1/0000/0250080D-FA44-DF11-B003-001D0967D5F8.root')
  #    fileNames = cms.untracked.vstring('file:/user/selvaggi/DataCopy__CMSSW_3_2_6__H120_2W_2lnu_gluonfusion_10TeV__Summer09-MC_31X_V3-v1__GEN-SIM-RECO_1.root')
  #   fileNames = cms.untracked.vstring('file:/user/selvaggi/DataCopy__CMSSW_3_2_8__H160_2W_2lnu_gluonfusion_7TeV__Summer09-MC_31X_V3_156BxLumiPileUp-v1__GEN-SIM-RECO_1.root')
 #    fileNames = cms.untracked.vstring('file:///user/xjanssen/outCopy/MYCOPY_1.root')
 #   fileNames = cms.untracked.vstring('file:////user/xjanssen/data/CMSSW_3_2_6/DataCopy/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/data/DataCopy__CMSSW_3_2_6__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO_1.root')
+
+   fileNames = cms.untracked.vstring('file:DataCopy_37x__CMSSW_3_7_0_patch4__MinimumBias__Commissioning10-SD_EG-Jun9thSkim_v1__RECO_1_1_EkL.root')
+
+
 )
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
@@ -115,7 +119,7 @@ process.load("RecoEgamma.EgammaIsolationAlgos.eleIsoDepositTk_cff")
 ## REMEMBER TO ADD NEW JV PRODUCER IF OTHER CALO JET COLLECTIONS ARE ADDED
 
 
-process.jetvertexalpha = cms.EDFilter("JetVertexAssociation",
+process.jetvertexalpha = cms.EDProducer("JetVertexAssociation",
     JV_deltaZ = cms.double(0.3),
     TRACK_ALGO = cms.string('generalTracks'),
     JV_alpha_threshold = cms.double(0.0),
@@ -164,6 +168,26 @@ process.jetvertexassociation = cms.Sequence(process.JVAak5        + process.JVBa
                                             process.JVAsisCone5 + process.JVBsisCone5
                                             )
 
+# ----- Trigger Selection --------------------
+
+process.load('HLTrigger.special.hltPhysicsDeclared_cfi')
+process.hltPhysicsDeclared.L1GtReadoutRecordTag = 'gtDigis'
+#process.mypath=cms.Path(process.hltPhysicsDeclared+<my_other_things_here>)
+
+
+#---------------Beam scraping -------------------------
+
+
+process.noscraping = cms.EDFilter("FilterOutScraping",
+                                applyfilter = cms.untracked.bool(True),
+                                debugOn = cms.untracked.bool(False),
+                                numtrack = cms.untracked.uint32(10),
+                                thresh = cms.untracked.double(0.25)
+                                )
+
+
+
+
 
 # Track Jets (>3_4_2)--------------------------------------------------------------
 
@@ -172,16 +196,16 @@ process.load("RecoJets.Configuration.RecoTrackJets_cff")
 
 # HWW Preselection ------------------------------------------------------------------
 
-process.load("HiggsAnalysis.HiggsToWW2Leptons.HWWPreselectionSequence_cff")
+#process.load("HiggsAnalysis.HiggsToWW2Leptons.HWWPreselectionSequence_cff")
 
 # K-Factor Producer -----------------------------------------------------------------
 
-process.load("HiggsAnalysis.HiggsToWW2Leptons.HWWKFactorProducer_cfi")
-process.KFactorProducer.inputFilename = cms.untracked.string('HiggsAnalysis/HiggsToWW2Leptons/data/160_7TeV.dat')
+#process.load("HiggsAnalysis.HiggsToWW2Leptons.HWWKFactorProducer_cfi")
+#process.KFactorProducer.inputFilename = cms.untracked.string('HiggsAnalysis/HiggsToWW2Leptons/data/160_7TeV.dat')
 
 #HLT filter from PreSelection 
 
-process.higgsToWW2LeptonsHLTFilter.HLTPaths = ['HLT_L1MuOpen','HLT_L1Mu','HLT_Mu5','HLT_Mu9','HLT_L1DoubleMuOpen','HLT_DoubleMu0','HLT_DoubleMu3','HLT_L1SingleEG5','HLT_Ele15_SW_EleId_L1R','HLT_Ele15_SiStrip_L1R']
+#process.higgsToWW2LeptonsHLTFilter.HLTPaths = ['HLT_L1MuOpen','HLT_L1Mu','HLT_Mu5','HLT_Mu9','HLT_L1DoubleMuOpen','HLT_DoubleMu0','HLT_DoubleMu3','HLT_L1SingleEG5','HLT_Ele15_SW_EleId_L1R','HLT_Ele15_SiStrip_L1R']
 
 # UAHiggsTree Code ------------------------------------------------------------------
 process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
@@ -189,9 +213,9 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
   , fileName = cms.untracked.string('UAHiggsTree.root')
 
 # Modules to execute
-  , StoreGenPart     = cms.bool(True)
-  , StoreGenKine     = cms.bool(True)
-  , doJetVertexAlpha = cms.bool(True)
+  , StoreGenPart     = cms.bool(False)
+  , StoreGenKine     = cms.bool(False)
+  , doJetVertexAlpha = cms.bool(False)
 # Define DATA Collections
   , genPartColl   = cms.InputTag("genParticles") 
   , hepMCColl     = cms.InputTag("generator")
@@ -211,9 +235,9 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
   , requested_tcmets       = cms.vstring('tcMet')
 
   , requested_genjets      = cms.vstring('iterativeCone5GenJets','sisCone5GenJets')
-  , requested_calojets     = cms.vstring('iterativeCone5CaloJets','sisCone5CaloJets','ak5CaloJets')
-  , requested_pfjets       = cms.vstring('iterativeCone5PFJets','sisCone5PFJets','ak5PFJets')
-  , requested_trackjets    = cms.vstring('iterativeCone5TrackJets','sisCone5TrackJets','ak5TrackJets')
+  , requested_calojets     = cms.vstring('ak5CaloJets')
+  , requested_pfjets       = cms.vstring('ak5PFJets')
+  , requested_trackjets    = cms.vstring('ak5TrackJets')
 
   , requested_hlt_bits     = cms.vstring('HLT_L1MuOpen','HLT_L1Mu','HLT_Mu5','HLT_Mu9','HLT_L1DoubleMuOpen','HLT_DoubleMu0','HLT_DoubleMu3','HLT_L1SingleEG5','HLT_Ele15_SW_EleId_L1R','HLT_Ele15_SiStrip_L1R')
   , requested_L1_bits      = cms.vstring('L1_SingleMuOpen','L1_SingleMu0','L1_SingleMu7','L1_DoubleMu3','L1_SingleMu20','L1_SingleMu3','L1_DoubleMuOpen','L1_SingleEG1','L1_SingleEG2','L1_SingleEG5','L1_SingleEG8','L1_SingleEG20','L1_DoubleEG5')
@@ -233,8 +257,9 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
 
 
 # PAth (what to do) ------------------------------------------------------------------
-process.path = cms.Path( 
-#                        process.l1GtUnpack *
+process.path = cms.Path( process.hltPhysicsDeclared*
+                         process.noscraping*
+#			 process.l1GtUnpack *
 #                        process.l1extraParticles *
 #                        process.GenPartDecay * 
 #                        process.GenPartTree *
@@ -244,7 +269,7 @@ process.path = cms.Path(
 #                         process.KFactorProducer *
 #		         process.higgsToWW2LeptonsPreselectionSequence *
                          process.recoAllTrackJets *
-			 process.jetvertexassociation *
+#			 process.jetvertexassociation *
 #			 process.eleIsoDepositEcalFromHits *
 #                         process.eleIsoFromDepsEcalFromHits *
 #                         process.eleIsoDepositTk * 

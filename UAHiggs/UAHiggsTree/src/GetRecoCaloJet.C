@@ -35,7 +35,7 @@ void UAHiggsTree::GetRecoCaloJet(const edm::Event& iEvent , const edm::EventSetu
 
   JetVector.clear();
    
-   size_t sz = CaloJetCollection_.size()-8;
+ /*  size_t sz = CaloJetCollection_.size()-8;
    string algo = CaloJetCollection_.substr(0,sz);
    string JValpha = "JVA";
    string JVbeta  = "JVB";
@@ -53,11 +53,11 @@ void UAHiggsTree::GetRecoCaloJet(const edm::Event& iEvent , const edm::EventSetu
    iEvent.getByLabel(JVbeta,"Var",Jet_BetaHandle);
    BetaCollection Jet_Beta = *(Jet_BetaHandle.product());
    
-   
+  
    vector<double>::const_iterator it_alpha = Jet_Alpha.begin();
    vector<double>::const_iterator it_beta =  Jet_Beta.begin();  
   
-  
+  */
  //  Handle<JetTagCollection> bjetsHandle;
   // iEvent.getByLabel(BJetCollection_,bjetsHandle);
  //  const JetTagCollection &bjets = *(bjetsHandle.product());
@@ -67,15 +67,15 @@ void UAHiggsTree::GetRecoCaloJet(const edm::Event& iEvent , const edm::EventSetu
    Handle<CaloJetCollection> CaloJets;
    iEvent.getByLabel(CaloJetCollection_,CaloJets);
   
-    for(CaloJetCollection::const_iterator jet=CaloJets->begin();jet!=CaloJets->end();jet++,it_alpha++,it_beta++){
+    for(CaloJetCollection::const_iterator jet=CaloJets->begin();jet!=CaloJets->end();jet++){//,it_alpha++,it_beta++){
   //   for(CaloJetCollection::const_iterator jet=CaloJets->begin();jet!=CaloJets->end();jet++,it_alpha++,it_beta++){ 
     
      double alpha=0;
      double beta=0;
      double discriminator=-100;
      
-     alpha=*it_alpha;
-     beta=*it_beta;
+    // alpha=*it_alpha;
+   //  beta=*it_beta;
      
      
      MyJet myjet;
