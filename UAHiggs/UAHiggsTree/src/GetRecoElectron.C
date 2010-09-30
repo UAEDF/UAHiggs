@@ -291,7 +291,7 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
      ConversionInfo convInfo = convFinder.getConversionInfo(*iElectron, tracks, 3.8112);
      electron.dist_conv   = convInfo.dist();
      electron.dcot_conv   = convInfo.dcot();
-     cout<<convInfo.dist()<<"    "<<convInfo.dcot()<<endl;
+     //cout<<convInfo.dist()<<"    "<<convInfo.dcot()<<endl;
      
      
      
