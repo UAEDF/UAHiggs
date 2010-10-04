@@ -3,7 +3,8 @@
 
 #include "TObject.h"
 #include "TLorentzVector.h"
-
+#include <iostream>
+#include <algorithm>
 #include <string>
 
 class MyGenPart : public TObject {
@@ -16,10 +17,20 @@ class MyGenPart : public TObject {
   TLorentzVector v;
   Int_t    pdgId,status,mo1,mo2,da1,da2;
   std::string   name; 
-
+ 
+  bool operator< ( const MyGenPart& genpart)
+  {
+  return this->pt < genpart.pt;
+  }	
+ // bool operator== ( const MyGenPart genpart)
+ // {
+//  return (*this).pt == genpart.pt;
+//  }	
+ 
+ 
   private:
 
-  ClassDef (MyGenPart,1)
+  ClassDef (MyGenPart,2)
 };
 
 #endif
