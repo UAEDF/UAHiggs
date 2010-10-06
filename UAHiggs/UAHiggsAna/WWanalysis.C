@@ -596,7 +596,7 @@ int main(){
             vector<MyElectron*> *electrons_conversion = new vector<MyElectron*>();
        
 	    
-	    *electrons              = ElectronsCleaning(*electrons                 , *muons);
+	    *electrons              = ElectronsCleaning(*electrons_bfmcl            , *muons);
 	    *electrons_ptEta        = ElectronsCleaning(*electrons_ptEta_bfmcl     , *muons_ptEta);
             *electrons_d0           = ElectronsCleaning(*electrons_d0_bfmcl        , *muons_d0);
             *electrons_iso_all      = ElectronsCleaning(*electrons_iso_all_bfmcl   , *muons_iso);
@@ -664,12 +664,12 @@ int main(){
           vector<LeptonPair*> *pair_conv  = new vector<LeptonPair*>;
       
          
-          pair_noCut = MakeLeptonPairVector(*electrons, *muons);
-          pair_ptEta = MakeLeptonPairVector(*electrons_ptEta, *muons_ptEta);
-          pair_d0    = MakeLeptonPairVector(*electrons_d0 , *muons_d0);
-          pair_iso   = MakeLeptonPairVector(*electrons_iso_all , *muons_iso);
-          pair_id    = MakeLeptonPairVector(*electrons_id_all , *muons_id);
-          pair_conv  = MakeLeptonPairVector(*electrons_conversion , *muons_id);
+          pair_noCut = MakeLeptonPairVector(*electrons_bfmcl, *muons);
+          pair_ptEta = MakeLeptonPairVector(*electrons_ptEta_bfmcl, *muons_ptEta);
+          pair_d0    = MakeLeptonPairVector(*electrons_d0_bfmcl , *muons_d0);
+          pair_iso   = MakeLeptonPairVector(*electrons_iso_all_bfmcl , *muons_iso);
+          pair_id    = MakeLeptonPairVector(*electrons_id_all_bfmcl , *muons_id);
+          pair_conv  = MakeLeptonPairVector(*electrons_conversion_bfmcl , *muons_id);
       
           vector<LeptonPair*> *pair_mll1 = new vector<LeptonPair*>;
 	  vector<LeptonPair*> *pair_mll2 = new vector<LeptonPair*>;
@@ -857,8 +857,9 @@ int main(){
 				        // ---------------- Jet Veto -------------------------------
 				    
 				        
-					if ( jetsCleaned -> size() ==0 ) {
-				           
+	  				if ( jetsCleaned -> size() ==0 ) {
+        //                              if (       ak5pfjets -> size() ==0 ) {			
+	           
 					   jetveto_passed_all += weight;
 	                                   if( find(*pair_pmet,"ee") )                               jetveto_passed_ee    += weight;
 	                                   if( find(*pair_pmet,"mm") )                               jetveto_passed_mm    += weight;
@@ -870,7 +871,7 @@ int main(){
 					   // -------------Soft Muon Veto --------------------------------
 				           
 					   
-					   *extrasoftmuons_ee = ExtraSoftMuons(*muons, *pair_pmet,vtxId,"ee"); 
+					   *extrasoftmuons_ee = ExtraSoftMuons(*muons, *pair_pmet,vtxId,"ee");
 					   *extrasoftmuons_mm = ExtraSoftMuons(*muons, *pair_pmet,vtxId,"mm"); 
 					   *extrasoftmuons_em = ExtraSoftMuons(*muons, *pair_pmet,vtxId,"em"); 
 					   *extrasoftmuons_me = ExtraSoftMuons(*muons, *pair_pmet,vtxId,"me"); 

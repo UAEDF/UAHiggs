@@ -46,8 +46,8 @@ class LeptonPair : public TObject {
     Double_t getDeltaEta();
     Double_t getProjectedMet(double met, double metphi);
     
-    bool isInside(MyMuon&);
-    bool isInside(MyElectron&);
+    bool isInside(MyMuon*);
+    bool isInside(MyElectron*);
     
     string type;
 

@@ -3,6 +3,7 @@
 #include "../include/ElectronPlots.h"
 #include "../include/MyElectron.h"
 #include "../include/LeptonPair.h"
+#include "../include/MassParticles.h"
 #include "TLorentzVector.h"
 
 ClassImp(LeptonPair)
@@ -58,11 +59,38 @@ Double_t LeptonPair::getPtMin(){
  } 
  
 Double_t LeptonPair::getMll(){
+
+ Double_t ELepton1 = 0;
+ Double_t ELepton2 = 0;
  Double_t mll = 0;
- if(this->type == "ee") mll = sqrt(pow((this->e1->e+this->e2->e),2)-pow((this->e1->px+this->e2->px),2)-pow((this->e1->py+this->e2->py),2)-pow((this->e1->pz+this->e2->pz),2));  
- if(this->type == "em") mll = sqrt(pow((this->e1->e+this->m2->e),2)-pow((this->e1->px+this->m2->px),2)-pow((this->e1->py+this->m2->py),2)-pow((this->e1->pz+this->m2->pz),2));
- if(this->type == "me") mll = sqrt(pow((this->m1->e+this->e2->e),2)-pow((this->m1->px+this->e2->px),2)-pow((this->m1->py+this->e2->py),2)-pow((this->m1->pz+this->e2->pz),2));
- if(this->type == "mm") mll = sqrt(pow((this->m1->e+this->m2->e),2)-pow((this->m1->px+this->m2->px),2)-pow((this->m1->py+this->m2->py),2)-pow((this->m1->pz+this->m2->pz),2));
+
+ if(this->type == "ee") { 
+   ELepton1 = sqrt(pow(this->e1->px,2)+pow(this->e1->py,2)+pow(this->e1->pz,2)+pow(MASS_EL,2));
+   ELepton2 = sqrt(pow(this->e2->px,2)+pow(this->e2->py,2)+pow(this->e2->pz,2)+pow(MASS_EL,2));
+   mll = sqrt(pow((ELepton1+ELepton2),2)-pow((this->e1->px+this->e2->px),2)-pow((this->e1->py+this->e2->py),2)-pow((this->e1->pz+this->e2->pz),2));
+ }
+ if(this->type == "em") {
+   ELepton1 = sqrt(pow(this->e1->px,2)+pow(this->e1->py,2)+pow(this->e1->pz,2)+pow(MASS_EL,2));
+   ELepton2 = sqrt(pow(this->m2->px,2)+pow(this->m2->py,2)+pow(this->m2->pz,2)+pow(MASS_MU,2));
+   mll = sqrt(pow((ELepton1+ELepton2),2)-pow((this->e1->px+this->m2->px),2)-pow((this->e1->py+this->m2->py),2)-pow((this->e1->pz+this->m2->pz),2));
+ }
+ if(this->type == "me") {
+   ELepton1 = sqrt(pow(this->m1->px,2)+pow(this->m1->py,2)+pow(this->m1->pz,2)+pow(MASS_MU,2));
+   ELepton2 = sqrt(pow(this->e2->px,2)+pow(this->e2->py,2)+pow(this->e2->pz,2)+pow(MASS_EL,2));
+   mll = sqrt(pow((ELepton1+ELepton2),2)-pow((this->m1->px+this->e2->px),2)-pow((this->m1->py+this->e2->py),2)-pow((this->m1->pz+this->e2->pz),2));
+ }
+ if(this->type == "mm") { 
+   ELepton1 = sqrt(pow(this->m1->px,2)+pow(this->m1->py,2)+pow(this->m1->pz,2)+pow(MASS_MU,2));
+   ELepton2 = sqrt(pow(this->m2->px,2)+pow(this->m2->py,2)+pow(this->m2->pz,2)+pow(MASS_MU,2));
+   mll = sqrt(pow((ELepton1+ELepton2),2)-pow((this->m1->px+this->m2->px),2)-pow((this->m1->py+this->m2->py),2)-pow((this->m1->pz+this->m2->pz),2));
+ }
+ 
+ //if(this->type == "ee") mll = sqrt(pow((this->e1->e+this->e2->e),2)-pow((this->e1->px+this->e2->px),2)-pow((this->e1->py+this->e2->py),2)-pow((this->e1->pz+this->e2->pz),2));  
+ //if(this->type == "em") mll = sqrt(pow((this->e1->e+this->m2->e),2)-pow((this->e1->px+this->m2->px),2)-pow((this->e1->py+this->m2->py),2)-pow((this->e1->pz+this->m2->pz),2));
+ //if(this->type == "me") mll = sqrt(pow((this->m1->e+this->e2->e),2)-pow((this->m1->px+this->e2->px),2)-pow((this->m1->py+this->e2->py),2)-pow((this->m1->pz+this->e2->pz),2));
+ //if(this->type == "mm") mll = sqrt(pow((this->m1->e+this->m2->e),2)-pow((this->m1->px+this->m2->px),2)-pow((this->m1->py+this->m2->py),2)-pow((this->m1->pz+this->m2->pz),2));
+ //if(this->type == "ee") cout << mll << endl;
+ 
  return mll;
  } 
 
@@ -74,7 +102,7 @@ Double_t LeptonPair::getPhiMax(){
  if(this->type == "mm") phi = this->m1->phi;
  return phi;
  }
- 
+
  Double_t LeptonPair::getPhiMin(){
  Double_t phi = 0;
  if(this->type == "ee") phi = this->e2->phi;
@@ -138,13 +166,15 @@ Double_t LeptonPair::getPhiMax(){
    return pmet;
  }
  
-bool LeptonPair::isInside(MyMuon& mu){
-     if( (this->m1 = &mu) || (this->m2 = &mu) )return true;
+bool LeptonPair::isInside(MyMuon* mu){
+     //cout << "Mu3Test: " << mu << endl;
+     //cout << "Paire  : " << this->m1 << " " << this->m2 << endl;
+     if( (this->m1 == mu) || (this->m2 == mu) )return true;
      else return false;
      }
  
-bool LeptonPair::isInside(MyElectron &ele){
-     if( (this->e1 = &ele) || (this->e2 = &ele) )return true;
+bool LeptonPair::isInside(MyElectron* ele){
+     if( (this->e1 == ele) || (this->e2 == ele) )return true;
      else return false;
      }
  

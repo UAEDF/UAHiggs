@@ -27,9 +27,7 @@ int getBestVertex(vector<MyVertex>* vtxcoll){
     }
   }
   
-  if(ntracks<=0)
-    return -1;
-  
+  if(ntracks<=0)return -1;
   return goodVtx->id;
 }
 
@@ -87,6 +85,10 @@ vector<MyElectron*> ElectronFilter(vector<MyElectron*> velec,
      //-----------------Isolation-----------------------------
      
      if(cutIso){
+
+       if( !( ((*it_ele)->TrackIsolationDr03+max(Double_t(0),(*it_ele)->EcalRecHitIsoDr03-1.0)+(*it_ele)->HcalTowerSumEtDr03)/(*it_ele)->pt < 0.1 ) ) reject = true; 
+
+/* VBTF 80
        if ((*it_ele)->isBarrel){
 	       if( !( ((*it_ele)->TrackIsolationDr03+max(Double_t(0),(*it_ele)->EcalRecHitIsoDr03-1.0)+(*it_ele)->HcalTowerSumEtDr03)/(*it_ele)->pt < isoBarrelcut_ele)  ) reject = true;
 	       if( !((*it_ele)->TrackIsolationDr03/(*it_ele)->pt < 0.09) )reject = true;
@@ -99,10 +101,11 @@ vector<MyElectron*> ElectronFilter(vector<MyElectron*> velec,
 	      if( !( ((*it_ele)->TrackIsolationDr03+(*it_ele)->EcalRecHitIsoDr03+(*it_ele)->HcalTowerSumEtDr03/(*it_ele)->pt) < isoEndCapcut_ele)  ) reject = true;   
               if( !((*it_ele)->TrackIsolationDr03/(*it_ele)->pt < 0.04) ) reject = true;
 	      if( !((*it_ele)->EcalRecHitIsoDr03/(*it_ele)->pt  < 0.05) ) reject = true;
-	      if( !((*it_ele)->HcalTowerSumEtDr03/(*it_ele)->pt < 0.025)) reject = true;}
+	      if( !((*it_ele)->HcalTowerSumEtDr03/(*it_ele)->pt < 0.025)) reject = true;
 	   }
-	   
+*/	   
    
+      } 
     
      //---------VBTF Id 80 cuts -----------------------------
       
@@ -115,7 +118,7 @@ vector<MyElectron*> ElectronFilter(vector<MyElectron*> velec,
           if ((*it_ele)->isEndCap) {
             if( !((*it_ele)->CoviEtaiEta<0.03) )             reject = true;  
 	    if( !(fabs((*it_ele)->dPhiSupClusTrVtx)<0.03 ) ) reject = true;
-           // if( !(fabs((*it_ele)->dEtaSupClusTrVtx)<0.007) ) reject = true; 
+            if( !(fabs((*it_ele)->dEtaSupClusTrVtx)<0.007) ) reject = true; 
             if( !((*it_ele)->HadronicOverEm<0.025)  )        reject = true;}
           }
      
@@ -219,10 +222,8 @@ vector<MyMuon*> MuonFilter(vector<MyMuon*> vmuon,
      //---------------------Vertex Association and NO STANDALONE Muon ---------------
     
      if(cutd0){
-       Double_t d0 = (*it_mu)->globalTrack.vtxdxy.at(vtxId);
+       Double_t d0 = (*it_mu)->innerTrack.vtxdxy.at(vtxId);
        if( !(fabs(d0) < 0.02) )            reject = true;
-       if( !((*it_mu)->IsGlobalMuon) )     reject = true;
-       if( !((*it_mu)->IsTrackerMuon) )    reject = true;
        }
      
      //-----------------Isolation-----------------------------
@@ -233,9 +234,10 @@ vector<MyMuon*> MuonFilter(vector<MyMuon*> vmuon,
      //---------VBTF Id 80 cuts -----------------------------
       
      if(cutId){
-        if( !((*it_mu)->globalTrack.numberOfValidTkHits   >10)   )reject = true;   
-        if( !((*it_mu)->globalTrack.numberOfValidMuonHits > 0)   )reject = true;  
-        if( !((*it_mu)->globalTrack.chi2n                 <10)   )reject = true;  
+        if( !( (*it_mu)->IsGlobalMuon && (*it_mu)->IsTrackerMuon ) ) reject = true; 
+        if( !( (*it_mu)->globalTrack.numberOfValidTkHits   >10)    ) reject = true;   
+        if( !( (*it_mu)->globalTrack.numberOfValidMuonHits > 0)    ) reject = true;  
+        if( !( (*it_mu)->globalTrack.chi2n                 <10)    ) reject = true;  
           } 
        
      if(reject) vmuon.erase(it_mu--); 
@@ -397,8 +399,10 @@ vector<LeptonPair*>   makeMllCut1 ( vector<LeptonPair*> pair ){
 
 vector<LeptonPair*>   makeMllCut2 ( vector<LeptonPair*> pair ){
     for(vector<LeptonPair*>::iterator itpair = pair.begin() ; itpair != pair.end() ; ++itpair){
-       if( fabs( (*itpair) -> getMll() - 91.1876 ) <= 15 ) pair.erase(itpair--);
-       }
+      if ( (*itpair)->type == "ee" || (*itpair)->type == "mm" ) {  
+        if( fabs( (*itpair) -> getMll() - 91.1876 ) <= 15 ) pair.erase(itpair--);
+      }  
+    }
    return pair;
    } 
  
@@ -406,12 +410,17 @@ vector<LeptonPair*>   makeMllCut2 ( vector<LeptonPair*> pair ){
 // -------- projected MET cut -------------------------------
 
 vector<LeptonPair*>   makeProjectedMetCut ( vector<LeptonPair*> pair, double met, double phimet){
-   
+
     bool reject=false;
     for(vector<LeptonPair*>::iterator itpair = pair.begin() ; itpair != pair.end() ; ++itpair){
-       
+/*    
+       // NEW   
        if(   ( ((*itpair)->getProjectedMet(met,phimet) < 35 )    &&  ((*itpair)->type == "ee"  ||  (*itpair)->type == "mm") )      
            ||( ((*itpair)->getProjectedMet(met,phimet) < 20 )    &&  ((*itpair)->type == "em"  ||  (*itpair)->type == "me") )  )   reject=true;  
+*/
+       if( (*itpair)->getProjectedMet(met,phimet) < 20 ) reject=true; 
+       if( (met < 45) && ( (*itpair)->type == "ee"  ||  (*itpair)->type == "mm" ) ) reject=true; 
+
        if(reject)pair.erase(itpair--) ;
        }
     return pair;
@@ -438,14 +447,14 @@ vector<MyJet*> makeJetCleaning(vector<MyJet*> jet, vector<MyElectron*>& ele, vec
      
      for(vector<MyJet*>::iterator itj = jet.begin() ; itj != jet.end() ; ++itj){
      	bool fakejet = false;
-	bool reject;
+	bool reject  = false;
 	for(vector<MyElectron*>::iterator itele = ele.begin() ; itele != ele.end() ; ++itele){    
             if(deltaR((*itj)->eta,(*itele)->eta,(*itj)->phi,(*itele)->phi)< dR )fakejet=true;       
             }
 	for(vector<MyMuon*>::iterator itmu = muo.begin() ; itmu != muo.end() ; ++itmu){    
             if(deltaR((*itj)->eta,(*itmu)->eta,(*itj)->phi,(*itmu)->phi)< dR )fakejet=true;       
             }
-        if((*itj)->pt<ptmax || fabs( (*itj)->eta )>eta || (!fakejet))reject=true;
+        if((*itj)->pt<ptmax || fabs( (*itj)->eta )>eta || (fakejet))reject=true;
 	
 	if(reject) jet.erase(itj--); 
         }
@@ -500,20 +509,23 @@ LeptonPair* findBestPair(vector<LeptonPair*>& pair, string type){
 
 
 
-//----------  Soft Extra Muon Collection ----------    
+//----------  Soft Extra Muon Collection ----------    muons
 
 
 
 
 vector<MyMuon*>  RemoveBestPairFromMuons(vector<MyMuon*>& muo ,vector<LeptonPair*>& pair, string type){ 
-      bool reject=false;
       vector<MyMuon*> *muons = new vector<MyMuon*>();
       LeptonPair* bestpair = new LeptonPair();
       bestpair = findBestPair(pair,type);
+      //cout << "  ****  START  ***** " <<endl; 
+      //cout << "  bestpair : " << bestpair <<  " " << bestpair->type << endl ;
       for(vector<MyMuon*>::iterator itm = muo.begin() ; itm != muo.end() ; ++itm){ 
-         if( bestpair->isInside(**itm) )reject=true;
+         bool reject = false;
+         if( bestpair->isInside(*itm) )reject=true;
 	 if(!reject) muons->push_back(*itm); 
 	 }
+      //if (bestpair->type == "mm" && type=="mm" ) { cout << "Muon all : " << muo.size()  <<" Muon outside pair: " << muons->size() << endl;}
       return *muons;
       }
  
@@ -529,7 +541,7 @@ vector<MyMuon*>  RemoveBestPairFromMuons(vector<MyMuon*>& muo ,vector<LeptonPair
 	      || !( (*itm)->IsTrackerMuon)
 	      || !( (*itm)->TMOneStationAngTight)
 	      || !( (*itm)->globalTrack.numberOfValidTkHits   >10)
-	      || !( fabs( (*itm)->globalTrack.vtxdxy.at(vtxId))<0.2 )  ) reject = true;
+	      || !( fabs( (*itm)->innerTrack.vtxdxy.at(vtxId))<0.2 )  ) reject = true;
                
           if(reject) extrasoftmuons->erase(itm--); 
       }
@@ -562,12 +574,12 @@ vector<MyMuon*>  RemoveBestPairFromMuons(vector<MyMuon*>& muo ,vector<LeptonPair
 
 
 vector<MyElectron*>  RemoveBestPairFromElectrons(vector<MyElectron*>& ele ,vector<LeptonPair*>& pair, string type){ 
-      bool reject=false;
       vector<MyElectron*> *electrons = new vector<MyElectron*>();
       LeptonPair* bestpair = new LeptonPair();
       bestpair = findBestPair(pair,type);
       for(vector<MyElectron*>::iterator ite = ele.begin() ; ite != ele.end() ; ++ite){ 
-         if( bestpair->isInside(**ite) )reject=true;
+         bool reject=false;
+         if( bestpair->isInside(*ite) )reject=true;
 	 if(!reject) electrons->push_back(*ite); 
 	 }
       return *electrons;
@@ -597,7 +609,7 @@ vector<MyElectron*> ElectronsCleaning(vector<MyElectron*> velec, vector<MyMuon*>
 
 vector<MyElectron*>  ExtraElectrons(vector<MyElectron*>& ele ,  vector<LeptonPair*>& pair, int vtxId, string type){ 
       vector<MyElectron*>* extraelectrons = new vector<MyElectron*>();
-        *extraelectrons = RemoveBestPairFromElectrons(ele,pair,type);
+      *extraelectrons = RemoveBestPairFromElectrons(ele,pair,type);
       *extraelectrons = ElectronFilter(*extraelectrons,vtxId, true, true, true, true,10);
       return *extraelectrons;	   
      } 
