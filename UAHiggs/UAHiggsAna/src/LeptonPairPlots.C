@@ -68,10 +68,11 @@ void LeptonPairPlots::init(){
 void LeptonPairPlots::fill(LeptonPair& leptonPair, double met , double metphi ,double weight){
 
     vector<LeptonPair*> *pair = new vector<LeptonPair*>();
-    (*pair).push_back(&LeptonPair);
+    (*pair).push_back(&leptonPair);
     fill(*pair,met,metphi,weight);
  
 }
+
 
 void LeptonPairPlots::fill(vector<LeptonPair*>& LeptonPaircoll, double met , double metphi , double weight){
    

@@ -39,6 +39,8 @@ using namespace std;
 #include "src/MuonPlots.C"
 #include "include/LeptonPair.h"
 #include "src/LeptonPair.C"
+#include "include/LeptonPairPlots.h"
+#include "src/LeptonPairPlots.C"
 #include "include/LinkDef.h"
 
 

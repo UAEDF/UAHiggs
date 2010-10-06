@@ -1,3 +1,7 @@
+
+#ifndef __LeptonPairPlots_H__
+#define __LeptonPairPlots_H__
+
 #include "TObject.h"
 #include "TH1F.h"
 #include "TH2F.h"
