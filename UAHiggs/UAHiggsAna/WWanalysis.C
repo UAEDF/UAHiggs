@@ -128,8 +128,8 @@ int main(){
   double HLT_DoubleMu0=0;
   double HLT_DoubleMu3=0;
   double HLT_L1SingleEG5=0;
-  double HLT_Ele15_SW_EleId_L1R=0;
-  double HLT_Ele15_LW_EleId_L1R=0;
+//  double HLT_Ele15_SW_EleId_L1R=0;
+  double HLT_Ele15_LW_L1R=0;
   double HLT_Ele15_SiStrip_L1R=0;
   
   
@@ -333,7 +333,7 @@ int main(){
       rootTree         -> SetBranchAddress("L1Trig",&l1trig);
       rootTree         -> SetBranchAddress("HLTrig",&hltrig);
  //     rootTree         -> SetBranchAddress("GenKin",&genkin);
-      rootTree         -> SetBranchAddress("GenPart",&genpart);
+  //    rootTree         -> SetBranchAddress("GenPart",&genpart);
  //     rootTree         -> SetBranchAddress("GenElec",&genelec);
  //     rootTree         -> SetBranchAddress("GenMu",&genmu);
  //   rootTree         -> SetBranchAddress("GenNu",&gennu);
@@ -506,8 +506,8 @@ int main(){
        if(hltrig->HLTmap["HLT_DoubleMu0"])         HLT_DoubleMu0+=weight;
        if(hltrig->HLTmap["HLT_DoubleMu3"])         HLT_DoubleMu3+=weight;
        if(hltrig->HLTmap["HLT_L1SingleEG5"])       HLT_L1SingleEG5+=weight;
-       if(hltrig->HLTmap["HLT_Ele15_SW_EleId_L1R"])HLT_Ele15_SW_EleId_L1R+=weight;
-       if(hltrig->HLTmap["HLT_Ele15_LW_EleId_L1R"])HLT_Ele15_LW_EleId_L1R+=weight;
+    //   if(hltrig->HLTmap["HLT_Ele15_SW_EleId_L1R"])HLT_Ele15_SW_EleId_L1R+=weight;
+       if(hltrig->HLTmap["HLT_Ele15_LW_L1R"])      HLT_Ele15_LW_L1R+=weight;
        if(hltrig->HLTmap["HLT_Ele15_SiStrip_L1R"]) HLT_Ele15_SiStrip_L1R +=weight;
        
        
@@ -535,7 +535,7 @@ int main(){
        
        bool hltok=false;
        
-       if(hltrig->HLTmap["HLT_Mu9"] || hltrig->HLTmap["HLT_Ele15_LW_EleId_L1R"])hltok=true;   //loose HLT for now ...
+       if(hltrig->HLTmap["HLT_Mu9"] || hltrig->HLTmap["HLT_Ele15_LW_L1R"])hltok=true;   //loose HLT for now ...
       
           if(hltok){
 	    hltpassed += weight;
@@ -1079,8 +1079,8 @@ int main(){
     cout<< " HLT_DoubleMu0=          "<<HLT_DoubleMu0/nevanalyzed    <<endl;
     cout<< " HLT_DoubleMu3=          "<<HLT_DoubleMu3/nevanalyzed    <<endl;
     cout<< " HLT_L1SingleEG5=        "<<HLT_L1SingleEG5/nevanalyzed    <<endl;
-    cout<< " HLT_Ele15_SW_EleId_L1R= "<<HLT_Ele15_SW_EleId_L1R/nevanalyzed    <<endl;
-    cout<< " HLT_Ele15_LW_EleId_L1R= "<<HLT_Ele15_LW_EleId_L1R/nevanalyzed    <<endl;
+ //   cout<< " HLT_Ele15_SW_EleId_L1R= "<<HLT_Ele15_SW_EleId_L1R/nevanalyzed    <<endl;
+    cout<< " HLT_Ele15_LW_L1R=       "<<HLT_Ele15_LW_L1R/nevanalyzed    <<endl;
     cout<< " HLT_Ele15_SiStrip_L1R=  "<<HLT_Ele15_SiStrip_L1R/nevanalyzed    <<endl;
        
     
