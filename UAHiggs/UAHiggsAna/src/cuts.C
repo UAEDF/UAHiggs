@@ -292,6 +292,7 @@ bool order (LeptonPair*  i,LeptonPair* j)  {
 
 bool sameSign = false;
 
+
 vector<LeptonPair*>* MakeLeptonPairVector(vector<MyElectron*>& velec, vector<MyMuon*>& vmuon){
   
   vector<LeptonPair*>  *pairvector     = new vector<LeptonPair*>;
@@ -357,6 +358,7 @@ vector<LeptonPair*>* MakeLeptonPairVector(vector<MyElectron>& velec, vector<MyMu
     vector<MyElectron*>  *elec     = new vector<MyElectron*>;
     vector<MyMuon*>      *muon     = new vector<MyMuon    *>;
     
+
     vector<LeptonPair*>  *pairvector     = new vector<LeptonPair*>;
     
     
@@ -450,7 +452,12 @@ vector<MyJet*> makeJetCleaning(vector<MyJet*> jet, vector<MyElectron*>& ele, vec
 	bool reject  = false;
 	for(vector<MyElectron*>::iterator itele = ele.begin() ; itele != ele.end() ; ++itele){    
             if(deltaR((*itj)->eta,(*itele)->eta,(*itj)->phi,(*itele)->phi)< dR )fakejet=true;       
-            }
+     //       cout<<"e"<<deltaR((*itj)->eta,(*itele)->eta,(*itj)->phi,(*itele)->phi)<<endl;
+	    }
+	
+	
+	
+	
 	for(vector<MyMuon*>::iterator itmu = muo.begin() ; itmu != muo.end() ; ++itmu){    
             if(deltaR((*itj)->eta,(*itmu)->eta,(*itj)->phi,(*itmu)->phi)< dR )fakejet=true;       
             }
@@ -511,7 +518,17 @@ LeptonPair* findBestPair(vector<LeptonPair*>& pair, string type){
 
 //----------  Soft Extra Muon Collection ----------    muons
 
-
+vector<MyMuon*>  KeepBestPairFromMuons(vector<MyMuon*>& muo ,vector<LeptonPair*>& pair, string type){ 
+      vector<MyMuon*> *muons = new vector<MyMuon*>();
+      LeptonPair* bestpair = new LeptonPair();
+      bestpair = findBestPair(pair,type);
+      for(vector<MyMuon*>::iterator itm = muo.begin() ; itm != muo.end() ; ++itm){ 
+         bool reject=true;
+         if( bestpair->isInside(*itm) )reject=false;
+	 if(!reject) muons->push_back(*itm); 
+	 }
+      return *muons;
+      }
 
 
 vector<MyMuon*>  RemoveBestPairFromMuons(vector<MyMuon*>& muo ,vector<LeptonPair*>& pair, string type){ 
@@ -540,7 +557,7 @@ vector<MyMuon*>  RemoveBestPairFromMuons(vector<MyMuon*>& muo ,vector<LeptonPair
 	   if(    !( (*itm)->pt>3)
 	      || !( (*itm)->IsTrackerMuon)
 	      || !( (*itm)->TMOneStationAngTight)
-	      || !( (*itm)->globalTrack.numberOfValidTkHits   >10)
+	      || !( (*itm)->innerTrack.numberOfValidTkHits   >10)
 	      || !( fabs( (*itm)->innerTrack.vtxdxy.at(vtxId))<0.2 )  ) reject = true;
                
           if(reject) extrasoftmuons->erase(itm--); 
@@ -568,7 +585,17 @@ vector<MyMuon*>  RemoveBestPairFromMuons(vector<MyMuon*>& muo ,vector<LeptonPair
 
 //   -----------------Clean Electrons ---------------------------------------------	     
 	     
-
+vector<MyElectron*>  KeepBestPairFromElectrons(vector<MyElectron*>& ele ,vector<LeptonPair*>& pair, string type){ 
+      vector<MyElectron*> *electrons = new vector<MyElectron*>();
+      LeptonPair* bestpair = new LeptonPair();
+      bestpair = findBestPair(pair,type);
+      for(vector<MyElectron*>::iterator ite = ele.begin() ; ite != ele.end() ; ++ite){ 
+         bool reject=true;
+         if( bestpair->isInside(*ite) )reject=false;
+	 if(!reject) electrons->push_back(*ite); 
+	 }
+      return *electrons;
+      }
 
 
 
