@@ -24,8 +24,8 @@ class LeptonPair : public TObject {
   MyMuon*     m1;
   MyMuon*     m2;
   
-  
   public :
+  
     LeptonPair(){;};
     virtual ~LeptonPair(){;};
     void fillLeptonPair(MyElectron& ele1,MyElectron& ele2);

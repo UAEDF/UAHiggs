@@ -303,7 +303,7 @@ int main(){
     int nev = int(rootTree->GetEntries());
     cout<<"number of entries is : "<<nev<<endl;
     
-  //  MyEvtId            *evtid                    = NULL ;
+      MyEvtId            *evtid                    = NULL ;
       MyL1Trig           *l1trig                   = NULL ;
       MyHLTrig           *hltrig                   = NULL ;
       MyGenKin           *genkin                   = NULL ;
@@ -331,7 +331,7 @@ int main(){
    
 
       rootTree         -> SetBranchAddress("offlinePrimaryVertices",&vertex);
-   // rootTree         -> SetBranchAddress("EvtId",&evtid);
+      rootTree         -> SetBranchAddress("EvtId",&evtid);
       rootTree         -> SetBranchAddress("L1Trig",&l1trig);
       rootTree         -> SetBranchAddress("HLTrig",&hltrig);
  //     rootTree         -> SetBranchAddress("GenKin",&genkin);
@@ -727,8 +727,15 @@ int main(){
 	  //-------------- Prepare Jet Collection------------------------------
 	  
 	  vector<MyJet*> *jetsCleaned = new vector<MyJet*>();
-	  *jetsCleaned = makeJetCleaning(*ak5pfjets,*electrons_id_all,*muons_id, 20, 3, 0.3);
-	 
+	  *jetsCleaned = makeJetCleaning(*ak5pfjets,*electrons_conversion_bfmcl,*muons_id, 20, 3, 0.3);
+	
+	  
+	  vector<MyJet*> *jetsCleaned_ee  = new vector<MyJet*>();
+	  vector<MyJet*> *jetsCleaned_mm  = new vector<MyJet*>();
+	  vector<MyJet*> *jetsCleaned_em  = new vector<MyJet*>();
+	  vector<MyJet*> *jetsCleaned_me  = new vector<MyJet*>();
+	  vector<MyJet*> *jetsCleaned_all = new vector<MyJet*>();
+	  
 	  
 	  // ------ Pt, Eta, Opposite charge requirement ------------------
       
@@ -758,7 +765,7 @@ int main(){
               
 	            iso_passed_all += weight;
 	            if( find(*pair_iso,"ee") )                          iso_passed_ee += weight;
-	            if( find(*pair_iso,"mm") )                          iso_passed_mm += weight;
+          	    if( find(*pair_iso,"mm") )                          iso_passed_mm += weight;
 	            if( find(*pair_iso,"em") )                          iso_passed_em += weight;
 	            if( find(*pair_iso,"me") )                          iso_passed_me += weight;
 	            if( find(*pair_iso,"em") || find(*pair_iso,"me") )  iso_passed_mixed += weight;  
@@ -825,7 +832,7 @@ int main(){
 			          
 			          *pair_mll2 = makeMllCut2(*pair_mll1);
 			      
-			          // -------------- Mll cut #2 -------------------------
+			          // -------------- Mll cuthttps://cms-mgt-conferences.web.cern.ch/cms-mgt-conferences/conferences/pres_display.aspx?cid=501&pid=2509 #2 -------------------------
 				
 				
 				  if ( pair_mll2->size() > 0  ){
@@ -855,9 +862,105 @@ int main(){
 				    
 				    
 				        // ---------------- Jet Veto -------------------------------
-				    
 				        
-	  				if ( jetsCleaned -> size() ==0 ) {
+					/* vector<MyElectron*> *ee = new vector<MyElectron*>;
+					 vector<MyMuon*> *mm = new vector<MyMuon*>;
+					
+					
+					 *ee = KeepBestPairFromElectrons(*electrons,*pair_pmet,"ee");
+					 *mm = KeepBestPairFromMuons(*muons,*pair_pmet,"ee");
+       				         *jetsCleaned_ee = makeJetCleaning(*ak5pfjets,*ee,*mm, 20, 3, 0.3);
+				         ee->clear();
+				         mm->clear();
+				        
+					 *ee = KeepBestPairFromElectrons(*electrons,*pair_pmet,"mm");
+					 *mm = KeepBestPairFromMuons(*muons,*pair_pmet,"mm");
+       				         *jetsCleaned_mm = makeJetCleaning(*ak5pfjets,*ee,*mm, 20, 3, 0.3);
+				         ee->clear();
+				         mm->clear();
+					 
+					 *ee = KeepBestPairFromElectrons(*electrons,*pair_pmet,"me");
+					 *mm = KeepBestPairFromMuons(*muons,*pair_pmet,"me");
+       				         *jetsCleaned_me = makeJetCleaning(*ak5pfjets,*ee,*mm, 20, 3, 0.3);
+				         ee->clear();
+				         mm->clear();	  				
+					
+					 *ee = KeepBestPairFromElectrons(*electrons,*pair_pmet,"em");
+					 *mm = KeepBestPairFromMuons(*muons,*pair_pmet,"em");
+       				         *jetsCleaned_em = makeJetCleaning(*ak5pfjets,*ee,*mm, 20, 3, 0.3);
+				         ee->clear();
+				         mm->clear();
+					
+					 delete mm;
+					 delete ee;
+					  if( find(*pair_pmet,"ee") ){
+					     cout<<"ak5 " <<jetsCleaned -> size()<<" ee "<<jetsCleaned_ee ->size()<<endl;
+					     if  ( jetsCleaned -> size() ==0 && 
+					        !( jetsCleaned_ee ->size()==0) ){
+					    
+					    cout<<"Run          : "<<evtid->Run<<endl;
+					    cout<<"LumiSect     : "<<evtid->LumiSect<<endl;
+					    cout<<"Event        : "<<evtid->Evt<<endl;
+					    
+					    for(vector<MyJet*>::iterator itj = jetsCleaned_ee->begin() ; itj != jetsCleaned_ee->end() ; ++itj){
+					    cout<<"======= Jets ==================================================="<<endl;
+					    cout<<" e                    "<<(*itj)->e <<endl;
+					    cout<<" pt                   "<<(*itj)->pt <<endl;
+					    cout<<" eta                  "<<(*itj)->eta <<endl;
+					    cout<<" phi                  "<<(*itj)->phi <<endl;
+					    cout<<" ChargedHadronEnergy  "<<(*itj)->ChargedHadronEnergy <<endl;
+					    cout<<" NeutralHadronEnergy  "<<(*itj)->NeutralHadronEnergy <<endl;
+					    cout<<" ChargedEmEnergy      "<<(*itj)->ChargedEmEnergy <<endl;
+					    cout<<" ChargedMuEnergy      "<<(*itj)->ChargedMuEnergy <<endl;
+					    cout<<" NeutralEmEnergy      "<<(*itj)->NeutralEmEnergy  <<endl;
+					    cout<<" ChargedMultiplicity  "<<(*itj)->ChargedMultiplicity <<endl;
+					    cout<<" NeutralMultiplicity  "<<(*itj)->NeutralMultiplicity <<endl;
+					    cout<<" MuonMultiplicity     "<<(*itj)->MuonMultiplicity <<endl;
+					    }
+					    cout<<"======= electrons ==================================================="<<endl;
+					    
+					    
+					    for(vector<MyElectron*>::iterator itele = electrons->begin() ; itele != electrons->end() ; ++itele){   	    
+					    cout<<"-------------------------"<<endl;
+					    cout<<" e                "<<(*itele)->e <<endl;
+					    cout<<" pt               "<<(*itele)->pt <<endl;
+					    cout<<" eta              "<<(*itele)->eta <<endl;
+					    cout<<" phi              "<<(*itele)->phi <<endl;
+					    cout<<" isoglobal        "<<((*itele)->TrackIsolationDr03+max(Double_t(0),(*itele)->EcalRecHitIsoDr03-1.0)+(*itele)->HcalTowerSumEtDr03)/(*itele)->pt <<endl;
+					    cout<<" HoE              "<<(*itele)->HadronicOverEm <<endl;
+					    cout<<" dPhi             "<<(*itele)->dPhiSupClusTrVtx <<endl;
+					    cout<<" dEta             "<<(*itele)->dEtaSupClusTrVtx <<endl;
+					    cout<<" Cov              "<<(*itele)->CoviEtaiEta <<endl;
+					    cout<<" ConvDcot         "<<(*itele)->dcot_conv <<endl;
+					    cout<<" ConvDist         "<<(*itele)->dist_conv <<endl;
+					    
+					    
+					    }
+					     
+					     }
+					     
+					     }
+					     
+					     
+					    
+					    
+					  */  
+					    
+					    
+					    
+					    
+					    
+					    // for(vector<MyJet*>::iterator itj = jet.begin() ; itj != jet.end() ; ++itj){
+					    //     cout<<
+					 	 
+						 
+						 
+						// }
+					    // for(vector<MyElectron*>::iterator itele = ele.begin() ; itele != ele.end() ; ++itele){   
+					         
+						// } 		
+					 
+					 if ( jetsCleaned -> size() ==0 ) {
         //                              if (       ak5pfjets -> size() ==0 ) {			
 	           
 					   jetveto_passed_all += weight;
@@ -867,6 +970,17 @@ int main(){
 	                                   if( find(*pair_pmet,"me") )                               jetveto_passed_me    += weight;
 	                                   if( find(*pair_pmet,"em") || find(*pair_pmet,"me") )      jetveto_passed_mixed += weight;  
 					   
+					/* 
+				         if((jetsCleaned_ee -> size() ==0) || (jetsCleaned_mm -> size() ==0) || (jetsCleaned_em -> size() ==0) || (jetsCleaned_me -> size() ==0) ){
+					   jetveto_passed_all += weight;
+					   if ( jetsCleaned_ee -> size() ==0 && find(*pair_pmet,"ee") )jetveto_passed_ee    += weight;
+					   if ( jetsCleaned_mm -> size() ==0 && find(*pair_pmet,"mm") )jetveto_passed_mm    += weight;
+					   if ( jetsCleaned_em -> size() ==0 && find(*pair_pmet,"em") )jetveto_passed_em    += weight;
+					   if ( jetsCleaned_me -> size() ==0 && find(*pair_pmet,"me") )jetveto_passed_me    += weight;
+					   
+					  */
+					   	
+	           
 					   
 					   // -------------Soft Muon Veto --------------------------------
 				           
@@ -961,6 +1075,11 @@ int main(){
           delete pair_id;
           delete pair_conv;
           delete jetsCleaned;
+          delete jetsCleaned_ee;
+          delete jetsCleaned_mm;
+          delete jetsCleaned_em;
+          delete jetsCleaned_me;
+          delete jetsCleaned_all;
           delete pair_mll1;
           delete pair_mll2;
           delete pair_pmet;
