@@ -558,6 +558,7 @@ vector<MyMuon*>  RemoveBestPairFromMuons(vector<MyMuon*>& muo ,vector<LeptonPair
 	      || !( (*itm)->IsTrackerMuon)
 	      || !( (*itm)->TMOneStationAngTight)
 	      || !( (*itm)->innerTrack.numberOfValidTkHits   >10)
+              || !( (*itm)->innerTrack.numberOfValidPixelHits >0)
 	      || !( fabs( (*itm)->innerTrack.vtxdxy.at(vtxId))<0.2 )  ) reject = true;
                
           if(reject) extrasoftmuons->erase(itm--); 
