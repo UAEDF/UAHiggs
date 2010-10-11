@@ -48,7 +48,7 @@ class LeptonPair : public TObject {
     
     bool isInside(MyMuon*);
     bool isInside(MyElectron*);
-    void Print();
+    void PrintPair(int);
     
     string type;
 
