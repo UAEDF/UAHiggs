@@ -172,14 +172,6 @@ Double_t LeptonPair::getPhiMax(){
  }
  
  
- 
- 
- 
- 
- 
- 
- 
- 
  Double_t LeptonPair::getProjectedMet(double met, double metphi){
    double pmet=0;
    double dphi = min( deltaphi( metphi,this->getPhiMax()) , deltaphi(metphi,this->getPhiMin()) );
@@ -208,6 +200,10 @@ void LeptonPair::Print() {
   cout << "Eta min,max,pair   : " << this->getEtaMin() << " " << this->getEtaMax() << " " << this->get4v().Eta() << endl;
   cout << "Phi min,max,pair   : " << this->getPhiMin() << " " << this->getPhiMax() << " " << this->get4v().Phi() << endl;
   cout << "Mll , Deta, Dphi   : " << this->getMll()    << " " << this->getDeltaEta() << " " << this->getDeltaPhi() << endl; 
+  if (this->type == "ee") { this->e1->Print();  this->e2->Print() ; }
+  if (this->type == "em") { this->e1->Print();  this->m2->Print() ; }
+  if (this->type == "me") { this->m1->Print();  this->e2->Print() ; }
+  if (this->type == "mm") { this->m1->Print();  this->m2->Print() ; }
   cout << "------------------------------------------------------------" << endl;
 
 }
