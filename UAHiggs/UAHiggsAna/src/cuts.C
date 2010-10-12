@@ -171,20 +171,10 @@ bool bigger(MyElectron*  i,MyElectron* j)  {
 
 
 
-MyElectron*  HighestPtElectron(vector<MyElectron*> velec){
-             return *max_element(velec.begin(),velec.end(),bigger);
-	       }
+//MyElectron*  HighestPtElectron(vector<MyElectron*> velec){
+//             return *max_element(velec.begin(),velec.end(),bigger);
+//	       }
 
-
-MyElectron*  HighestPtElectron(vector<MyElectron>& velec){
-               vector<MyElectron*>  *elec     = new vector<MyElectron*>;
-               MyElectron  *elec_out;
-	       for(vector<MyElectron>::iterator it_ele = velec.begin() ; it_ele != velec.end() ; ++it_ele){
-                  (*elec).push_back(&*it_ele);
-    	          }
-               elec_out = HighestPtElectron(*elec);
-               return elec_out;
-             }
 
 
 
@@ -477,13 +467,13 @@ vector<MyJet*> makeJetCleaning(vector<MyJet>& jet,
 			       double dR)
 						       
                                                        { 
-    vector<MyJet*>  *jetn     = new vector<MyJet*>;
+    vector<MyJet*>  *jetin     = new vector<MyJet*>;
     vector<MyJet*>  *jetout   = new vector<MyJet*>;
     
     for(vector<MyJet>::iterator itj = jet.begin() ; itj != jet.end() ; ++itj){
-        (*jetn).push_back(&*itj);
+        (*jetin).push_back(&*itj);
     	}
-    *jetout = makeJetCleaning(*jetn,ele,muo,ptmax,eta,dR);
+    *jetout = makeJetCleaning(*jetin,ele,muo,ptmax,eta,dR);
     return *jetout;
     }
    
@@ -670,3 +660,197 @@ vector<MyMuon*> subs(vector<MyMuon*> mu1, vector<MyMuon*> mu2){
            }
 	return mu2;		     
 	}	     
+
+
+
+//// ==================================    GENPARTS =================================================================
+
+
+
+vector<MyGenPart*> GenPartFilter(vector<MyGenPart*> vpart, 
+						     bool cutPtEta = true, 
+						     Double_t ptcut=20,
+						     Double_t etacut=2.5)
+						     {
+   
+    for(vector<MyGenPart*>::iterator itp = vpart.begin() ; itp != vpart.end() ; ++itp){
+      bool reject = false;
+      if(cutPtEta){
+      // ------------------Pt, Eta cuts -----------------------
+     
+     
+        if( !( (*itp)->pt        > ptcut)        )    reject = true; 
+        if( !( fabs((*itp)->eta) < etacut)       )    reject = true;}
+       
+     if(reject) vpart.erase(itp--); 
+     }
+  
+  return vpart;
+}
+
+vector<MyGenPart*> GenPartFilter(vector<MyGenPart>& vpart,
+                                                     bool cutPtEta = true, 
+						     double ptcut=20,
+						     Double_t etacut=2.5
+						     )
+                                                       { 
+    vector<MyGenPart*>  *part     = new vector<MyGenPart*>;
+    vector<MyGenPart*>  *part_out = new vector<MyGenPart*>;
+    
+    for(vector<MyGenPart>::iterator itp = vpart.begin() ; itp != vpart.end() ; ++itp){
+        (*part).push_back(&*itp);
+    	}
+    *part_out = GenPartFilter(*part,cutPtEta,ptcut,etacut);
+    return *part_out;
+    }
+
+
+
+
+
+
+
+
+//--------------------------- Make Vector of GenLepton Pairs ---------------------
+
+
+bool ordergen (GenLeptonPair*  i,GenLeptonPair* j)  { 
+     
+     if(i->getPtMax() >  j->getPtMax() )return true; 
+     if(i->getPtMax() == j->getPtMax() )return i->getPtMin() > j->getPtMin(); 
+     else return false;
+     }
+
+
+
+
+
+vector<GenLeptonPair*>* MakeGenLeptonPairVector(vector<MyGenPart*>& velec, vector<MyGenPart*>& vmuon, string ps){
+  
+  vector<GenLeptonPair*>  *pairvector     = new vector<GenLeptonPair*>;
+  
+  //  ------make electron-electron pairs ---------
+  int i=0;
+  int j=0;
+  for(vector<MyGenPart*>::iterator itele1 = velec.begin() ; itele1 != velec.end() ; ++itele1){
+     i++;j=0;
+     for(vector<MyGenPart*>::iterator itele2 = velec.begin() ; itele2 != velec.end() ; ++itele2){
+         j++;
+	 if(i<j){
+	    if( (*itele1)->charge == - (*itele2)->charge){
+	       GenLeptonPair* pair = new GenLeptonPair();
+	    //   cout<<"===================="<<endl;
+	    //   cout<<pair->isPrimary_ee<<" "<<ps<< endl;
+	       pair -> setPrimaryState(ps);
+	    //   cout<<pair->isPrimary_ee<<endl;
+	       if( (*itele1)->pt > (*itele2)->pt ) pair->fillGenLeptonPair(**itele1,**itele2);
+	       else                                pair->fillGenLeptonPair(**itele2,**itele1);
+	       pairvector->push_back(pair);
+	       } 
+	    }
+         }
+    }
+   //  ------make muon-muon pairs ---------
+   i=0;j=0;
+   for(vector<MyGenPart*>::iterator itmu1 = vmuon.begin() ; itmu1 != vmuon.end() ; ++itmu1){
+     i++;j=0;
+     for(vector<MyGenPart*>::iterator itmu2 = vmuon.begin() ; itmu2 != vmuon.end() ; ++itmu2){
+         j++;
+	 if(i<j){
+	    if( (*itmu1)->charge == - (*itmu2)->charge){
+	       GenLeptonPair* pair = new GenLeptonPair();
+	       pair -> setPrimaryState(ps);
+	       if( (*itmu1)->pt > (*itmu2)->pt ) pair->fillGenLeptonPair(**itmu1,**itmu2);
+	       else                              pair->fillGenLeptonPair(**itmu2,**itmu1);
+	       pairvector->push_back(pair);
+	      }
+	    } 
+	 }
+      }
+  
+  //  ------make electron-muon  and muon-electron pairs ---------
+  
+   for(vector<MyGenPart*>::iterator itele = velec.begin() ; itele!= velec.end() ; ++itele){
+      for(vector<MyGenPart*>::iterator itmu = vmuon.begin() ; itmu != vmuon.end() ; ++itmu){
+         if( (*itele)->charge == - (*itmu)->charge){
+	       GenLeptonPair* pair = new GenLeptonPair();
+	       pair -> setPrimaryState(ps);
+	       if( (*itele)->pt > (*itmu)->pt ) pair->fillGenLeptonPair(**itele,**itmu);
+	       else                             pair->fillGenLeptonPair(**itmu,**itele);
+	//       cout << "Pair Pointors : " << *itele << " " << *itmu << endl;
+	       pairvector->push_back(pair);
+	       }
+	    } 
+	 }
+  
+  sort(pairvector->begin(), pairvector->end(),ordergen); 
+  return pairvector;
+  
+  }
+
+
+
+ //---- overload the makepair function ---------------------
+
+vector<GenLeptonPair*>* MakeGenLeptonPairVector(vector<MyGenPart>& velec, vector<MyGenPart>& vmuon, string ps){
+
+    vector<MyGenPart*>      *elec     = new vector<MyGenPart*>;
+    vector<MyGenPart*>      *muon     = new vector<MyGenPart*>;
+    
+
+    vector<GenLeptonPair*>  *pairvector     = new vector<GenLeptonPair*>;
+    
+    
+    for(vector<MyGenPart>::iterator it_ele = velec.begin() ; it_ele != velec.end() ; ++it_ele){
+        (*elec).push_back(&*it_ele);
+    	}
+    for(vector<MyGenPart>::iterator it_mu = vmuon.begin() ; it_mu != vmuon.end() ; ++it_mu){
+        (*muon).push_back(&*it_mu);
+    	}
+   // cout<<ps<<endl; 
+    pairvector = MakeGenLeptonPairVector(*elec,*muon,ps);
+    return pairvector;
+    }  
+    
+    
+    
+// ----- Find type in a vector of Lepton Pairs ----------------------
+   
+   
+   
+bool find ( vector<GenLeptonPair*>& pair, string finalstate){
+   bool found = false;
+   for(vector<GenLeptonPair*>::iterator itpair = pair.begin() ; itpair != pair.end() ; ++itpair){
+      if( (*itpair) -> type == finalstate) found = true;
+      }
+   return found;
+   }
+
+
+//------------ find best pair in vector of gen lepton pairs    -------------------------
+
+
+GenLeptonPair* findBestGenPair(vector<GenLeptonPair*>& pair){
+      GenLeptonPair* bestpair = new GenLeptonPair();
+      if(pair.size()!=0)bestpair = pair.at(0);
+      return bestpair;
+     }
+
+
+GenLeptonPair* findBestGenPair(vector<GenLeptonPair*>& pair, string type){
+      bool found = false;
+      GenLeptonPair* bestpair = new GenLeptonPair();
+      for(vector<GenLeptonPair*>::iterator itpair = pair.begin() ; itpair != pair.end() ; ++itpair){
+	  if( (*itpair) -> type == type ){
+	    found = true;
+	    bestpair = (*itpair);
+	    break;          
+            }
+      }
+     return bestpair;
+     }
+
+
+
+
+

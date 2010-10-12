@@ -84,11 +84,31 @@ class MuonPlots : public TObject {
      
      TH1F *  d0; 
     
-     TH1F* nTrackerHits;
-     TH1F* nMuonHits; 
-     TH1F* chi2Track;
+    
+    // Track Properties
+     
+     TH1F* InnerTrackPixelHits;
+     TH1F* InnerTrackStripHits; 
+     TH1F* InnerTrackchi2;
+     TH1F* InnerTrackPt;
+     TH1F* OuterTrackMuonHits;
+     TH1F* OuterTrackchi2;
+     TH1F* OuterTrackPt;
+     TH1F* GlobalTrackPixelHits;
+     TH1F* GlobalTrackStripHits; 
+     TH1F* GlobalTrackMuonHits;  
+     TH1F* GlobalTrackTotalHits;  
+     TH1F* GlobalTrackchi2;
+     TH1F* GlobalTrackPt;
    
-   
+     
+     
+     
+     
+     
+     
+     
+     
      void init();
      void fill(vector<MyMuon*>& , double = 1., int =1 );
      void fill(vector<MyMuon>& , double = 1., int =1 );

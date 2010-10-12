@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -31,6 +32,7 @@ using namespace std;
 #include "include/MyMuon.h"
 #include "include/MyMET.h"
 
+#include "src/PrintTools.C"
 #include "include/GenPartPlots.h"
 #include "src/GenPartPlots.C"
 #include "include/ElectronPlots.h"
@@ -39,8 +41,12 @@ using namespace std;
 #include "src/MuonPlots.C"
 #include "include/LeptonPair.h"
 #include "src/LeptonPair.C"
+#include "include/GenLeptonPair.h"
+#include "src/GenLeptonPair.C"
 #include "include/LeptonPairPlots.h"
 #include "src/LeptonPairPlots.C"
+#include "include/GenLeptonPairPlots.h"
+#include "src/GenLeptonPairPlots.C"
 #include "include/LinkDef.h"
 
 
@@ -100,6 +106,18 @@ int main(){
   double nevanalyzed=0;
   double hltpassed=0;
 
+  
+  
+  double nmu5    =0;
+  double nel5    =0;
+  double nmu10   =0;
+  double nel10   =0;
+  double npair5  =0;
+  double npair10 =0;
+ 
+  
+  
+  
   
   // ------------ L1 Trigger ---------------------
   
@@ -258,20 +276,7 @@ int main(){
   cout<<"===> Output txt file    : "<<OutputTextFile<<endl;
 
 
-  GenPartPlots* genlep_Iinc          = new GenPartPlots("genlep_Iinc"); 
-  GenPartPlots* genlep_Iinc_emu      = new GenPartPlots("genlep_Iinc_emu"); 
-  GenPartPlots* genlep_I_ee          = new GenPartPlots("genlep_I_ee"); 
-  GenPartPlots* genlep_I_mumu        = new GenPartPlots("genlep_I_mumu"); 
-  GenPartPlots* genlep_I_emu         = new GenPartPlots("genlep_I_emu"); 
-  GenPartPlots* genlep_I_tautau      = new GenPartPlots("genlep_I_tautau"); 
-  
-  GenPartPlots* genlep_IIIinc         = new GenPartPlots("genlep_III"); 
-  GenPartPlots* genlep_IIIinc_emu     = new GenPartPlots("genlep_IIIinc_emu"); 
-  GenPartPlots* genlep_III_ee         = new GenPartPlots("genlep_III_ee"); 
-  GenPartPlots* genlep_III_mumu       = new GenPartPlots("genlep_III_mumu"); 
-  GenPartPlots* genlep_III_emu        = new GenPartPlots("genlep_III_emu"); 
-  GenPartPlots* genlep_III_tautau     = new GenPartPlots("genlep_III_tautau"); 
-  
+ 
   ElectronPlots* electrons_noCut          = new ElectronPlots("electrons_noCut");
   ElectronPlots* electrons_PtEtaCut       = new ElectronPlots("electrons_PtEtaCut");
   ElectronPlots* electrons_d0Cut          = new ElectronPlots("electrons_d0Cut");
@@ -289,9 +294,95 @@ int main(){
   MuonPlots*     muons_d0Cut         = new MuonPlots("muons_d0Cut");
   MuonPlots*     muons_IsoCut        = new MuonPlots("muons_IsoCut");
   MuonPlots*     muons_IdCut         = new MuonPlots("muons_IdCut");
-    
   
   
+  LeptonPairPlots*  pair_noCut_ee       = new LeptonPairPlots("noCut_ee");
+  LeptonPairPlots*  pair_noCut_mm       = new LeptonPairPlots("noCut_mm");
+  LeptonPairPlots*  pair_noCut_em       = new LeptonPairPlots("noCut_em");
+  LeptonPairPlots*  pair_noCut_me       = new LeptonPairPlots("noCut_me");
+  LeptonPairPlots*  pair_noCut_mixed    = new LeptonPairPlots("noCut_ee");
+  LeptonPairPlots*  pair_noCut_all      = new LeptonPairPlots("noCut_all");
+  
+  LeptonPairPlots*  pair_ptEtaCut_ee       = new LeptonPairPlots("ptEtaCut_ee");
+  LeptonPairPlots*  pair_ptEtaCut_mm       = new LeptonPairPlots("ptEtaCut_mm");
+  LeptonPairPlots*  pair_ptEtaCut_em       = new LeptonPairPlots("ptEtaCut_em");
+  LeptonPairPlots*  pair_ptEtaCut_me       = new LeptonPairPlots("ptEtaCut_me");
+  LeptonPairPlots*  pair_ptEtaCut_mixed    = new LeptonPairPlots("ptEtaCut_ee");
+  LeptonPairPlots*  pair_ptEtaCut_all      = new LeptonPairPlots("ptEtaCut_all");
+  
+  LeptonPairPlots*  pair_d0Cut_ee       = new LeptonPairPlots("d0Cut_ee");
+  LeptonPairPlots*  pair_d0Cut_mm       = new LeptonPairPlots("d0Cut_mm");
+  LeptonPairPlots*  pair_d0Cut_em       = new LeptonPairPlots("d0Cut_em");
+  LeptonPairPlots*  pair_d0Cut_me       = new LeptonPairPlots("d0Cut_me");
+  LeptonPairPlots*  pair_d0Cut_mixed    = new LeptonPairPlots("d0Cut_ee");
+  LeptonPairPlots*  pair_d0Cut_all      = new LeptonPairPlots("d0Cut_all");
+  
+  LeptonPairPlots*  pair_IsoCut_ee       = new LeptonPairPlots("IsoCut_ee");
+  LeptonPairPlots*  pair_IsoCut_mm       = new LeptonPairPlots("IsoCut_mm");
+  LeptonPairPlots*  pair_IsoCut_em       = new LeptonPairPlots("IsoCut_em");
+  LeptonPairPlots*  pair_IsoCut_me       = new LeptonPairPlots("IsoCut_me");
+  LeptonPairPlots*  pair_IsoCut_mixed    = new LeptonPairPlots("IsoCut_ee");
+  LeptonPairPlots*  pair_IsoCut_all      = new LeptonPairPlots("IsoCut_all");
+
+  LeptonPairPlots*  pair_IdCut_ee       = new LeptonPairPlots("IdCut_ee");
+  LeptonPairPlots*  pair_IdCut_mm       = new LeptonPairPlots("IdCut_mm");
+  LeptonPairPlots*  pair_IdCut_em       = new LeptonPairPlots("IdCut_em");
+  LeptonPairPlots*  pair_IdCut_me       = new LeptonPairPlots("IdCut_me");
+  LeptonPairPlots*  pair_IdCut_mixed    = new LeptonPairPlots("IdCut_ee");
+  LeptonPairPlots*  pair_IdCut_all      = new LeptonPairPlots("IdCut_all");
+
+  LeptonPairPlots*  pair_ConvCut_ee       = new LeptonPairPlots("ConvCut_ee");
+  LeptonPairPlots*  pair_ConvCut_mm       = new LeptonPairPlots("ConvCut_mm");
+  LeptonPairPlots*  pair_ConvCut_em       = new LeptonPairPlots("ConvCut_em");
+  LeptonPairPlots*  pair_ConvCut_me       = new LeptonPairPlots("ConvCut_me");
+  LeptonPairPlots*  pair_ConvCut_mixed    = new LeptonPairPlots("ConvCut_ee");
+  LeptonPairPlots*  pair_ConvCut_all      = new LeptonPairPlots("ConvCut_all");
+
+  
+   
+  
+  GenLeptonPairPlots*  genpair_ee_nocut       = new GenLeptonPairPlots("genpair_ee_nocut");
+  GenLeptonPairPlots*  genpair_mm_nocut       = new GenLeptonPairPlots("genpair_mm_nocut");
+  GenLeptonPairPlots*  genpair_em_nocut       = new GenLeptonPairPlots("genpair_em_nocut");
+  GenLeptonPairPlots*  genpair_me_nocut       = new GenLeptonPairPlots("genpair_me_nocut");
+  GenLeptonPairPlots*  genpair_mixed_nocut    = new GenLeptonPairPlots("genpair_mixed_nocut");
+  GenLeptonPairPlots*  genpair_all_nocut      = new GenLeptonPairPlots("genpair_all_nocut");
+  
+  GenLeptonPairPlots*  genpair_ee_nofromtau_nocut       = new GenLeptonPairPlots("genpair_ee_nofromtau_nocut");
+  GenLeptonPairPlots*  genpair_mm_nofromtau_nocut       = new GenLeptonPairPlots("genpair_mm_nofromtau_nocut");
+  GenLeptonPairPlots*  genpair_em_nofromtau_nocut       = new GenLeptonPairPlots("genpair_em_nofromtau_nocut");
+  GenLeptonPairPlots*  genpair_me_nofromtau_nocut       = new GenLeptonPairPlots("genpair_me_nofromtau_nocut");
+  GenLeptonPairPlots*  genpair_mixed_nofromtau_nocut    = new GenLeptonPairPlots("genpair_mixed_nofromtau_nocut");
+  GenLeptonPairPlots*  genpair_all_nofromtau_nocut      = new GenLeptonPairPlots("genpair_all_nofromtau_nocut");
+  
+  GenLeptonPairPlots*  genpair_ee_fromtau_nocut       = new GenLeptonPairPlots("genpair_ee_fromtau_nocut");
+  GenLeptonPairPlots*  genpair_mm_fromtau_nocut       = new GenLeptonPairPlots("genpair_mm_fromtau_nocut");
+  GenLeptonPairPlots*  genpair_em_fromtau_nocut       = new GenLeptonPairPlots("genpair_em_fromtau_nocut");
+  GenLeptonPairPlots*  genpair_me_fromtau_nocut       = new GenLeptonPairPlots("genpair_me_fromtau_nocut");
+  GenLeptonPairPlots*  genpair_mixed_fromtau_nocut    = new GenLeptonPairPlots("genpair_mixed_fromtau_nocut");
+  GenLeptonPairPlots*  genpair_all_fromtau_nocut      = new GenLeptonPairPlots("genpair_all_fromtau_nocut");  
+  
+  GenLeptonPairPlots*  genpair_ee_pteta       = new GenLeptonPairPlots("genpair_ee_pteta");
+  GenLeptonPairPlots*  genpair_mm_pteta       = new GenLeptonPairPlots("genpair_mm_pteta");
+  GenLeptonPairPlots*  genpair_em_pteta       = new GenLeptonPairPlots("genpair_em_pteta");
+  GenLeptonPairPlots*  genpair_me_pteta       = new GenLeptonPairPlots("genpair_me_pteta");
+  GenLeptonPairPlots*  genpair_mixed_pteta    = new GenLeptonPairPlots("genpair_mixed_pteta");
+  GenLeptonPairPlots*  genpair_all_pteta      = new GenLeptonPairPlots("genpair_all_pteta");
+  
+  GenLeptonPairPlots*  genpair_ee_nofromtau_pteta       = new GenLeptonPairPlots("genpair_ee_nofromtau_pteta");
+  GenLeptonPairPlots*  genpair_mm_nofromtau_pteta       = new GenLeptonPairPlots("genpair_mm_nofromtau_pteta");
+  GenLeptonPairPlots*  genpair_em_nofromtau_pteta       = new GenLeptonPairPlots("genpair_em_nofromtau_pteta");
+  GenLeptonPairPlots*  genpair_me_nofromtau_pteta       = new GenLeptonPairPlots("genpair_me_nofromtau_pteta");
+  GenLeptonPairPlots*  genpair_mixed_nofromtau_pteta    = new GenLeptonPairPlots("genpair_mixed_nofromtau_pteta");
+  GenLeptonPairPlots*  genpair_all_nofromtau_pteta      = new GenLeptonPairPlots("genpair_all_nofromtau_pteta");
+  
+  GenLeptonPairPlots*  genpair_ee_fromtau_pteta       = new GenLeptonPairPlots("genpair_ee_fromtau_pteta");
+  GenLeptonPairPlots*  genpair_mm_fromtau_pteta       = new GenLeptonPairPlots("genpair_mm_fromtau_pteta");
+  GenLeptonPairPlots*  genpair_em_fromtau_pteta       = new GenLeptonPairPlots("genpair_em_fromtau_pteta");
+  GenLeptonPairPlots*  genpair_me_fromtau_pteta       = new GenLeptonPairPlots("genpair_me_fromtau_pteta");
+  GenLeptonPairPlots*  genpair_mixed_fromtau_pteta    = new GenLeptonPairPlots("genpair_mixed_fromtau_pteta");
+  GenLeptonPairPlots*  genpair_all_fromtau_pteta      = new GenLeptonPairPlots("genpair_all_fromtau_pteta");  
+
   int nf=0;
   string filename;
   while(ConfigFile>>filename && filename!="EOF"){
@@ -327,17 +418,17 @@ int main(){
    // vector<MyMET>      *calomet                  = NULL ;
       vector<MyMET>      *tcmet                    = NULL ;
   //  vector<MyMET>      *pfmet                    = NULL ;
-  //  vector<MyGenMET>   *genmet                   = NULL ;
+      vector<MyGenMET>   *genmet                   = NULL ;
    
 
       rootTree         -> SetBranchAddress("offlinePrimaryVertices",&vertex);
       rootTree         -> SetBranchAddress("EvtId",&evtid);
       rootTree         -> SetBranchAddress("L1Trig",&l1trig);
       rootTree         -> SetBranchAddress("HLTrig",&hltrig);
- //     rootTree         -> SetBranchAddress("GenKin",&genkin);
-  //    rootTree         -> SetBranchAddress("GenPart",&genpart);
- //     rootTree         -> SetBranchAddress("GenElec",&genelec);
- //     rootTree         -> SetBranchAddress("GenMu",&genmu);
+      rootTree         -> SetBranchAddress("GenKin",&genkin);
+      rootTree         -> SetBranchAddress("GenPart",&genpart);
+      rootTree         -> SetBranchAddress("GenElec",&genelec);
+      rootTree         -> SetBranchAddress("GenMu",&genmu);
  //   rootTree         -> SetBranchAddress("GenNu",&gennu);
  //   rootTree         -> SetBranchAddress("ak5CaloJets",&ak5calojets);
       rootTree         -> SetBranchAddress("ak5PFJets",&ak5pfjets);
@@ -353,7 +444,7 @@ int main(){
  //   rootTree         -> SetBranchAddress("met",&calomet);
      rootTree         -> SetBranchAddress("tcMet",&tcmet);
  //   rootTree	     -> SetBranchAddress("pfMet",&pfmet);
- //   rootTree	     -> SetBranchAddress("genMetTrue",&genmet);
+     rootTree	     -> SetBranchAddress("genMetTrue",&genmet);
     
     
     
@@ -372,29 +463,15 @@ int main(){
       weight=kfactor;
       weight*=DataSampleWeight;    //have to run once to get this
       nevanalyzed += weight;
-        //------------- Control Plots at Gen Level ------------------------
-        
-       vector<MyGenPart> *allGenLeptonsIinc        = new vector<MyGenPart>();
-       vector<MyGenPart> *allGenLeptonsIinc_emu    = new vector<MyGenPart>();
-       vector<MyGenPart> *allGenLeptonsI_ee        = new vector<MyGenPart>();
-       vector<MyGenPart> *allGenLeptonsI_mumu      = new vector<MyGenPart>();
-       vector<MyGenPart> *allGenLeptonsI_emu       = new vector<MyGenPart>();
-       vector<MyGenPart> *allGenLeptonsI_tautau    = new vector<MyGenPart>();
       
-       vector<MyGenPart> *allGenLeptonsIIIinc      = new vector<MyGenPart>();
-       vector<MyGenPart> *allGenLeptonsIIIinc_emu  = new vector<MyGenPart>();
-       vector<MyGenPart> *allGenLeptonsIII_ee      = new vector<MyGenPart>();
-       vector<MyGenPart> *allGenLeptonsIII_mumu    = new vector<MyGenPart>();
-       vector<MyGenPart> *allGenLeptonsIII_emu     = new vector<MyGenPart>();
-       vector<MyGenPart> *allGenLeptonsIII_tautau  = new vector<MyGenPart>();
+      bool leptonic = false;   
+      string fs;
+      int ne =0;
+      int nm =0;
+      int nt =0;
       
-        
-      int n_e=0,n_mu=0,n_tau = 0;  
-      int n_e_or_mu=0;
-      
-   /*   for(vector<MyGenPart>::iterator itgen=genpart->begin();itgen!=genpart->end();itgen++){
-      if(itgen->name=="W+") {
-	//  cout<<"name      : "<<itgen->name    <<endl;
+        /*
+       cout<<"name      : "<<itgen->name    <<endl;
        cout<<"pdgID     : "<<itgen->pdgId   <<endl;
        cout<<"status    : "<<itgen->status    <<endl;
        cout<<"uniqueId  : "<<itgen->fUniqueID <<endl;
@@ -402,104 +479,158 @@ int main(){
        cout<<"mother2   : "<<itgen->mo2   <<endl;
        cout<<"daughter1 : "<<itgen->da1   <<endl;
        cout<<"daughter2 : "<<itgen->da2   <<endl;
-       
        cout<<"mass      : "<<itgen->m       <<endl;
        cout<<"eta       : "<<itgen->eta     <<endl;
-     //  cout<<"y         : "<<Y              <<endl;
+       cout<<"y         : "<<Y              <<endl;
        cout<<"pt        : "<<itgen->pt      <<endl;
        cout<<"e         : "<<itgen->e       <<endl;
-      // cout<<"p         : "<<P              <<endl;
+       cout<<"p         : "<<P              <<endl;
        cout<<"px        : "<<itgen->px      <<endl;
        cout<<"py        : "<<itgen->py      <<endl;
        cout<<"pz        : "<<itgen->pz      <<endl;
        cout<<"                            "<<endl;
        cout<<" ---------------------------"<<endl;
-       cout<<"                            "<<endl;
-	}
-       }
-	if(fabs(itgen->pdgId) == 11) {
-           n_e++;
-	   allGenLeptonsI_ee->push_back(*itgen);
-           allGenLeptonsI_emu->push_back(*itgen);
-	   }
-	if(fabs(itgen->pdgId) == 13) {
-           n_mu++;
-	   allGenLeptonsI_mumu->push_back(*itgen);
-           allGenLeptonsI_emu->push_back(*itgen);
-	   }
-        if(fabs(itgen->pdgId) == 15) {
-	   n_tau++;
-	   allGenLeptonsI_tautau->push_back(*itgen);
-           }
-        if(fabs(itgen->pdgId) == 11 || fabs(itgen->pdgId) == 13 ){
-	   n_e_or_mu++;
-	   allGenLeptonsIinc_emu->push_back(*itgen);
-	   }
-	if(fabs(itgen->pdgId) == 11 || fabs(itgen->pdgId) == 13 || fabs(itgen->pdgId) == 15) {
-           allGenLeptonsIinc->push_back(*itgen);
-           }
-      
-        }
-	
-	                              genlep_Iinc         -> fill(*allGenLeptonsIinc       ,weight);
-	if(n_e_or_mu ==2)             genlep_Iinc_emu     -> fill(*allGenLeptonsIinc_emu   ,weight);
-	if(n_e==1 && n_mu==1)         genlep_I_emu        -> fill(*allGenLeptonsI_emu      ,weight);
-	if(n_e       ==2)             genlep_I_ee         -> fill(*allGenLeptonsI_ee       ,weight);
-	if(n_mu      ==2)             genlep_I_mumu       -> fill(*allGenLeptonsI_mumu     ,weight);
-	if(n_tau     ==2)             genlep_I_tautau     -> fill(*allGenLeptonsI_tautau   ,weight);
+       cout<<"                            "<<endl;*/
+    
+   //    vector<MyGenPart*> *genmuons_I             = new vector<MyGenPart*>();
+   //    vector<MyGenPart*> *genelectrons_I         = new vector<MyGenPart*>();
+    
+    
+       for(vector<MyGenPart>::iterator itgen=genpart->begin();itgen!=genpart->end();itgen++){
+         
 	 
+	 if(fabs(itgen->pdgId) == 11) ne++;
+         if(fabs(itgen->pdgId) == 13) nm++;
+         if(fabs(itgen->pdgId) == 15) nt++;
+	 }
 	
-        for(vector<MyGenPart>::iterator itgenelec=genelec->begin();itgenelec!=genelec->end();itgenelec++){
-                               allGenLeptonsIIIinc            ->push_back(*itgenelec);
-        if(n_e_or_mu==2)       allGenLeptonsIIIinc_emu        ->push_back(*itgenelec);
-	if(n_e     ==2)        allGenLeptonsIII_ee            ->push_back(*itgenelec);
-	if(n_mu    ==2)        allGenLeptonsIII_mumu          ->push_back(*itgenelec);
-	if(n_e==1 && n_mu==1)  allGenLeptonsIII_emu           ->push_back(*itgenelec);
-	if(n_tau==2)           allGenLeptonsIII_tautau        ->push_back(*itgenelec);
-	  }
-        
-	for(vector<MyGenPart>::iterator itgenmu=genmu->begin();itgenmu!=genmu->end();itgenmu++){
-                               allGenLeptonsIIIinc            ->push_back(*itgenmu);
-        if(n_e_or_mu==2)       allGenLeptonsIIIinc_emu        ->push_back(*itgenmu);
-	if(n_e     ==2)        allGenLeptonsIII_ee            ->push_back(*itgenmu);
-	if(n_mu    ==2)        allGenLeptonsIII_mumu          ->push_back(*itgenmu);
-	if(n_e==1 && n_mu==1)  allGenLeptonsIII_emu           ->push_back(*itgenmu);
-	if(n_tau==2)           allGenLeptonsIII_tautau        ->push_back(*itgenmu);
-	}
-        
-	                            genlep_IIIinc         -> fill(*allGenLeptonsIIIinc       ,weight);
-	if(n_e_or_mu ==2)           genlep_IIIinc_emu     -> fill(*allGenLeptonsIIIinc_emu   ,weight);
-	if(n_e==1 && n_mu==1)       genlep_III_emu        -> fill(*allGenLeptonsIII_emu      ,weight);
-	if(n_e       ==2)           genlep_III_ee         -> fill(*allGenLeptonsIII_ee       ,weight);
-	if(n_mu      ==2)           genlep_III_mumu       -> fill(*allGenLeptonsIII_mumu     ,weight);
-	if(n_tau     ==2)           genlep_III_tautau     -> fill(*allGenLeptonsIII_tautau   ,weight);*/
-	
+       
+       if( ne == 2 )                  {fs="ee";leptonic = true;}
+       if( nm == 2 )                  {fs="mm";leptonic = true;}
+       if( nt == 2 )                  {fs="tt";leptonic = true;}
+       if( ne == 1 && nm ==1 )        {fs="em";leptonic = true;}
+       if( ne == 1 && nt ==1 )        {fs="et";leptonic = true;}
+       if( nm == 1 && nt ==1 )        {fs="mt";leptonic = true;}
+       if( !leptonic ) fs="nl"; 
+    //   cout << ne << " " <<nm<<" "<<nt<< " leptonic "<<leptonic<<endl;
+      
+      
+      
+      
+      
+       // ------------ GenMet definition --------------------------  
+	  
+	double genMet=0;
+	double genMetPhi=0;
+	double genMetx=0;
+	double genMety=0;
+	for(vector<MyGenMET>::iterator itmet=genmet->begin();itmet!=genmet->end();itmet++){
+	   genMet=itmet->pt;
+	   genMetPhi=itmet->phi;
+	   genMetx=itmet->pt * cos(itmet->phi);
+	   genMety=itmet->pt * sin(itmet->phi);
+	   }
+      
+      
+      /// ----------------   Make Gen LeptonPairs ----------------------------
+   //   if(fs=="ee"){
+   //   cout<<"-------------------------------------------"<<endl;
+  //    cout<<" electron vector size "<<genelec->size()<<endl;
+      
+      vector<GenLeptonPair*> *genLeptonPair_nocut       = new vector<GenLeptonPair*>;
+      vector<GenLeptonPair*> *genLeptonPair_pteta       = new vector<GenLeptonPair*>;
+      
+      vector<MyGenPart*> *genmuons_nocut             = new vector<MyGenPart*>();
+      vector<MyGenPart*> *genmuons_pteta             = new vector<MyGenPart*>();
+      
+      vector<MyGenPart*> *genelectrons_nocut         = new vector<MyGenPart*>();
+      vector<MyGenPart*> *genelectrons_pteta         = new vector<MyGenPart*>();
+      
+      *genmuons_nocut           = GenPartFilter(*genmu,false,10,2.4);
+      *genmuons_pteta           = GenPartFilter(*genmu,true ,10,2.4);
+      
+      *genelectrons_nocut       = GenPartFilter(*genelec,false,10,2.5);
+      *genelectrons_pteta       = GenPartFilter(*genelec,true ,10,2.5);
+      
+      genLeptonPair_nocut        = MakeGenLeptonPairVector(*genelectrons_nocut,*genmuons_nocut,fs);
+      genLeptonPair_pteta        = MakeGenLeptonPairVector(*genelectrons_pteta,*genmuons_pteta,fs);
+      
+       
+      GenLeptonPair *bestGenPair_nocut = new GenLeptonPair;
+      GenLeptonPair *bestGenPair_pteta = new GenLeptonPair;
+      
+      
+       bestGenPair_nocut = findBestGenPair(*genLeptonPair_nocut);
+       bestGenPair_pteta = findBestGenPair(*genLeptonPair_pteta);
+   
+   
+   
+       if( bestGenPair_nocut->type =="ee" && leptonic)   genpair_ee_nocut     -> fill(*bestGenPair_nocut,genMet,genMetPhi,weight );
+      if( bestGenPair_nocut->type =="mm" && leptonic)   genpair_mm_nocut     -> fill(*bestGenPair_nocut,genMet,genMetPhi,weight );
+      if( bestGenPair_nocut->type =="em" && leptonic)   genpair_em_nocut     -> fill( *bestGenPair_nocut,genMet,genMetPhi,weight );
+      if( bestGenPair_nocut->type =="me" && leptonic)   genpair_me_nocut     -> fill(*bestGenPair_nocut,genMet,genMetPhi,weight );
+      if((bestGenPair_nocut->type =="em" ||  
+          bestGenPair_nocut->type =="me") && leptonic)  genpair_mixed_nocut  -> fill(*bestGenPair_nocut,genMet,genMetPhi,weight );
+      if( bestGenPair_nocut->type !="none" && leptonic) genpair_all_nocut    -> fill( *bestGenPair_nocut,genMet,genMetPhi,weight);
+    
+      
+      if( bestGenPair_nocut->type =="ee" && (fs=="tt" || fs=="et" || fs=="mt") )   genpair_ee_fromtau_nocut     -> fill( *bestGenPair_nocut,genMet,genMetPhi,weight );
+      if( bestGenPair_nocut->type =="mm" && (fs=="tt" || fs=="et" || fs=="mt") )   genpair_mm_fromtau_nocut     -> fill( *bestGenPair_nocut,genMet,genMetPhi,weight );
+      if( bestGenPair_nocut->type =="em" && (fs=="tt" || fs=="et" || fs=="mt") )   genpair_em_fromtau_nocut     -> fill( *bestGenPair_nocut,genMet,genMetPhi,weight );
+      if( bestGenPair_nocut->type =="me" && (fs=="tt" || fs=="et" || fs=="mt") )   genpair_me_fromtau_nocut     -> fill( *bestGenPair_nocut,genMet,genMetPhi,weight );
+      if((bestGenPair_nocut->type =="em" ||  bestGenPair_nocut->type =="me") 
+       && (fs=="tt" || fs=="et" || fs=="mt"))                                      genpair_mixed_fromtau_nocut  -> fill( *bestGenPair_nocut,genMet,genMetPhi,weight );
+      if( bestGenPair_nocut->type !="none" &&  leptonic && (fs=="tt" || fs=="et" || fs=="mt") )   genpair_all_fromtau_nocut   -> fill( *bestGenPair_nocut,genMet,genMetPhi,weight );
+   
+      
+      
+      if( bestGenPair_nocut->type =="ee" && !(fs=="tt" || fs=="et" || fs=="mt") && leptonic)    genpair_ee_nofromtau_nocut     -> fill( *bestGenPair_nocut,genMet,genMetPhi,weight );
+      if( bestGenPair_nocut->type =="mm" && !(fs=="tt" || fs=="et" || fs=="mt") && leptonic )   genpair_mm_nofromtau_nocut     -> fill( *bestGenPair_nocut,genMet,genMetPhi,weight );
+      if( bestGenPair_nocut->type =="em" && !(fs=="tt" || fs=="et" || fs=="mt") )               genpair_em_nofromtau_nocut     -> fill( *bestGenPair_nocut,genMet,genMetPhi,weight );
+      if( bestGenPair_nocut->type =="me" && !(fs=="tt" || fs=="et" || fs=="mt") )               genpair_me_nofromtau_nocut     -> fill( *bestGenPair_nocut,genMet,genMetPhi,weight );
+      if((bestGenPair_nocut->type =="em" || bestGenPair_nocut->type =="me") 
+       && !(fs=="tt" || fs=="et" || fs=="mt") && leptonic)                                      genpair_mixed_nofromtau_nocut  -> fill( *bestGenPair_nocut,genMet,genMetPhi,weight );
+      if( bestGenPair_nocut->type !="none" && leptonic && !(fs=="tt" || fs=="et" || fs=="mt") )                                     genpair_all_nofromtau_nocut   -> fill( *bestGenPair_nocut,genMet,genMetPhi,weight );
+   
+  
+      if( bestGenPair_pteta->type =="ee" && leptonic)                                           genpair_ee_pteta     -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
+      if( bestGenPair_pteta->type =="mm" && leptonic)                                           genpair_mm_pteta     -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
+      if( bestGenPair_pteta->type =="em" && leptonic)                                           genpair_em_pteta     -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
+      if( bestGenPair_pteta->type =="me" && leptonic)                                           genpair_me_pteta     -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
+      if((bestGenPair_pteta->type =="em" ||  
+          bestGenPair_pteta->type =="me") && leptonic)                                          genpair_mixed_pteta  -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
+      if(  bestGenPair_pteta->type !="none" && leptonic)                                        genpair_all_pteta    -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
+    
+      
+      if( bestGenPair_pteta->type =="ee" && (fs=="tt" || fs=="et" || fs=="mt") )                 genpair_ee_fromtau_pteta     -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
+      if( bestGenPair_pteta->type =="mm" && (fs=="tt" || fs=="et" || fs=="mt") )                 genpair_mm_fromtau_pteta     -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
+      if( bestGenPair_pteta->type =="em" && (fs=="tt" || fs=="et" || fs=="mt") )                 genpair_em_fromtau_pteta     -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
+      if( bestGenPair_pteta->type =="me" && (fs=="tt" || fs=="et" || fs=="mt") )                 genpair_me_fromtau_pteta     -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
+      if((bestGenPair_pteta->type =="em" ||  bestGenPair_pteta->type =="me") 
+       && (fs=="tt" || fs=="et" || fs=="mt"))                                                    genpair_mixed_fromtau_pteta  -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
+      if( bestGenPair_pteta->type !="none" && leptonic && (fs=="tt" || fs=="et" || fs=="mt") )                                       genpair_all_fromtau_pteta    -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
+   
+      
+      
+      if( bestGenPair_pteta->type =="ee" && !(fs=="tt" || fs=="et" || fs=="mt") && leptonic)     genpair_ee_nofromtau_pteta     -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
+      if( bestGenPair_pteta->type =="mm" && !(fs=="tt" || fs=="et" || fs=="mt") && leptonic )    genpair_mm_nofromtau_pteta     -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
+      if( bestGenPair_pteta->type =="em" && !(fs=="tt" || fs=="et" || fs=="mt") )                genpair_em_nofromtau_pteta     -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
+      if( bestGenPair_pteta->type =="me" && !(fs=="tt" || fs=="et" || fs=="mt") )                genpair_me_nofromtau_pteta     -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
+      if((bestGenPair_pteta->type =="em" || bestGenPair_pteta->type =="me") 
+       && !(fs=="tt" || fs=="et" || fs=="mt") && leptonic)                                       genpair_mixed_nofromtau_pteta  -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
+      if( bestGenPair_pteta->type !="none" && leptonic && !(fs=="tt" || fs=="et" || fs=="mt") )  genpair_all_nofromtau_pteta    -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
+   
  
- 
- //    cout <<"-----------------------------------------------------"<<endl;
-     
-       delete  allGenLeptonsIinc         ;
-       delete  allGenLeptonsIinc_emu     ;
-       delete  allGenLeptonsI_ee         ; 
-       delete  allGenLeptonsI_mumu       ;
-       delete  allGenLeptonsI_emu        ;
-       delete  allGenLeptonsI_tautau     ;
-      
-       delete  allGenLeptonsIIIinc       ;
-       delete  allGenLeptonsIIIinc_emu   ;
-       delete  allGenLeptonsIII_ee       ;
-       delete  allGenLeptonsIII_mumu     ;
-       delete  allGenLeptonsIII_emu      ;
-       delete  allGenLeptonsIII_tautau   ;
       
       
-      // ------------- DATA  ------Event Selection ------------------
+      // ------vector<MyMuon*> *muons       = new vector<MyMuon*>();------- DATA  ------Event Selection ------------------
         
        int vtxId = getBestVertex(vertex);
     
        
        
        // -------- Trigger Count ------------------------
+       
        if(hltrig->HLTmap["HLT_L1MuOpen"])          HLT_L1MuOpen+=weight;
        if(hltrig->HLTmap["HLT_L1Mu"])              HLT_L1Mu+=weight;
        if(hltrig->HLTmap["HLT_Mu5"])               HLT_Mu5+=weight;
@@ -514,7 +645,7 @@ int main(){
        
        
        if(l1trig->L1map["L1_SingleMuOpen"]) L1_SingleMuOpen+=weight;
-       if(l1trig->L1map["L1_SingleMu0"])    L1_SingleMu0+=weight;
+       if(l1trig->L1map["L1_SingleMu0*muons_ptEta = MuonFilter(*muons,vtxId, true, false, false, false);"])    L1_SingleMu0+=weight;
        if(l1trig->L1map["L1_SingleMu3"])    L1_SingleMu3+=weight;
        if(l1trig->L1map["L1_SingleMu7"])    L1_SingleMu7+=weight;
        if(l1trig->L1map["L1_SingleMu20"])   L1_SingleMu20+=weight;
@@ -527,9 +658,31 @@ int main(){
        if(l1trig->L1map["L1_SingleEG20"])   L1_SingleEG20+=weight;
        if(l1trig->L1map["L1_DoubleEG5"])    L1_DoubleEG5+=weight;
        
+       // ---------- Make lepton preselection collection --------------------
        
-     
        
+       vector<MyMuon*> *muons_pt5                      = new vector<MyMuon*>();
+       vector<MyMuon*> *muons_pt10                     = new vector<MyMuon*>();
+       vector<MyElectron*> *electrons_bfmcl_pt5        = new vector<MyElectron*>();
+       vector<MyElectron*> *electrons_bfmcl_pt10       = new vector<MyElectron*>();
+	       
+       *muons_pt5                  = MuonFilter(*muons_raw,vtxId, false, false, false, false,5);
+       *muons_pt10                 = MuonFilter(*muons_raw,vtxId, false, false, false, false,10);
+       *electrons_bfmcl_pt5        = ElectronFilter(*electrons_raw,vtxId, false, false, false, false, false,0,5);
+       *electrons_bfmcl_pt10       = ElectronFilter(*electrons_raw,vtxId, false, false, false, false, false,0,10);
+	      
+       vector<LeptonPair*> *pair_pt5   = new vector<LeptonPair*>;
+       vector<LeptonPair*> *pair_pt10  = new vector<LeptonPair*>;
+         
+       pair_pt5   = MakeLeptonPairVector(*electrons_bfmcl_pt5, *muons_pt5);
+       pair_pt10  = MakeLeptonPairVector(*electrons_bfmcl_pt10,*muons_pt10);
+         
+       if( muons_pt5            -> size() > 0) nmu5     += weight;
+       if( muons_pt10           -> size() > 0) nmu10    += weight;
+       if( electrons_bfmcl_pt5  -> size() > 0) nel5     += weight;
+       if( electrons_bfmcl_pt10 -> size() > 0) nel10    += weight;
+       if( pair_pt5             -> size() > 0) npair5   += weight;
+       if( pair_pt10            -> size() > 0) npair10  += weight;
        
        
        
@@ -557,6 +710,10 @@ int main(){
             *muons_iso   = MuonFilter(*muons,vtxId, true, true, true, false);
             *muons_id    = MuonFilter(*muons,vtxId, true, true, true, true);
          
+	 
+	 
+	 
+	   
        
             //------------- Make Electrons collections ------------------------
        
@@ -596,7 +753,7 @@ int main(){
             vector<MyElectron*> *electrons_conversion = new vector<MyElectron*>();
        
 	    
-	    *electrons              = ElectronsCleaning(*electrons_bfmcl            , *muons);
+	    *electrons              = ElectronsCleaning(*electrons_bfmcl           , *muons);
 	    *electrons_ptEta        = ElectronsCleaning(*electrons_ptEta_bfmcl     , *muons_ptEta);
             *electrons_d0           = ElectronsCleaning(*electrons_d0_bfmcl        , *muons_d0);
             *electrons_iso_all      = ElectronsCleaning(*electrons_iso_all_bfmcl   , *muons_iso);
@@ -635,25 +792,9 @@ int main(){
             muons_IdCut    -> fill(*muons_id, weight, vtxId);
        
       
-            //--------- Highest pt lepton --------------------
-	   
-	   
-	   
-	   
-	   
-	   
-	   
+          
 	   // ------Lepton Pairs Creations --------------------------
       
-      
-          
-    
-    
-            //"  "<< pair_noCut->at(0)->type <<endl;
-          //  cout << "pteta cut size "<< pair_PtEta->size() <<endl;
-           // cout<<"-----------------------"<<endl;
-          //  << "  "<< pair_PtEta->at(0)->type <<endl;
-          // cout << "d0 size        "<< pair_d0   ->size() << "  "<< pair_d0   ->at(0)->type << endl;
       
        
           vector<LeptonPair*> *pair_noCut = new vector<LeptonPair*>;
@@ -692,37 +833,99 @@ int main(){
 	  vector<MyElectron*> *extraelectrons_me   = new vector<MyElectron*>();
 	  
 		  
+	// ------------ Met definition --------------------------  
 	  
-	/*   if (electrons_ptEta->size() >1) {   
-     
-           cout << "ele vector size    "<< electrons_ptEta->size() << endl;
-         //  cout << "muon vector size    "<< muons->size() << endl;
-           
-           for(vector<MyElectron*>::iterator it_ele = electrons_ptEta->begin() ; it_ele != electrons_ptEta->end() ; ++it_ele){
-              cout<< (*it_ele)->GsfTrack.vtxdxy.at(vtxId)<<"         "<<(*it_ele)->pt<<endl;
-              }
-      
-        //   for(vector<LeptonPair*>::iterator itpair = pair_ptEta->begin() ; itpair != pair_ptEta->end() ; ++itpair){
-         //  cout << (*itpair)->type  <<"       "<< (*itpair)->getPtMax() <<"       "<< (*itpair)->getPtMin() <<endl;
-         //  }
-           //     sort(pair_noCut->begin(),pair_noCut->end(),order);
-     
-           cout<<"-------------------------"<<endl;
-      
-           cout << "ele d0 vector size    "<< electrons_d0->size() << endl;
-           cout << "muon d0 vector size    "<< muons_d0->size() << endl;
-      
-        //   pair_ptEta = MakeLeptonPairVector(*electrons_ptEta, *muons_ptEta);
-           
-      
-           for(vector<LeptonPair*>::iterator itpair = pair_d0->begin() ; itpair != pair_d0->end() ; ++itpair){
-           cout << (*itpair)->type  <<"       "<< (*itpair)->getPtMax() <<"       "<< (*itpair)->getPtMin() <<endl;
-           }
-      
-           }
+	   double tcMet=0;
+	   double tcMetPhi=0;
+	   double tcMetx=0;
+	   double tcMety=0;
+	   for(vector<MyMET>::iterator itmet=tcmet->begin();itmet!=tcmet->end();itmet++){
+	      tcMet=itmet->pt;
+	      tcMetPhi=itmet->phi;
+	      tcMetx=itmet->pt * cos(itmet->phi);
+	      tcMety=itmet->pt * sin(itmet->phi);
+	      }
 	  
-	  cout <<" =========================================="<<endl;*/
 	  
+	  
+	  // ------- LeptonPair Plots ------------------------  
+	  
+	  
+	  LeptonPair *bestPair_nocut = new LeptonPair;
+          LeptonPair *bestPair_pteta = new LeptonPair;
+          LeptonPair *bestPair_d0    = new LeptonPair;
+          LeptonPair *bestPair_iso   = new LeptonPair;
+          LeptonPair *bestPair_id    = new LeptonPair;
+          LeptonPair *bestPair_conv  = new LeptonPair;
+         
+	  bestPair_nocut   = findBestPair(*pair_noCut);
+          bestPair_pteta   = findBestPair(*pair_ptEta);
+          bestPair_d0      = findBestPair(*pair_d0);
+          bestPair_iso     = findBestPair(*pair_iso);
+          bestPair_id      = findBestPair(*pair_id);
+          bestPair_conv    = findBestPair(*pair_conv);
+          
+	  
+	  if( bestPair_nocut->type =="ee" )   pair_noCut_ee     -> fill( *bestPair_nocut,tcMet,tcMetPhi,weight );
+          if( bestPair_nocut->type =="em" )   pair_noCut_em     -> fill( *bestPair_nocut,tcMet,tcMetPhi,weight );
+          if( bestPair_nocut->type =="me" )   pair_noCut_me     -> fill( *bestPair_nocut,tcMet,tcMetPhi,weight );
+          if( bestPair_nocut->type =="mm" )   pair_noCut_mm     -> fill( *bestPair_nocut,tcMet,tcMetPhi,weight );
+          if( bestPair_nocut->type =="em" 
+	   || bestPair_nocut->type =="me" )   pair_noCut_mixed  -> fill( *bestPair_nocut,tcMet,tcMetPhi,weight );
+          if( bestPair_nocut->type !="none" )   pair_noCut_all     -> fill( *bestPair_nocut,tcMet,tcMetPhi,weight );
+          
+	  
+	  if( bestPair_pteta->type =="ee" )   pair_ptEtaCut_ee     -> fill( *bestPair_pteta,tcMet,tcMetPhi,weight );
+          if( bestPair_pteta->type =="em" )   pair_ptEtaCut_em     -> fill( *bestPair_pteta,tcMet,tcMetPhi,weight );
+          if( bestPair_pteta->type =="me" )   pair_ptEtaCut_me     -> fill( *bestPair_pteta,tcMet,tcMetPhi,weight );
+          if( bestPair_pteta->type =="mm" )   pair_ptEtaCut_mm     -> fill( *bestPair_pteta,tcMet,tcMetPhi,weight );
+          if( bestPair_pteta->type =="em" 
+	   || bestPair_pteta->type =="me" )   pair_ptEtaCut_mixed  -> fill( *bestPair_pteta,tcMet,tcMetPhi,weight );
+          if( bestPair_pteta->type !="none" ) pair_ptEtaCut_all    -> fill( *bestPair_pteta,tcMet,tcMetPhi,weight );
+          
+	  
+	  if( bestPair_d0->type =="ee" )   pair_d0Cut_ee     -> fill( *bestPair_d0,tcMet,tcMetPhi,weight );
+          if( bestPair_d0->type =="em" )   pair_d0Cut_em     -> fill( *bestPair_d0,tcMet,tcMetPhi,weight );
+          if( bestPair_d0->type =="me" )   pair_d0Cut_me     -> fill( *bestPair_d0,tcMet,tcMetPhi,weight );
+          if( bestPair_d0->type =="mm" )   pair_d0Cut_mm     -> fill( *bestPair_d0,tcMet,tcMetPhi,weight );
+          if( bestPair_d0->type =="em" 
+	   || bestPair_d0->type =="me" )   pair_d0Cut_mixed  -> fill( *bestPair_d0,tcMet,tcMetPhi,weight );
+          if( bestPair_d0->type !="none" ) pair_d0Cut_all    -> fill( *bestPair_d0,tcMet,tcMetPhi,weight );
+          
+	  
+	  
+	  if( bestPair_iso->type =="ee" )   pair_IsoCut_ee     -> fill( *bestPair_iso,tcMet,tcMetPhi,weight );
+          if( bestPair_iso->type =="em" )   pair_IsoCut_em     -> fill( *bestPair_iso,tcMet,tcMetPhi,weight );
+          if( bestPair_iso->type =="me" )   pair_IsoCut_me     -> fill( *bestPair_iso,tcMet,tcMetPhi,weight );
+          if( bestPair_iso->type =="mm" )   pair_IsoCut_mm     -> fill( *bestPair_iso,tcMet,tcMetPhi,weight );
+          if( bestPair_iso->type =="em" 
+	   || bestPair_iso->type =="me" )   pair_IsoCut_mixed  -> fill( *bestPair_iso,tcMet,tcMetPhi,weight );
+          if( bestPair_iso->type !="none" ) pair_IsoCut_all    -> fill( *bestPair_iso,tcMet,tcMetPhi,weight );
+          
+	  
+	  if( bestPair_id->type =="ee" )   pair_IdCut_ee     -> fill( *bestPair_id,tcMet,tcMetPhi,weight );
+          if( bestPair_id->type =="em" )   pair_IdCut_em     -> fill( *bestPair_id,tcMet,tcMetPhi,weight );
+          if( bestPair_id->type =="me" )   pair_IdCut_me     -> fill( *bestPair_id,tcMet,tcMetPhi,weight );
+          if( bestPair_id->type =="mm" )   pair_IdCut_mm     -> fill( *bestPair_id,tcMet,tcMetPhi,weight );
+          if( bestPair_id->type =="em" 
+	   || bestPair_id->type =="me" )   pair_IdCut_mixed  -> fill( *bestPair_id,tcMet,tcMetPhi,weight );
+          if( bestPair_id->type !="none" ) pair_IdCut_all    -> fill( *bestPair_id,tcMet,tcMetPhi,weight );
+         
+	  
+	  
+	  if( bestPair_conv->type =="ee" )   pair_ConvCut_ee     -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
+          if( bestPair_conv->type =="em" )   pair_ConvCut_em     -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
+          if( bestPair_conv->type =="me" )   pair_ConvCut_me     -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
+          if( bestPair_conv->type =="mm" )   pair_ConvCut_mm     -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
+          if( bestPair_conv->type =="em" 
+	   || bestPair_conv->type =="me" )   pair_ConvCut_mixed  -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
+          if( bestPair_id->type !="none" )   pair_ConvCut_all    -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
+         
+	
+	
+	
+	
+	
 	  
 	  //-------------- Prepare Jet Collection------------------------------
 	  
@@ -789,16 +992,7 @@ int main(){
 	     
 	                 
 			  // ------------ MEt cut -------------------
-			  double tcMet=0;
-			  double tcMetPhi=0;
-			  double tcMetx=0;
-	                  double tcMety=0;
-			  for(vector<MyMET>::iterator itmet=tcmet->begin();itmet!=tcmet->end();itmet++){
-	                      tcMet=itmet->pt;
-	                      tcMetPhi=itmet->phi;
-			      tcMetx=itmet->pt * cos(itmet->phi);
-	                      tcMety=itmet->pt * sin(itmet->phi);
-			      }
+			 
 			 
 			  if ( tcMet > 20 ){
 			      
@@ -827,7 +1021,7 @@ int main(){
 			          
 			          *pair_mll2 = makeMllCut2(*pair_mll1);
 			      
-			          // -------------- Mll cuthttps://cms-mgt-conferences.web.cern.ch/cms-mgt-conferences/conferences/pres_display.aspx?cid=501&pid=2509 #2 -------------------------
+			          // -------------- Mll cut-------------------------
 				
 				
 				  if ( pair_mll2->size() > 0  ){
@@ -892,7 +1086,7 @@ int main(){
 					     
 					     
 					    
-					     *extramuons_ee           = ExtraMuons(*muons, *pair_pmet,vtxId,"ee");
+		 			     *extramuons_ee           = ExtraMuons(*muons, *pair_pmet,vtxId,"ee");
 					     *extramuons_mm           = ExtraMuons(*muons, *pair_pmet,vtxId,"mm");
 					     *extramuons_em           = ExtraMuons(*muons, *pair_pmet,vtxId,"em");
 					     *extramuons_me           = ExtraMuons(*muons, *pair_pmet,vtxId,"me");
@@ -930,6 +1124,9 @@ int main(){
 	            } // iso requirement 
 	        }   // d0 requirement
 	     }  // pt, eta , opposite charge cut
+	  
+	  
+	  
 	  
 	  delete electrons;
 	  delete electrons_ptEta;
@@ -978,9 +1175,27 @@ int main(){
 	  delete extraelectrons_me;
 	  delete extraelectrons_ee;
 	  delete extraelectrons_mm;
-	  
+	  delete bestPair_nocut ;
+          delete bestPair_pteta ;
+          delete bestPair_d0    ;
+          delete bestPair_iso   ;
+          delete bestPair_id    ;
+          delete bestPair_conv  ;
+         
 	 
 	  } // HLT requirement
+      
+      delete genLeptonPair_pteta;
+      delete bestGenPair_pteta;
+      
+      delete muons_pt5;
+      delete muons_pt10;
+      delete electrons_bfmcl_pt5;
+      delete electrons_bfmcl_pt10;
+      delete pair_pt5;
+      delete pair_pt10;
+          
+      
       }  //end event-loop
   
       
@@ -993,18 +1208,6 @@ int main(){
    
    TFile analysisfile(OutputRootFile.c_str(),"RECREATE");
    
-   genlep_Iinc          -> write();
-   genlep_Iinc_emu      -> write();
-   genlep_I_emu         -> write();
-   genlep_I_ee          -> write();
-   genlep_I_mumu        -> write();
-   genlep_I_tautau      -> write();
-   genlep_IIIinc        -> write();
-   genlep_IIIinc_emu    -> write();
-   genlep_III_emu       -> write();
-   genlep_III_ee        -> write();
-   genlep_III_mumu      -> write();
-   genlep_III_tautau    -> write();
    electrons_noCut           -> write();
    electrons_PtEtaCut        -> write();
    electrons_d0Cut           -> write();
@@ -1021,19 +1224,102 @@ int main(){
    muons_IsoCut            -> write();
    muons_IdCut             -> write();
    
-    
-   delete genlep_Iinc          ;
-   delete genlep_Iinc_emu      ;
-   delete genlep_I_emu         ;
-   delete genlep_I_ee          ;
-   delete genlep_I_mumu        ;
-   delete genlep_I_tautau      ;
-   delete genlep_IIIinc        ;
-   delete genlep_IIIinc_emu    ;
-   delete genlep_III_emu       ;
-   delete genlep_III_ee        ;
-   delete genlep_III_mumu      ;
-   delete genlep_III_tautau    ;
+  // pair_noCut_ee        ->write();
+ //  pair_ptEtaCut_ee     ->write(); 
+   
+   genpair_ee_nocut ->write();
+   genpair_mm_nocut ->write();
+   genpair_em_nocut ->write();
+   genpair_me_nocut ->write();
+   genpair_mixed_nocut ->write();
+   genpair_all_nocut ->write();
+   genpair_ee_fromtau_nocut ->write();
+   genpair_mm_fromtau_nocut ->write();
+   genpair_em_fromtau_nocut ->write();
+   genpair_me_fromtau_nocut ->write();
+   genpair_mixed_fromtau_nocut ->write();
+   genpair_all_fromtau_nocut ->write();
+   genpair_ee_nofromtau_nocut ->write();
+   genpair_mm_nofromtau_nocut ->write();
+   genpair_em_nofromtau_nocut ->write();
+   genpair_me_nofromtau_nocut ->write();
+   genpair_mixed_nofromtau_nocut ->write();
+   genpair_all_nofromtau_nocut ->write();
+ 
+ 
+   genpair_ee_pteta ->write();
+   genpair_mm_pteta ->write();
+   genpair_em_pteta ->write();
+   genpair_me_pteta ->write();
+   genpair_mixed_pteta ->write();
+   genpair_all_pteta ->write();
+   genpair_ee_fromtau_pteta ->write();
+   genpair_mm_fromtau_pteta ->write();
+   genpair_em_fromtau_pteta ->write();
+   genpair_me_fromtau_pteta ->write();
+   genpair_mixed_fromtau_pteta ->write();
+   genpair_all_fromtau_pteta ->write();
+   genpair_ee_nofromtau_pteta ->write();
+   genpair_mm_nofromtau_pteta ->write();
+   genpair_em_nofromtau_pteta ->write();
+   genpair_me_nofromtau_pteta ->write();
+   genpair_mixed_nofromtau_pteta ->write();
+   genpair_all_nofromtau_pteta ->write();
+ 
+
+
+   pair_noCut_ee      -> write();
+   pair_noCut_mm       -> write();
+   pair_noCut_em       -> write();
+   pair_noCut_me       -> write();
+   pair_noCut_mixed    -> write();
+   pair_noCut_all      -> write();
+  
+   pair_ptEtaCut_ee       -> write();
+   pair_ptEtaCut_mm       -> write();
+   pair_ptEtaCut_em       -> write();
+   pair_ptEtaCut_me       -> write();
+   pair_ptEtaCut_mixed    -> write();
+   pair_ptEtaCut_all      -> write();
+  
+   pair_d0Cut_ee       -> write();
+   pair_d0Cut_mm       -> write();
+   pair_d0Cut_em       -> write();
+   pair_d0Cut_me       -> write();
+   pair_d0Cut_mixed    -> write();
+   pair_d0Cut_all      -> write();
+  
+   pair_IsoCut_ee       -> write();
+   pair_IsoCut_mm       -> write();
+   pair_IsoCut_em       -> write();
+   pair_IsoCut_me       -> write();
+   pair_IsoCut_mixed    -> write();
+   pair_IsoCut_all      -> write();
+
+   pair_IdCut_ee       -> write();
+   pair_IdCut_mm       -> write();
+   pair_IdCut_em       -> write();
+   pair_IdCut_me       -> write();
+   pair_IdCut_mixed    -> write();
+   pair_IdCut_all      -> write();
+
+   pair_ConvCut_ee       -> write();
+   pair_ConvCut_mm       -> write();
+   pair_ConvCut_em       -> write();
+   pair_ConvCut_me       -> write();
+   pair_ConvCut_mixed    -> write();
+   pair_ConvCut_all      -> write();
+
+
+
+
+
+
+
+
+
+
+
    delete electrons_noCut         ;
    delete electrons_PtEtaCut      ;
    delete electrons_d0Cut         ;
@@ -1048,8 +1334,19 @@ int main(){
    delete muons_PtEtaCut          ;
    delete muons_d0Cut             ;
    delete muons_IsoCut            ;
-   delete  muons_IdCut            ;
+   delete muons_IdCut            ;
    
+  // delete pair_noCut_ee ;  
+    
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
     
     cout << " ------------- Trigger efficiencies ------------------------"   << endl;
     cout << "  "   << endl;
@@ -1089,10 +1386,25 @@ int main(){
     cout<< " HLT_Ele15_SiStrip_L1R=  "<<HLT_Ele15_SiStrip_L1R/nevanalyzed    <<endl;
        
     
+    cout <<" ------------------  Preselection for leptons ---------------------- " << endl;
+    
+    cout <<" electrons  5 GeV  :" << nel5/nevanalyzed <<endl;
+    cout <<" muons      5 GeV  :" << nmu5/nevanalyzed <<endl;
+    cout <<" electrons 10 GeV  :" << nel10/nevanalyzed <<endl;
+    cout <<" muons     10 GeV  :" << nmu10/nevanalyzed <<endl;
+    cout <<" ============================" << endl;
+    cout <<" pairs      5 GeV  :" << npair5/nevanalyzed <<endl;
+    cout <<" pairs     10 GeV  :" << npair10/nevanalyzed <<endl;
+   
     
     
     
     
+    cout<<"                                        "<<endl;
+    cout<<"                                        "<<endl;
+    cout<<"                                        "<<endl;
+    cout<<"                                        "<<endl;
+    cout<<" =============================          "<<endl;
     cout<<"                                        "<<endl;
     cout<<"(READ THIS FIRST ROUND ONLY !!)  Data Sample Weight for "<<Luminosity<<" pb-1 (sigma x Lumi)/(number of an. events): "<<CrossSection*Luminosity/nevanalyzed<<endl;
     cout<<"                                        "<<endl;

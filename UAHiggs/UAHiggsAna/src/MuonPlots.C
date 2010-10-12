@@ -89,11 +89,22 @@ void MuonPlots::init(){
        TMLastStationOptimizedBarrelLowPtLoose   = new TH1F("TMLastStationOptimizedBarrelLowPtLoose_"+Muoncoll,"TMLastStationOptimizedBarrelLowPtLoose_"+Muoncoll+";TMLastStationOptimizedBarrelLowPtLoose;#events",2,0,2);
        TMLastStationOptimizedBarrelLowPtTight   = new TH1F("TMLastStationOptimizedBarrelLowPtTight_"+Muoncoll,"TMLastStationOptimizedBarrelLowPtTight_"+Muoncoll+";TMLastStationOptimizedBarrelLowPtTight;#events",2,0,2);
        
-       nTrackerHits= new TH1F("nTrackerHits_"+Muoncoll,"nTrackerHits_"+Muoncoll+";nTrackerHits;#events",40,0,40);
-       nMuonHits= new TH1F("nMuonHits_"+Muoncoll,"nMuonHits_"+Muoncoll+";nMuonHits;#events",40,0,40); 
-       chi2Track= new TH1F("chi2Track_"+Muoncoll,"chi2Track_"+Muoncoll+";chi2Track;#events",100,0,10);
-      
+       
+       InnerTrackPixelHits= new TH1F("nInnerTrackPixelHits_"+Muoncoll,"nInnerTrackPixelHits_"+Muoncoll+";nInnerTrackPixelHits;#events",10,0,10);
+       InnerTrackStripHits= new TH1F("nInnerTrackStripHits_"+Muoncoll,"nInnerTrackStripHits_"+Muoncoll+";nInnerTrackStripHits;#events",20,0,20); 
+       InnerTrackchi2= new TH1F("InnerTrackchi2_"+Muoncoll,"InnerTrackchi2_"+Muoncoll+";InnerTrackchi2;#events",100,0,10);
+       InnerTrackPt= new TH1F("InnerTrackPt_"+Muoncoll,"InnerTrackPt_"+Muoncoll+";InnerTrackPt;#events",40,0,200);
+   
+       OuterTrackMuonHits= new TH1F("nOuterTrackMuonHits_"+Muoncoll,"nOuterTrackMuonHits_"+Muoncoll+";nOuterTrackMuonHits;#events",20,0,20);
+       OuterTrackchi2= new TH1F("OuterTrackchi2_"+Muoncoll,"OuterTrackchi2_"+Muoncoll+";OuterTrackchi2;#events",100,0,10);
+       OuterTrackPt= new TH1F("OuterTrackPt_"+Muoncoll,"OuterTrackPt_"+Muoncoll+";OuterTrackPt;#events",40,0,200);
      
+       GlobalTrackPixelHits = new TH1F("nGlobalTrackPixelHits_"+Muoncoll,"nGlobalTrackPixelHits_"+Muoncoll+";nGlobalTrackPixelHits;#events",10,0,10);
+       GlobalTrackStripHits = new TH1F("nGlobalTrackStripHits_"+Muoncoll,"nGlobalTrackStripHits_"+Muoncoll+";nGlobalTrackStripHits;#events",20,0,20); 
+       GlobalTrackMuonHits  = new TH1F("nGlobalTrackMuonHits_"+Muoncoll,"nGlobalTrackMuonHits_"+Muoncoll+";nGlobalTrackMuonHits;#events",20,0,20);  
+       GlobalTrackTotalHits = new TH1F("nGlobalTrackTotalHits_"+Muoncoll,"nGlobalTrackTotalHits_"+Muoncoll+";nGlobalTrackTotalHits;#events",600,0,60);  
+       GlobalTrackchi2      = new TH1F("GlobalTrackchi2_"+Muoncoll,"GlobalTrackchi2_"+Muoncoll+";GlobalTrackchi2;#events",100,0,10);
+       GlobalTrackPt        = new TH1F("GlobalTrackPt_"+Muoncoll,"GlobalTrackPt_"+Muoncoll+";GlobalTrackPt;#events",40,0,200);
     
     pt->Sumw2(); 
     eta->Sumw2(); 
@@ -122,6 +133,14 @@ void MuonPlots::init(){
     IsStandaloneMuon   ->Sumw2();
     IsCaloMuon         ->Sumw2();
     
+    
+    
+    
+    
+    
+    
+    
+    
     // Muon Id
     
      
@@ -148,10 +167,30 @@ void MuonPlots::init(){
      TMOneStationAngTight                     ->Sumw2();
      TMLastStationOptimizedBarrelLowPtLoose   ->Sumw2();
      TMLastStationOptimizedBarrelLowPtTight   ->Sumw2();
-     nTrackerHits->Sumw2();
-     nMuonHits   ->Sumw2(); 
-     chi2Track   ->Sumw2();
-     d0->Sumw2();
+      d0->Sumw2();
+  
+  
+     InnerTrackPixelHits    ->Sumw2();
+     InnerTrackStripHits    ->Sumw2(); 
+     InnerTrackchi2         ->Sumw2();
+     InnerTrackPt           ->Sumw2();
+   
+     OuterTrackMuonHits     ->Sumw2();
+     GlobalTrackStripHits   ->Sumw2(); 
+     OuterTrackchi2         ->Sumw2();
+     OuterTrackPt           ->Sumw2();
+     
+     GlobalTrackPixelHits   ->Sumw2();
+     GlobalTrackStripHits   ->Sumw2(); 
+     GlobalTrackMuonHits    ->Sumw2();  
+     GlobalTrackTotalHits   ->Sumw2();  
+     GlobalTrackchi2        ->Sumw2();
+     GlobalTrackPt          ->Sumw2(); 
+  
+  
+  
+  
+  
   
 //  ->Sumw2();
   
@@ -241,10 +280,22 @@ void MuonPlots::fill(vector<MyMuon*>& Muoncoll, double weight, int vtxId){
         TMLastStationOptimizedBarrelLowPtLoose  ->Fill((*it_mu)->TMLastStationOptimizedBarrelLowPtLoose,weight);
         TMLastStationOptimizedBarrelLowPtTight  ->Fill((*it_mu)->TMLastStationOptimizedBarrelLowPtTight,weight);
    
-        nTrackerHits  ->Fill((*it_mu)->globalTrack.numberOfValidTkHits,weight);
-        nMuonHits     ->Fill((*it_mu)->globalTrack.numberOfValidMuonHits,weight); 
-        chi2Track     ->Fill((*it_mu)->globalTrack.chi2n,weight);
+        InnerTrackPixelHits    ->Fill((*it_mu)->innerTrack.numberOfValidPixelHits,weight);
+        InnerTrackStripHits    ->Fill((*it_mu)->innerTrack.numberOfValidStripHits,weight); 
+        InnerTrackchi2         ->Fill((*it_mu)->innerTrack.chi2n,weight);
+        InnerTrackPt           ->Fill((*it_mu)->innerTrack.Part.v.Pt(),weight);
    
+        OuterTrackMuonHits     ->Fill((*it_mu)->outerTrack.numberOfValidMuonHits,weight);
+        OuterTrackchi2         ->Fill((*it_mu)->outerTrack.chi2n,weight);
+        OuterTrackPt           ->Fill((*it_mu)->outerTrack.Part.v.Pt(),weight);
+     
+        GlobalTrackPixelHits   ->Fill((*it_mu)->globalTrack.numberOfValidPixelHits,weight);
+        GlobalTrackStripHits   ->Fill((*it_mu)->globalTrack.numberOfValidStripHits,weight); 
+        GlobalTrackMuonHits    ->Fill((*it_mu)->globalTrack.numberOfValidMuonHits,weight);  
+        GlobalTrackTotalHits   ->Fill((*it_mu)->globalTrack.nhit,weight);  
+        GlobalTrackchi2        ->Fill((*it_mu)->globalTrack.chi2n,weight);
+        GlobalTrackPt          ->Fill((*it_mu)->globalTrack.Part.v.Pt(),weight); 
+  
    
    //vertex
     
@@ -290,7 +341,7 @@ void MuonPlots::write(){
         isoR05nJets ->Write(); 
             
 	calEnergyEm   ->Write();
-    calEnergyHad  ->Write();
+        calEnergyHad  ->Write();
     calEnergyHo   ->Write();
     calEnergyEmS9 ->Write();
     calEnergyHadS9->Write();
@@ -329,9 +380,21 @@ void MuonPlots::write(){
         TMLastStationOptimizedBarrelLowPtTight   ->Write();       
      
      
-        nTrackerHits->Write();
-        nMuonHits->Write(); 
-        chi2Track->Write();
+        InnerTrackPixelHits    ->Write();
+     InnerTrackStripHits    ->Write(); 
+     InnerTrackchi2         ->Write();
+     InnerTrackPt           ->Write();
+   
+     OuterTrackMuonHits     ->Write();
+     OuterTrackchi2         ->Write();
+     OuterTrackPt           ->Write();
+     
+     GlobalTrackPixelHits   ->Write();
+     GlobalTrackStripHits   ->Write(); 
+     GlobalTrackMuonHits    ->Write();  
+     GlobalTrackTotalHits   ->Write();  
+     GlobalTrackchi2        ->Write();
+     GlobalTrackPt          ->Write(); 
   
   
   

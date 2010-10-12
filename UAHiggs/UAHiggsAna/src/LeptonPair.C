@@ -200,12 +200,12 @@ void LeptonPair::PrintPair(int vtxId) {
   cout << "Eta min,max,pair   : " << this->getEtaMin() << " " << this->getEtaMax() << " " << this->get4v().Eta() << endl;
   cout << "Phi min,max,pair   : " << this->getPhiMin() << " " << this->getPhiMax() << " " << this->get4v().Phi() << endl;
   cout << "Mll , Deta, Dphi   : " << this->getMll()    << " " << this->getDeltaEta() << " " << this->getDeltaPhi() << endl; 
-/*
+
   if (this->type == "ee") { PrintRecoElectron(this->e1) ; PrintRecoElectron(this->e2) ; } 
   if (this->type == "em") { PrintRecoElectron(this->e1) ; PrintRecoMuon(this->m2,vtxId) ; } 
   if (this->type == "me") { PrintRecoMuon(this->m1,vtxId) ; PrintRecoElectron(this->e2) ; } 
   if (this->type == "mm") { PrintRecoMuon(this->m1,vtxId) ; PrintRecoMuon(this->m2,vtxId) ; } 
-*/  
+  
 
   cout << "------------------------------------------------------------" << endl;
 
