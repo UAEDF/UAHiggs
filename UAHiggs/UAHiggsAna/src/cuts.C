@@ -668,13 +668,29 @@ vector<MyMuon*> subs(vector<MyMuon*> mu1, vector<MyMuon*> mu2){
 
 
 vector<MyGenPart*> GenPartFilter(vector<MyGenPart*> vpart, 
-						     bool cutPtEta = true, 
+                                                     bool cutpdgId = true,
+						     bool cutPtEta = true,
+                                                     int  pdgId    = 0   ,  
 						     Double_t ptcut=20,
 						     Double_t etacut=2.5)
 						     {
    
     for(vector<MyGenPart*>::iterator itp = vpart.begin() ; itp != vpart.end() ; ++itp){
       bool reject = false;
+    
+      if(cutpdgId ){
+      // ------------------ PDG Id Cut ------------------------
+          if ( pdgId == 0 ) {
+             if ( ! (    fabs((*itp)->pdgId) == 11 
+                      || fabs((*itp)->pdgId) == 13
+                      || fabs((*itp)->pdgId) == 15  
+                    )  
+                ) reject = true; 
+          } else {
+             if ( fabs((*itp)->pdgId) != pdgId )   reject = true; 
+          }
+      }
+
       if(cutPtEta){
       // ------------------Pt, Eta cuts -----------------------
      
@@ -689,7 +705,9 @@ vector<MyGenPart*> GenPartFilter(vector<MyGenPart*> vpart,
 }
 
 vector<MyGenPart*> GenPartFilter(vector<MyGenPart>& vpart,
-                                                     bool cutPtEta = true, 
+                                                     bool cutpdgId = true,
+                                                     bool cutPtEta = true,
+                                                     int  pdgId    = 0   , 
 						     double ptcut=20,
 						     Double_t etacut=2.5
 						     )
@@ -700,7 +718,7 @@ vector<MyGenPart*> GenPartFilter(vector<MyGenPart>& vpart,
     for(vector<MyGenPart>::iterator itp = vpart.begin() ; itp != vpart.end() ; ++itp){
         (*part).push_back(&*itp);
     	}
-    *part_out = GenPartFilter(*part,cutPtEta,ptcut,etacut);
+    *part_out = GenPartFilter(*part,cutpdgId,cutPtEta,pdgId,ptcut,etacut);
     return *part_out;
     }
 

@@ -548,11 +548,11 @@ int main(){
       vector<MyGenPart*> *genelectrons_nocut         = new vector<MyGenPart*>();
       vector<MyGenPart*> *genelectrons_pteta         = new vector<MyGenPart*>();
       
-      *genmuons_nocut           = GenPartFilter(*genmu,false,10,2.4);
-      *genmuons_pteta           = GenPartFilter(*genmu,true ,10,2.4);
+      *genmuons_nocut           = GenPartFilter(*genmu,true,false,13,10,2.4);
+      *genmuons_pteta           = GenPartFilter(*genmu,true,true ,13,10,2.4);
       
-      *genelectrons_nocut       = GenPartFilter(*genelec,false,10,2.5);
-      *genelectrons_pteta       = GenPartFilter(*genelec,true ,10,2.5);
+      *genelectrons_nocut       = GenPartFilter(*genelec,true,false,11,10,2.5);
+      *genelectrons_pteta       = GenPartFilter(*genelec,true,true ,11,10,2.5);
       
       genLeptonPair_nocut        = MakeGenLeptonPairVector(*genelectrons_nocut,*genmuons_nocut,fs);
       genLeptonPair_pteta        = MakeGenLeptonPairVector(*genelectrons_pteta,*genmuons_pteta,fs);
@@ -668,10 +668,10 @@ int main(){
        vector<MyElectron*> *electrons_bfmcl_pt5        = new vector<MyElectron*>();
        vector<MyElectron*> *electrons_bfmcl_pt10       = new vector<MyElectron*>();
 	       
-       *muons_pt5                  = MuonFilter(*muons_raw,vtxId, false, false, false, false,5);
-       *muons_pt10                 = MuonFilter(*muons_raw,vtxId, false, false, false, false,10);
-       *electrons_bfmcl_pt5        = ElectronFilter(*electrons_raw,vtxId, false, false, false, false, false,0,5);
-       *electrons_bfmcl_pt10       = ElectronFilter(*electrons_raw,vtxId, false, false, false, false, false,0,10);
+       *muons_pt5                  = MuonFilter(*muons_raw,vtxId, true , false, false, false,5);
+       *muons_pt10                 = MuonFilter(*muons_raw,vtxId, true , false, false, false,10);
+       *electrons_bfmcl_pt5        = ElectronFilter(*electrons_raw,vtxId, true , false, false, false, false,0,5);
+       *electrons_bfmcl_pt10       = ElectronFilter(*electrons_raw,vtxId, true , false, false, false, false,0,10);
 	      
        vector<LeptonPair*> *pair_pt5   = new vector<LeptonPair*>;
        vector<LeptonPair*> *pair_pt10  = new vector<LeptonPair*>;
