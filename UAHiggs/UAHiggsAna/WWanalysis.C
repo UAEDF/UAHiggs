@@ -33,6 +33,8 @@ using namespace std;
 #include "include/MyMET.h"
 
 #include "src/PrintTools.C"
+#include "src/MatchTools.C"
+
 #include "include/GenPartPlots.h"
 #include "src/GenPartPlots.C"
 #include "include/ElectronPlots.h"
@@ -1071,7 +1073,23 @@ int main(){
 					   *extrasoftmuons_mm = ExtraSoftMuons(*muons, *pair_pmet,vtxId,"mm"); 
 					   *extrasoftmuons_em = ExtraSoftMuons(*muons, *pair_pmet,vtxId,"em"); 
 					   *extrasoftmuons_me = ExtraSoftMuons(*muons, *pair_pmet,vtxId,"me"); 
-					   
+					 
+ /* 
+                                           if( (extrasoftmuons_em -> size() >0)  &&  find(*pair_pmet,"em")  ) {
+				                 cout << " ===================== ExtraSofKilled ====================== " << endl;
+                                                    cout << "pair_pmet size  = " <<   pair_pmet->size() << endl ;
+                                                    for ( vector<LeptonPair*>::iterator itp = pair_pmet->begin() ; itp != pair_pmet->end() ; ++itp){ 
+                                                       (*itp)->PrintPair(vtxId);
+                                                    } 
+                                                    cout << "extrasoft size =  " <<   extrasoftmuons_em->size() << endl ;
+                                                    for(vector<MyMuon*>::iterator itm = extrasoftmuons_em->begin() ; itm != extrasoftmuons_em->end() ; ++itm){ 
+                                                      cout << " Pt " <<  (*itm)->pt << endl; 
+                                                      PrintRecoMuon(*itm ,vtxId );
+                                                    }
+                                            } 
+*/
+                                              
+ 
 					    if((extrasoftmuons_ee -> size() ==0) || (extrasoftmuons_mm -> size() ==0) || (extrasoftmuons_em -> size() ==0) || (extrasoftmuons_me -> size() ==0) ){
 					      
 					      softmuons_passed_all += weight;
@@ -1079,8 +1097,8 @@ int main(){
 	                                      if(  (extrasoftmuons_mm -> size() ==0)  &&  find(*pair_pmet,"mm")  )           softmuons_passed_mm    += weight;
 	                                      if(  (extrasoftmuons_em -> size() ==0)  &&  find(*pair_pmet,"em")  )          {softmuons_passed_em += weight; softmuons_passed_mixed += weight;}
 	                                      if(  (extrasoftmuons_me -> size() ==0)  &&  find(*pair_pmet,"me")  )          {softmuons_passed_me += weight; softmuons_passed_mixed += weight;}
-	                                      
-				        
+	                                    
+
 					   
 					     // ------------ extra lepton veto -------------------------
 					     

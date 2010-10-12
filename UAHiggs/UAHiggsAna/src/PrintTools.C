@@ -1,22 +1,33 @@
 
+#include "../include/MyGenPart.h"
 #include "../include/MyMuon.h"
 #include "../include/MyElectron.h"
 
+void PrintGenPart ( MyGenPart *gp ) {
+
+   cout << "---------------- GenPart Print() ---- BEGIN -------------" << endl;
+   cout << " Type, Pt , Eta , Phi , charge : " << gp->name << " "  << gp->pt << " " << gp->eta << " " << gp->phi << " " << gp->charge << endl ;
+   cout << "---------------- GenPart Print() ---- END ---------------" << endl;
+
+}
+
+
 void PrintRecoElectron ( MyElectron *ele ) {
 
-   cout << "---------------- Reco Electron Print() ------------------------" << endl;
+   cout << "---------------- Reco Electron Print() ---- BEGIN -------------" << endl;
    cout << " Pt , Eta , Phi , charge : " << ele->pt << " " << ele->eta << " " << ele->phi << " " << ele->Part.charge << endl ; 
-
-   cout << "---------------------------------------------------------------" << endl;
+   cout << "---------------- Reco Electron Print() ---- END ---------------" << endl;
 
 }
 
 
 
-void PrintRecoMuon ( MyMuon *muo , int vtxId ) {
+void PrintRecoMuon ( MyMuon *muo , int vtxId , int iLevel = 1 ) {
 
    cout << "---------------- Reco Muon Print() -------- BEGIN ---------" << endl;
    cout << " Pt , Eta , Phi , charge : " << muo->pt << " " << muo->eta << " " << muo->phi << " " << muo->Part.charge << endl ; 
+
+ if (iLevel>0) {
    cout << " --- Muon Type --- " << endl;
    cout << " Global , Tracker, StanAlone, Calo : " << muo->IsGlobalMuon << " " << muo->IsTrackerMuon << " " << muo->IsStandaloneMuon << " " << muo->IsCaloMuon << endl;
    cout << " --- Tracks --- " << endl;
@@ -77,7 +88,7 @@ void PrintRecoMuon ( MyMuon *muo , int vtxId ) {
    cout << " TMOneStationAngTight    : " << muo->TMOneStationAngTight     << endl;   
    cout << " TMLastStationOptimizedBarrelLowPtLoose      : " << muo->TMLastStationOptimizedBarrelLowPtLoose       << endl;   
    cout << " TMLastStationOptimizedBarrelLowPtTight      : " << muo->TMLastStationOptimizedBarrelLowPtTight       << endl;   
-
+ }
    cout << "---------------- Reco Muon Print() ------ END -------------"  << endl;
 
 }
