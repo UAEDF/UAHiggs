@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -89,7 +88,7 @@ double maxi=max(x,max(y,z));
 }
 
 
-int main(){
+int main(int argc, char **argv){
 
   
   double CrossSection;
@@ -256,8 +255,18 @@ int main(){
 
   int ntot=0;
 
+  
+  string config = "config/Config.txt";
+  
+  if ( argc > 1 ) {
+     *argv++; string test = string(*argv); config = test ;
+     
+   } 
+   cout<<"ConfigFile = "<<config<<endl;
+  
   ifstream ConfigFile;
-  ConfigFile.open("config/Config.txt");
+  ConfigFile.open(config.c_str());
+  
   if(!ConfigFile){cout<<"Unable to read the config file";exit(1);}
   
   ConfigFile>>CrossSection;
@@ -267,7 +276,7 @@ int main(){
   ConfigFile>>OutputRootFile;
   ConfigFile>>OutputTextFile;
 
- 
+  
   
   cout<<" Ok The Following input parameters were read : "<<endl;
   cout<<"===> CrossSection       : "<<CrossSection<<endl;
@@ -302,42 +311,42 @@ int main(){
   LeptonPairPlots*  pair_noCut_mm       = new LeptonPairPlots("noCut_mm");
   LeptonPairPlots*  pair_noCut_em       = new LeptonPairPlots("noCut_em");
   LeptonPairPlots*  pair_noCut_me       = new LeptonPairPlots("noCut_me");
-  LeptonPairPlots*  pair_noCut_mixed    = new LeptonPairPlots("noCut_ee");
+  LeptonPairPlots*  pair_noCut_mixed    = new LeptonPairPlots("noCut_mixed");
   LeptonPairPlots*  pair_noCut_all      = new LeptonPairPlots("noCut_all");
   
   LeptonPairPlots*  pair_ptEtaCut_ee       = new LeptonPairPlots("ptEtaCut_ee");
   LeptonPairPlots*  pair_ptEtaCut_mm       = new LeptonPairPlots("ptEtaCut_mm");
   LeptonPairPlots*  pair_ptEtaCut_em       = new LeptonPairPlots("ptEtaCut_em");
   LeptonPairPlots*  pair_ptEtaCut_me       = new LeptonPairPlots("ptEtaCut_me");
-  LeptonPairPlots*  pair_ptEtaCut_mixed    = new LeptonPairPlots("ptEtaCut_ee");
+  LeptonPairPlots*  pair_ptEtaCut_mixed    = new LeptonPairPlots("ptEtaCut_mixed");
   LeptonPairPlots*  pair_ptEtaCut_all      = new LeptonPairPlots("ptEtaCut_all");
   
   LeptonPairPlots*  pair_d0Cut_ee       = new LeptonPairPlots("d0Cut_ee");
   LeptonPairPlots*  pair_d0Cut_mm       = new LeptonPairPlots("d0Cut_mm");
   LeptonPairPlots*  pair_d0Cut_em       = new LeptonPairPlots("d0Cut_em");
   LeptonPairPlots*  pair_d0Cut_me       = new LeptonPairPlots("d0Cut_me");
-  LeptonPairPlots*  pair_d0Cut_mixed    = new LeptonPairPlots("d0Cut_ee");
+  LeptonPairPlots*  pair_d0Cut_mixed    = new LeptonPairPlots("d0Cut_mixed");
   LeptonPairPlots*  pair_d0Cut_all      = new LeptonPairPlots("d0Cut_all");
   
   LeptonPairPlots*  pair_IsoCut_ee       = new LeptonPairPlots("IsoCut_ee");
   LeptonPairPlots*  pair_IsoCut_mm       = new LeptonPairPlots("IsoCut_mm");
   LeptonPairPlots*  pair_IsoCut_em       = new LeptonPairPlots("IsoCut_em");
   LeptonPairPlots*  pair_IsoCut_me       = new LeptonPairPlots("IsoCut_me");
-  LeptonPairPlots*  pair_IsoCut_mixed    = new LeptonPairPlots("IsoCut_ee");
+  LeptonPairPlots*  pair_IsoCut_mixed    = new LeptonPairPlots("IsoCut_mixed");
   LeptonPairPlots*  pair_IsoCut_all      = new LeptonPairPlots("IsoCut_all");
 
   LeptonPairPlots*  pair_IdCut_ee       = new LeptonPairPlots("IdCut_ee");
   LeptonPairPlots*  pair_IdCut_mm       = new LeptonPairPlots("IdCut_mm");
   LeptonPairPlots*  pair_IdCut_em       = new LeptonPairPlots("IdCut_em");
   LeptonPairPlots*  pair_IdCut_me       = new LeptonPairPlots("IdCut_me");
-  LeptonPairPlots*  pair_IdCut_mixed    = new LeptonPairPlots("IdCut_ee");
+  LeptonPairPlots*  pair_IdCut_mixed    = new LeptonPairPlots("IdCut_mixed");
   LeptonPairPlots*  pair_IdCut_all      = new LeptonPairPlots("IdCut_all");
 
   LeptonPairPlots*  pair_ConvCut_ee       = new LeptonPairPlots("ConvCut_ee");
   LeptonPairPlots*  pair_ConvCut_mm       = new LeptonPairPlots("ConvCut_mm");
   LeptonPairPlots*  pair_ConvCut_em       = new LeptonPairPlots("ConvCut_em");
   LeptonPairPlots*  pair_ConvCut_me       = new LeptonPairPlots("ConvCut_me");
-  LeptonPairPlots*  pair_ConvCut_mixed    = new LeptonPairPlots("ConvCut_ee");
+  LeptonPairPlots*  pair_ConvCut_mixed    = new LeptonPairPlots("ConvCut_mixed");
   LeptonPairPlots*  pair_ConvCut_all      = new LeptonPairPlots("ConvCut_all");
 
   
@@ -498,7 +507,7 @@ int main(){
    //    vector<MyGenPart*> *genelectrons_I         = new vector<MyGenPart*>();
     
     
-       for(vector<MyGenPart>::iterator itgen=genpart->begin();itgen!=genpart->end();itgen++){
+   /*    for(vector<MyGenPart>::iterator itgen=genpart->begin();itgen!=genpart->end();itgen++){
          
 	 
 	 if(fabs(itgen->pdgId) == 11) ne++;
@@ -609,7 +618,7 @@ int main(){
       if( bestGenPair_pteta->type =="em" && (fs=="tt" || fs=="et" || fs=="mt") )                 genpair_em_fromtau_pteta     -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
       if( bestGenPair_pteta->type =="me" && (fs=="tt" || fs=="et" || fs=="mt") )                 genpair_me_fromtau_pteta     -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
       if((bestGenPair_pteta->type =="em" ||  bestGenPair_pteta->type =="me") 
-       && (fs=="tt" || fs=="et" || fs=="mt"))                                                    genpair_mixed_fromtau_pteta  -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
+       && (fs=="tLeptonPairPlotst" || fs=="et" || fs=="mt"))                                                    genpair_mixed_fromtau_pteta  -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
       if( bestGenPair_pteta->type !="none" && leptonic && (fs=="tt" || fs=="et" || fs=="mt") )                                       genpair_all_fromtau_pteta    -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
    
       
@@ -622,7 +631,7 @@ int main(){
        && !(fs=="tt" || fs=="et" || fs=="mt") && leptonic)                                       genpair_mixed_nofromtau_pteta  -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
       if( bestGenPair_pteta->type !="none" && leptonic && !(fs=="tt" || fs=="et" || fs=="mt") )  genpair_all_nofromtau_pteta    -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
    
- 
+      */
       
       
       // ------vector<MyMuon*> *muons       = new vector<MyMuon*>();------- DATA  ------Event Selection ------------------
@@ -867,7 +876,7 @@ int main(){
           bestPair_id      = findBestPair(*pair_id);
           bestPair_conv    = findBestPair(*pair_conv);
           
-	  
+	/*  
 	  if( bestPair_nocut->type =="ee" )   pair_noCut_ee     -> fill( *bestPair_nocut,tcMet,tcMetPhi,weight );
           if( bestPair_nocut->type =="em" )   pair_noCut_em     -> fill( *bestPair_nocut,tcMet,tcMetPhi,weight );
           if( bestPair_nocut->type =="me" )   pair_noCut_me     -> fill( *bestPair_nocut,tcMet,tcMetPhi,weight );
@@ -904,7 +913,7 @@ int main(){
 	   || bestPair_iso->type =="me" )   pair_IsoCut_mixed  -> fill( *bestPair_iso,tcMet,tcMetPhi,weight );
           if( bestPair_iso->type !="none" ) pair_IsoCut_all    -> fill( *bestPair_iso,tcMet,tcMetPhi,weight );
           
-	  
+	  =
 	  if( bestPair_id->type =="ee" )   pair_IdCut_ee     -> fill( *bestPair_id,tcMet,tcMetPhi,weight );
           if( bestPair_id->type =="em" )   pair_IdCut_em     -> fill( *bestPair_id,tcMet,tcMetPhi,weight );
           if( bestPair_id->type =="me" )   pair_IdCut_me     -> fill( *bestPair_id,tcMet,tcMetPhi,weight );
@@ -913,15 +922,16 @@ int main(){
 	   || bestPair_id->type =="me" )   pair_IdCut_mixed  -> fill( *bestPair_id,tcMet,tcMetPhi,weight );
           if( bestPair_id->type !="none" ) pair_IdCut_all    -> fill( *bestPair_id,tcMet,tcMetPhi,weight );
          
+	 */ 
 	  
-	  
-	  if( bestPair_conv->type =="ee" )   pair_ConvCut_ee     -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
-          if( bestPair_conv->type =="em" )   pair_ConvCut_em     -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
-          if( bestPair_conv->type =="me" )   pair_ConvCut_me     -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
-          if( bestPair_conv->type =="mm" )   pair_ConvCut_mm     -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
-          if( bestPair_conv->type =="em" 
-	   || bestPair_conv->type =="me" )   pair_ConvCut_mixed  -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
-          if( bestPair_id->type !="none" )   pair_ConvCut_all    -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
+	 // if( bestPair_conv->type =="ee" )   pair_ConvCut_ee     -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
+        //  if( bestPair_conv->type =="em" )   pair_ConvCut_em     -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
+        //  if( bestPair_conv->type =="me" )   pair_ConvCut_me     -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
+         //   if( bestPair_conv->type =="mm" )   pair_ConvCut_mm     -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
+       //   if( bestPair_conv->type =="em" 
+	//   || bestPair_conv->type =="me" )   pair_ConvCut_mixed  -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
+         if( bestPair_conv->type !="none" )   pair_ConvCut_all    -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
+   
          
 	
 	
@@ -1203,8 +1213,8 @@ int main(){
 	 
 	  } // HLT requirement
       
-      delete genLeptonPair_pteta;
-      delete bestGenPair_pteta;
+   //   delete genLeptonPair_pteta;
+   //   delete bestGenPair_pteta;
       
       delete muons_pt5;
       delete muons_pt10;
@@ -1354,9 +1364,90 @@ int main(){
    delete muons_IsoCut            ;
    delete muons_IdCut            ;
    
-  // delete pair_noCut_ee ;  
     
+   delete genpair_ee_nocut ;
+   delete genpair_mm_nocut ;
+   delete genpair_em_nocut ;
+   delete genpair_me_nocut ;
+   delete genpair_mixed_nocut ;
+   delete genpair_all_nocut ;
+   delete genpair_ee_fromtau_nocut ;
+   delete genpair_mm_fromtau_nocut ;
+   delete genpair_em_fromtau_nocut ;
+   delete genpair_me_fromtau_nocut ;
+   delete genpair_mixed_fromtau_nocut ;
+   delete genpair_all_fromtau_nocut ;
+   delete genpair_ee_nofromtau_nocut ;
+   delete genpair_mm_nofromtau_nocut ;
+   delete genpair_em_nofromtau_nocut ;
+   delete genpair_me_nofromtau_nocut ;
+   delete genpair_mixed_nofromtau_nocut ;
+   delete genpair_all_nofromtau_nocut ;
+ 
+ 
+   delete genpair_ee_pteta ;
+   delete genpair_mm_pteta ;
+   delete genpair_em_pteta ;
+   delete genpair_me_pteta ;
+   delete genpair_mixed_pteta ;
+   delete genpair_all_pteta ;
+   delete genpair_ee_fromtau_pteta ;
+   delete genpair_mm_fromtau_pteta ;
+   delete genpair_em_fromtau_pteta ;
+   delete genpair_me_fromtau_pteta ;
+   delete genpair_mixed_fromtau_pteta ;
+   delete genpair_all_fromtau_pteta ;
+   delete genpair_ee_nofromtau_pteta ;
+   delete genpair_mm_nofromtau_pteta ;
+   delete genpair_em_nofromtau_pteta ;
+   delete genpair_me_nofromtau_pteta ;
+   delete genpair_mixed_nofromtau_pteta ;
+   delete genpair_all_nofromtau_pteta ;
+ 
 
+
+   delete pair_noCut_ee      ;
+   delete pair_noCut_mm       ;
+   delete pair_noCut_em       ;
+   delete pair_noCut_me       ;
+   delete pair_noCut_mixed    ;
+   delete pair_noCut_all      ;
+  
+   delete pair_ptEtaCut_ee       ;
+   delete pair_ptEtaCut_mm       ;
+   delete pair_ptEtaCut_em       ;
+   delete pair_ptEtaCut_me       ;
+   delete pair_ptEtaCut_mixed    ;
+   delete pair_ptEtaCut_all      ;
+  
+   delete pair_d0Cut_ee       ;
+   delete pair_d0Cut_mm       ;
+   delete pair_d0Cut_em       ;
+   delete pair_d0Cut_me       ;
+   delete pair_d0Cut_mixed    ;
+   delete pair_d0Cut_all      ;
+  
+   delete pair_IsoCut_ee       ;
+   delete pair_IsoCut_mm       ;
+   delete pair_IsoCut_em       ;
+   delete pair_IsoCut_me       ;
+   delete pair_IsoCut_mixed    ;
+   delete pair_IsoCut_all      ;
+
+   delete pair_IdCut_ee       ;
+   delete pair_IdCut_mm       ;
+   delete pair_IdCut_em       ;
+   delete pair_IdCut_me       ;
+   delete pair_IdCut_mixed    ;
+   delete pair_IdCut_all      ;
+
+
+   delete pair_ConvCut_ee       ;
+   delete pair_ConvCut_mm       ;
+   delete pair_ConvCut_em       ;
+   delete pair_ConvCut_me       ;
+   delete pair_ConvCut_mixed    ;
+   delete pair_ConvCut_all      ;
  
  
  
@@ -1410,7 +1501,9 @@ int main(){
     cout <<" muons      5 GeV  :" << nmu5/nevanalyzed <<endl;
     cout <<" electrons 10 GeV  :" << nel10/nevanalyzed <<endl;
     cout <<" muons     10 GeV  :" << nmu10/nevanalyzed <<endl;
+    
     cout <<" ============================" << endl;
+    
     cout <<" pairs      5 GeV  :" << npair5/nevanalyzed <<endl;
     cout <<" pairs     10 GeV  :" << npair10/nevanalyzed <<endl;
    
