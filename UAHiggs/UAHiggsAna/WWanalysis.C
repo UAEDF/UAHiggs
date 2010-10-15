@@ -48,6 +48,9 @@ using namespace std;
 #include "src/LeptonPairPlots.C"
 #include "include/GenLeptonPairPlots.h"
 #include "src/GenLeptonPairPlots.C"
+#include "include/EfficiencyPlots.h"
+#include "src/EfficiencyPlots.C"
+
 #include "include/LinkDef.h"
 
 
@@ -305,7 +308,17 @@ int main(int argc, char **argv){
   MuonPlots*     muons_d0Cut         = new MuonPlots("muons_d0Cut");
   MuonPlots*     muons_IsoCut        = new MuonPlots("muons_IsoCut");
   MuonPlots*     muons_IdCut         = new MuonPlots("muons_IdCut");
-  
+
+  EfficiencyPlots* RecoElecEff_PtEtaCut = new EfficiencyPlots("RecoElec_PtEtaCut");
+  EfficiencyPlots* RecoElecEff_d0Cut    = new EfficiencyPlots("RecoElec_d0Cut");
+  EfficiencyPlots* RecoElecEff_IsoCut   = new EfficiencyPlots("RecoElec_IsoCut");
+  EfficiencyPlots* RecoElecEff_IdCut    = new EfficiencyPlots("RecoElec_IdCut");
+  EfficiencyPlots* RecoElecEff_ConvCut  = new EfficiencyPlots("RecoElec_ConvCut");
+
+  EfficiencyPlots* RecoMuonEff_PtEtaCut = new EfficiencyPlots("RecoMuon_PtEtaCut");
+  EfficiencyPlots* RecoMuonEff_d0Cut    = new EfficiencyPlots("RecoMuon_d0Cut");
+  EfficiencyPlots* RecoMuonEff_IsoCut   = new EfficiencyPlots("RecoMuon_IsoCut");
+  EfficiencyPlots* RecoMuonEff_IdCut    = new EfficiencyPlots("RecoMuon_IdCut");
   
   LeptonPairPlots*  pair_noCut_ee       = new LeptonPairPlots("noCut_ee");
   LeptonPairPlots*  pair_noCut_mm       = new LeptonPairPlots("noCut_mm");
@@ -507,7 +520,7 @@ int main(int argc, char **argv){
    //    vector<MyGenPart*> *genelectrons_I         = new vector<MyGenPart*>();
     
     
-   /*    for(vector<MyGenPart>::iterator itgen=genpart->begin();itgen!=genpart->end();itgen++){
+       for(vector<MyGenPart>::iterator itgen=genpart->begin();itgen!=genpart->end();itgen++){
          
 	 
 	 if(fabs(itgen->pdgId) == 11) ne++;
@@ -547,22 +560,34 @@ int main(int argc, char **argv){
    //   if(fs=="ee"){
    //   cout<<"-------------------------------------------"<<endl;
   //    cout<<" electron vector size "<<genelec->size()<<endl;
+
+
+      vector<MyGenPart*> *trueelectrons_nocut = new vector<MyGenPart*>();
+      vector<MyGenPart*> *trueelectrons_pteta = new vector<MyGenPart*>();
+      vector<MyGenPart*> *truemuons_nocut = new vector<MyGenPart*>();
+      vector<MyGenPart*> *truemuons_pteta = new vector<MyGenPart*>();
+      vector<GenLeptonPair*> *trueLeptonPair_nocut       = new vector<GenLeptonPair*>;
+      vector<GenLeptonPair*> *trueLeptonPair_pteta       = new vector<GenLeptonPair*>; 
+
+      *trueelectrons_nocut = GenPartFilter(*genpart,true,false,11,10,2.5);
+      *trueelectrons_pteta = GenPartFilter(*genpart,true,true ,11,10,2.5);
+      *truemuons_nocut     = GenPartFilter(*genpart,true,false,13,10,2.4);
+      *truemuons_pteta     = GenPartFilter(*genpart,true,true ,13,10,2.4);
+      trueLeptonPair_nocut = MakeGenLeptonPairVector(*trueelectrons_nocut,*truemuons_nocut,fs);
+      trueLeptonPair_pteta = MakeGenLeptonPairVector(*trueelectrons_pteta,*truemuons_pteta,fs);
       
+
+      vector<MyGenPart*> *genelectrons_nocut         = new vector<MyGenPart*>();
+      vector<MyGenPart*> *genelectrons_pteta         = new vector<MyGenPart*>();      
+      vector<MyGenPart*> *genmuons_nocut             = new vector<MyGenPart*>();
+      vector<MyGenPart*> *genmuons_pteta             = new vector<MyGenPart*>();
       vector<GenLeptonPair*> *genLeptonPair_nocut       = new vector<GenLeptonPair*>;
       vector<GenLeptonPair*> *genLeptonPair_pteta       = new vector<GenLeptonPair*>;
       
-      vector<MyGenPart*> *genmuons_nocut             = new vector<MyGenPart*>();
-      vector<MyGenPart*> *genmuons_pteta             = new vector<MyGenPart*>();
-      
-      vector<MyGenPart*> *genelectrons_nocut         = new vector<MyGenPart*>();
-      vector<MyGenPart*> *genelectrons_pteta         = new vector<MyGenPart*>();
-      
       *genmuons_nocut           = GenPartFilter(*genmu,true,false,13,10,2.4);
       *genmuons_pteta           = GenPartFilter(*genmu,true,true ,13,10,2.4);
-      
       *genelectrons_nocut       = GenPartFilter(*genelec,true,false,11,10,2.5);
       *genelectrons_pteta       = GenPartFilter(*genelec,true,true ,11,10,2.5);
-      
       genLeptonPair_nocut        = MakeGenLeptonPairVector(*genelectrons_nocut,*genmuons_nocut,fs);
       genLeptonPair_pteta        = MakeGenLeptonPairVector(*genelectrons_pteta,*genmuons_pteta,fs);
       
@@ -631,7 +656,6 @@ int main(int argc, char **argv){
        && !(fs=="tt" || fs=="et" || fs=="mt") && leptonic)                                       genpair_mixed_nofromtau_pteta  -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
       if( bestGenPair_pteta->type !="none" && leptonic && !(fs=="tt" || fs=="et" || fs=="mt") )  genpair_all_nofromtau_pteta    -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
    
-      */
       
       
       // ------vector<MyMuon*> *muons       = new vector<MyMuon*>();------- DATA  ------Event Selection ------------------
@@ -802,7 +826,20 @@ int main(int argc, char **argv){
             muons_IsoCut   -> fill(*muons_iso, weight, vtxId);
             muons_IdCut    -> fill(*muons_id, weight, vtxId);
        
+            //------------- Make Electron Efficiency Plots ----------------------
+
+            RecoElecEff_PtEtaCut -> fill ( *trueelectrons_pteta , *electrons_ptEta_bfmcl      ,  weight );
+            RecoElecEff_d0Cut    -> fill ( *trueelectrons_pteta , *electrons_d0_bfmcl         ,  weight );
+            RecoElecEff_IsoCut   -> fill ( *trueelectrons_pteta , *electrons_iso_all_bfmcl    ,  weight );
+            RecoElecEff_IdCut    -> fill ( *trueelectrons_pteta , *electrons_id_all_bfmcl     ,  weight );
+            RecoElecEff_ConvCut  -> fill ( *trueelectrons_pteta , *electrons_conversion_bfmcl ,  weight );
+
+            //------------- Make Muon Efficiency Plots ----------------------
       
+            RecoMuonEff_PtEtaCut -> fill ( *truemuons_pteta , *muons_ptEta      ,  weight );
+            RecoMuonEff_d0Cut    -> fill ( *truemuons_pteta , *muons_d0         ,  weight );
+            RecoMuonEff_IsoCut   -> fill ( *truemuons_pteta , *muons_iso        ,  weight );
+            RecoMuonEff_IdCut    -> fill ( *truemuons_pteta , *muons_id         ,  weight );
           
 	   // ------Lepton Pairs Creations --------------------------
       
@@ -1212,9 +1249,25 @@ int main(int argc, char **argv){
          
 	 
 	  } // HLT requirement
+
+      delete trueelectrons_nocut  ;  
+      delete trueelectrons_pteta  ;
+      delete truemuons_nocut      ;
+      delete truemuons_pteta      ;
+      delete trueLeptonPair_nocut ;
+      delete trueLeptonPair_pteta ;
+
+
+      delete genelectrons_nocut  ;  
+      delete genelectrons_pteta  ;
+      delete genmuons_nocut      ;
+      delete genmuons_pteta      ;
+      delete genLeptonPair_nocut ;
+      delete genLeptonPair_pteta ;
+
       
-   //   delete genLeptonPair_pteta;
-   //   delete bestGenPair_pteta;
+      delete genLeptonPair_pteta;
+      delete bestGenPair_pteta;
       
       delete muons_pt5;
       delete muons_pt10;
@@ -1222,6 +1275,7 @@ int main(int argc, char **argv){
       delete electrons_bfmcl_pt10;
       delete pair_pt5;
       delete pair_pt10;
+
           
       
       }  //end event-loop
@@ -1251,7 +1305,19 @@ int main(int argc, char **argv){
    muons_d0Cut             -> write();
    muons_IsoCut            -> write();
    muons_IdCut             -> write();
-   
+  
+   RecoElecEff_PtEtaCut -> write();
+   RecoElecEff_d0Cut    -> write();
+   RecoElecEff_IsoCut   -> write();
+   RecoElecEff_IdCut    -> write();
+   RecoElecEff_ConvCut  -> write();
+ 
+   RecoMuonEff_PtEtaCut -> write();
+   RecoMuonEff_d0Cut    -> write();
+   RecoMuonEff_IsoCut   -> write();
+   RecoMuonEff_IdCut    -> write();
+
+ 
   // pair_noCut_ee        ->write();
  //  pair_ptEtaCut_ee     ->write(); 
    
@@ -1364,7 +1430,17 @@ int main(int argc, char **argv){
    delete muons_IsoCut            ;
    delete muons_IdCut            ;
    
-    
+   delete RecoElecEff_PtEtaCut ;
+   delete RecoElecEff_d0Cut    ;
+   delete RecoElecEff_IsoCut   ;
+   delete RecoElecEff_IdCut    ;
+   delete RecoElecEff_ConvCut  ;
+ 
+   delete RecoMuonEff_PtEtaCut ;
+   delete RecoMuonEff_d0Cut    ;
+   delete RecoMuonEff_IsoCut   ;
+   delete RecoMuonEff_IdCut    ;
+ 
    delete genpair_ee_nocut ;
    delete genpair_mm_nocut ;
    delete genpair_em_nocut ;
