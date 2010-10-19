@@ -216,6 +216,19 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
   , StoreGenPart     = cms.bool(False)
   , StoreGenKine     = cms.bool(False)
   , doJetVertexAlpha = cms.bool(False)
+
+
+# Preselection
+
+  , doSingleLeptonPreselection = cms.bool(True)
+  , doLeptonPairPreselection   = cms.bool(False)
+  , doRandomPreskim            = cms.bool(True)
+  
+  , singleLeptonPtCut          = cms.double(2)
+  , leptonPairPtCut            = cms.double(0)
+  , fractionOfEvents           = cms.double(1)   # insert number between 0 and 1
+
+
 # Define DATA Collections
   , genPartColl   = cms.InputTag("genParticles") 
   , hepMCColl     = cms.InputTag("generator")
@@ -278,4 +291,5 @@ process.path = cms.Path( process.hltPhysicsDeclared*
 
 # EndPath (what to store) ------------------------------------------------------------
 #process.outpath = cms.EndPath(process.out)
+
 

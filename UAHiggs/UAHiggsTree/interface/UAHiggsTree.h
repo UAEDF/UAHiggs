@@ -187,6 +187,28 @@ class UAHiggsTree : public edm::EDAnalyzer {
       virtual void GetAllTracks  (const edm::Event&, const edm::EventSetup& ,const vector<string>, vector<MyTracks> allTracks[5]);
      
      
+      
+      // --- Filters for Electrons, Muons, and pairs -----------------
+      
+      Bool_t DoSingleLeptonPreselection  ;
+      Bool_t DoLeptonPairPreselection    ;
+      Bool_t DoRandomPreskim             ;
+      
+      Double_t SingleLeptonPtCut         ;
+      Double_t LeptonPairPtCut           ;
+      Double_t FractionOfEvents          ;  
+      
+      bool PassLeptonFilter(vector<MyElectron> allElectrons[5],vector<MyMuon> allMuons[5], double ptCut );
+      bool PassLeptonPairFilter(vector<MyElectron> allElectrons[5],vector<MyMuon> allMuons[5], double ptCut );
+
+      
+      Int_t ntot;
+      Int_t n_single_presel;
+      Int_t n_pair_presel;
+      Int_t n_random_rej;
+      Double_t preskimFraction;
+      
+      
       // ----------member data ---------------------------
 
       // ----------Config data --------------------------- 
@@ -240,6 +262,7 @@ class UAHiggsTree : public edm::EDAnalyzer {
       string fOutputFileName ;
       TFile*   fout;
       TTree*   tree; 
+      TTree*   tree_extra; 
 
  //   MyEvent* evt;
 

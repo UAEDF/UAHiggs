@@ -13,7 +13,7 @@
 //
 // Original Author:  "local user"
 //         Created:  Wed Nov 18 10:39:03 CET 2009
-// $Id: UAHiggsTree.C,v 1.4 2010/04/29 11:54:43 selvaggi Exp $
+// $Id: UAHiggsTree.C,v 1.5 2010/05/03 14:44:59 selvaggi Exp $
 //
 //
 
@@ -46,7 +46,7 @@
 */
 
 
-
+#include "TRandom.h"
 // UAHiggsTree UAHiggs class decleration
 #include "UAHiggs/UAHiggsTree/interface/UAHiggsTree.h"
 
@@ -105,6 +105,20 @@ UAHiggsTree::UAHiggsTree(const edm::ParameterSet& iConfig)
    vertexs                 = iConfig.getParameter<vector<string> >("requested_vertexs");
    tracks                  = iConfig.getParameter<vector<string> >("requested_tracks");
 
+
+   // --- Lepton Preselection ------------
+ 
+   DoSingleLeptonPreselection = iConfig.getParameter<bool>("doSingleLeptonPreselection");
+   DoLeptonPairPreselection   = iConfig.getParameter<bool>("doLeptonPairPreselection");
+   DoRandomPreskim            = iConfig.getParameter<bool>("doRandomPreskim");
+   
+   
+   SingleLeptonPtCut          = iConfig.getParameter<double>("singleLeptonPtCut");
+   LeptonPairPtCut            = iConfig.getParameter<double>("leptonPairPtCut");
+   preskimFraction            = iConfig.getParameter<double>("fractionOfEvents");  
+
+
+
 }
 
 
@@ -126,7 +140,10 @@ void
 UAHiggsTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
    using namespace edm;
-
+   bool keepEvent = true;
+   ntot++;
+   
+   
    // EvtId and L1,HLT trig
    GetEvtId(iEvent); 
    GetL1Trig(iEvent,iSetup);
@@ -189,8 +206,21 @@ UAHiggsTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    GetAllPFMETs(iEvent,iSetup,pfmets,allPFMETs);
    GetAllTcMETs(iEvent,iSetup,tcmets,allTcMETs);
 
-
-   tree->Fill();
+   
+   if(DoSingleLeptonPreselection) {
+      keepEvent = PassLeptonFilter(allElectrons,allMuons,SingleLeptonPtCut);      
+      if(keepEvent) n_single_presel++;}
+   
+   if(DoLeptonPairPreselection)   {
+      keepEvent = PassLeptonPairFilter(allElectrons,allMuons,SingleLeptonPtCut); 
+      if(keepEvent) n_pair_presel++;}   
+      
+   
+  
+    if( (gRandom->Rndm() > preskimFraction) && (DoRandomPreskim) ) {keepEvent = false; n_random_rej++;}
+ 
+   
+   if(keepEvent)tree->Fill();
 
 }
 
@@ -199,8 +229,22 @@ UAHiggsTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 void 
 UAHiggsTree::beginJob()
 {
-   fout = new TFile(fOutputFileName.c_str(), "RECREATE" ) ;
-   tree = new TTree("tree","tree");
+   fout       = new TFile(fOutputFileName.c_str(), "RECREATE" ) ;
+   tree       = new TTree("tree","tree");
+   tree_extra = new TTree("tree_extra","tree_extra");
+   
+   tree_extra ->Branch("ntot",&ntot); 
+   tree_extra ->Branch("n_single_presel",&n_single_presel);
+   tree_extra ->Branch("n_pair_presel",&n_pair_presel); 
+   tree_extra ->Branch("n_random_rej",&n_random_rej); 
+   tree_extra ->Branch("preskimFraction",&preskimFraction); 
+   tree_extra ->Branch("DoSingleLeptonPreselection",&DoSingleLeptonPreselection );
+   tree_extra ->Branch("DoLeptonPairPreselection",&DoLeptonPairPreselection   );
+   tree_extra ->Branch("DoRandomPreskim",&DoRandomPreskim  );
+   tree_extra ->Branch("SingleLeptonPtCut",&SingleLeptonPtCut  );
+   tree_extra ->Branch("LeptonPairPtCut",&LeptonPairPtCut  );
+  
+   
    //evt  = new MyEvent;
    // tree->Branch("MyEvent","MyEvent",&evt);
 
@@ -242,15 +286,28 @@ UAHiggsTree::beginJob()
    // fill L1 map only once
    fill_L1_map = true;
    
-
+   ntot=0;
+   n_single_presel=0;
+   n_pair_presel=0;
+   n_random_rej=0;
+ 
 }
+   
 
 // ------------ method called once each job just after ending the event loop  ------------
 void 
 UAHiggsTree::endJob() 
 {
+   tree_extra -> Fill();
+  
    fout->Write() ;
    fout->Close() ; 
+
+    
+
+
+
+
 //   delete evt;
 //   delete tree;
 //   delete fout;
