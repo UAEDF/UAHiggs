@@ -13,7 +13,7 @@
 //
 // Original Author:  "local user"
 //         Created:  Wed Nov 18 10:39:03 CET 2009
-// $Id: UAHiggsTree.C,v 1.5 2010/05/03 14:44:59 selvaggi Exp $
+// $Id: UAHiggsTree.C,v 1.6 2010/10/19 13:28:38 selvaggi Exp $
 //
 //
 
@@ -142,7 +142,6 @@ UAHiggsTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    using namespace edm;
    bool keepEvent = true;
    ntot++;
-   
    
    // EvtId and L1,HLT trig
    GetEvtId(iEvent); 
@@ -290,7 +289,7 @@ UAHiggsTree::beginJob()
    n_single_presel=0;
    n_pair_presel=0;
    n_random_rej=0;
- 
+
 }
    
 

@@ -34,7 +34,7 @@ process.source = cms.Source("PoolSource",
 #    fileNames = cms.untracked.vstring('file:///user/xjanssen/outCopy/MYCOPY_1.root')
 #   fileNames = cms.untracked.vstring('file:////user/xjanssen/data/CMSSW_3_2_6/DataCopy/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/data/DataCopy__CMSSW_3_2_6__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO_1.root')
 
-   fileNames = cms.untracked.vstring('file:DataCopy_37x__CMSSW_3_7_0_patch4__MinimumBias__Commissioning10-SD_EG-Jun9thSkim_v1__RECO_1_1_EkL.root')
+   fileNames = cms.untracked.vstring('file:/user/xjanssen/data/CMSSW_3_8_3/DataCopy_38x/__EG__Run2010A-Sep17ReReco_v2__RECO/DataCopy_38x__CMSSW_3_8_3__EG__Run2010A-Sep17ReReco_v2__RECO_1_1_Okg.root')
 
 
 )
@@ -81,7 +81,8 @@ process.GenPartList = cms.EDAnalyzer("ParticleListDrawer",
 # configure modules via Global Tag --------------------------------------------------
 # https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideFrontierConditions
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
-process.GlobalTag.globaltag = 'START3X_V26::All'
+#process.GlobalTag.globaltag = 'START3X_V26::All'
+process.GlobalTag.globaltag = 'GR_R_38X_V13A::All'
 
 # Electron Isolation collections ----( Majid )---------------------------------------
 
@@ -221,7 +222,7 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
 # Preselection
 
   , doSingleLeptonPreselection = cms.bool(False)
-  , doLeptonPairPreselection   = cms.bool(False)
+  , doLeptonPairPreselection   = cms.bool(True)
   , doRandomPreskim            = cms.bool(False)
   
   , singleLeptonPtCut          = cms.double(5)
