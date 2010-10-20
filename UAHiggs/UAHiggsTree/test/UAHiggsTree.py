@@ -253,7 +253,7 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
   , requested_pfjets       = cms.vstring('ak5PFJets')
   , requested_trackjets    = cms.vstring('ak5TrackJets')
 
-  , requested_hlt_bits     = cms.vstring('HLT_L1MuOpen','HLT_L1Mu','HLT_Mu5','HLT_Mu9','HLT_L1DoubleMuOpen','HLT_DoubleMu0','HLT_DoubleMu3','HLT_L1SingleEG5','HLT_Ele15_SW_EleId_L1R','HLT_Ele15_SiStrip_L1R')
+  , requested_hlt_bits     = cms.vstring('HLT_L1MuOpen','HLT_L1Mu','HLT_Mu5','HLT_Mu9','HLT_L1DoubleMuOpen','HLT_DoubleMu0','HLT_DoubleMu3','HLT_L1SingleEG5','HLT_Ele15_SW_EleId_L1R','HLT_Ele15_SiStrip_L1R','HLT_Photon10_L1R','HLT_Photon15_Cleaned_L1R','HLT_Ele15_SW_CaloEleId_L1R','HLT_Ele15_LW_L1R')
   , requested_L1_bits      = cms.vstring('L1_SingleMuOpen','L1_SingleMu0','L1_SingleMu7','L1_DoubleMu3','L1_SingleMu20','L1_SingleMu3','L1_DoubleMuOpen','L1_SingleEG1','L1_SingleEG2','L1_SingleEG5','L1_SingleEG8','L1_SingleEG20','L1_DoubleEG5')
 
   , requested_vertexs      = cms.vstring('offlinePrimaryVertices')#,'pixelVertices')
