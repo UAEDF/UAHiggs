@@ -32,7 +32,10 @@ class GenLeptonPair : public TObject {
     this->isPrimary_mt = false;
     this->isPrimary_nl = false;
     };
-    virtual ~GenLeptonPair(){;};
+    virtual ~GenLeptonPair(){
+   //   delete l1;
+   //   delete l2;
+    };
     void fillGenLeptonPair(MyGenPart& l1,MyGenPart& l2);
      
     TLorentzVector get4v();

@@ -1,6 +1,6 @@
 43
 100
-1
+0.034965
 NO
 output/outWW.root
 output/outWW.txt

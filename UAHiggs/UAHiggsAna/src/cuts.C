@@ -704,6 +704,62 @@ vector<MyGenPart*> GenPartFilter(vector<MyGenPart*> vpart,
   return vpart;
 }
 
+
+
+/*GenPartVector GenPartFilter_(GenPartVector vpart, 
+                                                     bool cutpdgId = true,
+						     bool cutPtEta = true,
+                                                     int  pdgId    = 0   ,  
+						     Double_t ptcut=20,
+						     Double_t etacut=2.5)
+						     {
+   
+    for(GenPartVector::iterator itp = vpart.begin() ; itp != vpart.end() ; ++itp){
+      bool reject = false;
+    
+      if(cutpdgId ){
+      // ------------------ PDG Id Cut ------------------------
+          if ( pdgId == 0 ) {
+             if ( ! (    fabs((*itp)->pdgId) == 11 
+                      || fabs((*itp)->pdgId) == 13
+                      || fabs((*itp)->pdgId) == 15  
+                    )  
+                ) reject = true; 
+          } else {
+             if ( fabs((*itp)->pdgId) != pdgId )   reject = true; 
+          }
+      }
+
+      if(cutPtEta){
+      // ------------------Pt, Eta cuts -----------------------
+     
+     
+        if( !( (*itp)->pt        > ptcut)        )    reject = true; 
+        if( !( fabs((*itp)->eta) < etacut)       )    reject = true;}
+       
+     if(reject) vpart.erase(itp--); 
+     }
+  
+  return vpart;
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 vector<MyGenPart*> GenPartFilter(vector<MyGenPart>& vpart,
                                                      bool cutpdgId = true,
                                                      bool cutPtEta = true,
@@ -712,19 +768,46 @@ vector<MyGenPart*> GenPartFilter(vector<MyGenPart>& vpart,
 						     Double_t etacut=2.5
 						     )
                                                        { 
-    vector<MyGenPart*>  *part     = new vector<MyGenPart*>;
-    vector<MyGenPart*>  *part_out = new vector<MyGenPart*>;
+  //   vector<MyGenPart*>  *part     = new vector<MyGenPart*>;
+  //  vector<MyGenPart*>  *part_out = new vector<MyGenPart*>;
     
+    vector<MyGenPart*>  part    ; 
+    vector<MyGenPart*>  part_out; 
+  
+   
+   
+   
     for(vector<MyGenPart>::iterator itp = vpart.begin() ; itp != vpart.end() ; ++itp){
-        (*part).push_back(&*itp);
-    	}
-    *part_out = GenPartFilter(*part,cutpdgId,cutPtEta,pdgId,ptcut,etacut);
-    return *part_out;
+     //   MyGenPart*  p = new MyGenPart;
+	//p = &*itp;
+	(part).push_back(&*itp);
+    //	part.push_back(p);
+	}
+    part_out = GenPartFilter(part,cutpdgId,cutPtEta,pdgId,ptcut,etacut);
+    return part_out;
     }
 
 
 
+/*GenPartVector GenPartFilter(vector<MyGenPart>& vpart,
+                                                     bool cutpdgId = true,
+                                                     bool cutPtEta = true,
+                                                     int  pdgId    = 0   , 
+						     double ptcut=20,
+						     Double_t etacut=2.5
+						     )
+                                                       { 
+    GenPartVector        genpart;
+    GenPartVector        genpart_out;
+     
+    for(vector<MyGenPart>::iterator itp = vpart.begin() ; itp != vpart.end() ; ++itp){
+   	genpart.push_back(boost::shared_ptr<MyGenPart>(&*itp));
+  	}
+    genpart_out = GenPartFilter(genpart,cutpdgId,cutPtEta,pdgId,ptcut,etacut);
+    return part_out;
+    }
 
+*/
 
 
 
@@ -868,6 +951,13 @@ GenLeptonPair* findBestGenPair(vector<GenLeptonPair*>& pair, string type){
      return bestpair;
      }
 
+//---------- delete vectors of pointers ------------
+
+void Delete(vector<MyGenPart*> vgenpart){
+       for(vector<MyGenPart*>::iterator it=vgenpart.begin();it!=vgenpart.end();it++){
+       delete (*it);
+       }
+}
 
 
 

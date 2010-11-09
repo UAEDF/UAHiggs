@@ -5,6 +5,8 @@
 #include <map>
 #include <string>
 #include <algorithm>
+//#include "boost/shared_ptr.h"
+
 using namespace std;
 #include "TH1F.h"
 #include "TGraph.h"
@@ -13,6 +15,8 @@ using namespace std;
 #include "TTree.h"
 #include "TFile.h"
 #include "TSystem.h"
+
+
 
 #include "include/MyPart.h"
 #include "include/MyEvtId.h"
@@ -449,10 +453,10 @@ int main(int argc, char **argv){
       rootTree         -> SetBranchAddress("EvtId",&evtid);
       rootTree         -> SetBranchAddress("L1Trig",&l1trig);
       rootTree         -> SetBranchAddress("HLTrig",&hltrig);
-      rootTree         -> SetBranchAddress("GenKin",&genkin);
-      rootTree         -> SetBranchAddress("GenPart",&genpart);
-      rootTree         -> SetBranchAddress("GenElec",&genelec);
-      rootTree         -> SetBranchAddress("GenMu",&genmu);
+      if(Data == "NO")rootTree    -> SetBranchAddress("GenKin",&genkin);
+      if(Data == "NO")rootTree    -> SetBranchAddress("GenPart",&genpart);
+      if(Data == "NO")rootTree    -> SetBranchAddress("GenElec",&genelec);
+      if(Data == "NO")rootTree    -> SetBranchAddress("GenMu",&genmu);
  //   rootTree         -> SetBranchAddress("GenNu",&gennu);
  //   rootTree         -> SetBranchAddress("ak5CaloJets",&ak5calojets);
       rootTree         -> SetBranchAddress("ak5PFJets",&ak5pfjets);
@@ -468,7 +472,7 @@ int main(int argc, char **argv){
  //   rootTree         -> SetBranchAddress("met",&calomet);
      rootTree         -> SetBranchAddress("tcMet",&tcmet);
  //   rootTree	     -> SetBranchAddress("pfMet",&pfmet);
-     rootTree	     -> SetBranchAddress("genMetTrue",&genmet);
+      if(Data == "NO")rootTree	     -> SetBranchAddress("genMetTrue",&genmet);
     
     
     
@@ -518,7 +522,8 @@ int main(int argc, char **argv){
     
    //    vector<MyGenPart*> *genmuons_I             = new vector<MyGenPart*>();
    //    vector<MyGenPart*> *genelectrons_I         = new vector<MyGenPart*>();
-    
+       
+       if(Data =="NO"){
     
        for(vector<MyGenPart>::iterator itgen=genpart->begin();itgen!=genpart->end();itgen++){
          
@@ -538,7 +543,7 @@ int main(int argc, char **argv){
        if( !leptonic ) fs="nl"; 
     //   cout << ne << " " <<nm<<" "<<nt<< " leptonic "<<leptonic<<endl;
       
-      
+       }
       
       
       
@@ -548,6 +553,8 @@ int main(int argc, char **argv){
 	double genMetPhi=0;
 	double genMetx=0;
 	double genMety=0;
+	
+	if(Data =="NO"){
 	for(vector<MyGenMET>::iterator itmet=genmet->begin();itmet!=genmet->end();itmet++){
 	   genMet=itmet->pt;
 	   genMetPhi=itmet->phi;
@@ -555,53 +562,69 @@ int main(int argc, char **argv){
 	   genMety=itmet->pt * sin(itmet->phi);
 	   }
       
-      
+       }
       /// ----------------   Make Gen LeptonPairs ----------------------------
    //   if(fs=="ee"){
    //   cout<<"-------------------------------------------"<<endl;
   //    cout<<" electron vector size "<<genelec->size()<<endl;
 
 
+    //  typedef vector<boost::shared_ptr<MyGenPart>> GenPartVector;
+      
+   //   GenPartVector trueelectrons_nocut;
+       
+    
       vector<MyGenPart*> *trueelectrons_nocut = new vector<MyGenPart*>();
+     
+    //  vector<MyGenPart*> trueelectrons_nocut;
+      
+      
       vector<MyGenPart*> *trueelectrons_pteta = new vector<MyGenPart*>();
       vector<MyGenPart*> *truemuons_nocut = new vector<MyGenPart*>();
       vector<MyGenPart*> *truemuons_pteta = new vector<MyGenPart*>();
       vector<GenLeptonPair*> *trueLeptonPair_nocut       = new vector<GenLeptonPair*>;
       vector<GenLeptonPair*> *trueLeptonPair_pteta       = new vector<GenLeptonPair*>; 
-
-      *trueelectrons_nocut = GenPartFilter(*genpart,true,false,11,10,2.5);
-      *trueelectrons_pteta = GenPartFilter(*genpart,true,true ,11,10,2.5);
-      *truemuons_nocut     = GenPartFilter(*genpart,true,false,13,10,2.4);
-      *truemuons_pteta     = GenPartFilter(*genpart,true,true ,13,10,2.4);
-      trueLeptonPair_nocut = MakeGenLeptonPairVector(*trueelectrons_nocut,*truemuons_nocut,fs);
-      trueLeptonPair_pteta = MakeGenLeptonPairVector(*trueelectrons_pteta,*truemuons_pteta,fs);
       
-
       vector<MyGenPart*> *genelectrons_nocut         = new vector<MyGenPart*>();
       vector<MyGenPart*> *genelectrons_pteta         = new vector<MyGenPart*>();      
       vector<MyGenPart*> *genmuons_nocut             = new vector<MyGenPart*>();
       vector<MyGenPart*> *genmuons_pteta             = new vector<MyGenPart*>();
       vector<GenLeptonPair*> *genLeptonPair_nocut       = new vector<GenLeptonPair*>;
       vector<GenLeptonPair*> *genLeptonPair_pteta       = new vector<GenLeptonPair*>;
+     
+      GenLeptonPair *bestGenPair_nocut = new GenLeptonPair;
+      GenLeptonPair *bestGenPair_pteta = new GenLeptonPair;
       
+      if(Data =="NO"){
+      
+      *trueelectrons_nocut = GenPartFilter(*genpart,true,false,11,10,2.5);
+     
+  //    trueelectrons_nocut = GenPartFilter(*genpart,true,false,11,10,2.5);
+      
+     
+      *trueelectrons_pteta = GenPartFilter(*genpart,true,true ,11,10,2.5);
+      *truemuons_nocut     = GenPartFilter(*genpart,true,false,13,10,2.4);
+      *truemuons_pteta     = GenPartFilter(*genpart,true,true ,13,10,2.4);
+    //  trueLeptonPair_nocut = MakeGenLeptonPairVector(*trueelectrons_nocut,*truemuons_nocut,fs);
+   //   trueLeptonPair_nocut = MakeGenLeptonPairVector(trueelectrons_nocut,*truemuons_nocut,fs);
+      
+      
+    //  trueLeptonPair_pteta = MakeGenLeptonPairVector(*trueelectrons_pteta,*truemuons_pteta,fs);
+       
       *genmuons_nocut           = GenPartFilter(*genmu,true,false,13,10,2.4);
       *genmuons_pteta           = GenPartFilter(*genmu,true,true ,13,10,2.4);
       *genelectrons_nocut       = GenPartFilter(*genelec,true,false,11,10,2.5);
       *genelectrons_pteta       = GenPartFilter(*genelec,true,true ,11,10,2.5);
-      genLeptonPair_nocut        = MakeGenLeptonPairVector(*genelectrons_nocut,*genmuons_nocut,fs);
-      genLeptonPair_pteta        = MakeGenLeptonPairVector(*genelectrons_pteta,*genmuons_pteta,fs);
-      
+       genLeptonPair_nocut       = MakeGenLeptonPairVector(*genelectrons_nocut,*genmuons_nocut,fs);
+       genLeptonPair_pteta       = MakeGenLeptonPairVector(*genelectrons_pteta,*genmuons_pteta,fs);
        
-      GenLeptonPair *bestGenPair_nocut = new GenLeptonPair;
-      GenLeptonPair *bestGenPair_pteta = new GenLeptonPair;
-      
       
        bestGenPair_nocut = findBestGenPair(*genLeptonPair_nocut);
        bestGenPair_pteta = findBestGenPair(*genLeptonPair_pteta);
    
    
    
-       if( bestGenPair_nocut->type =="ee" && leptonic)   genpair_ee_nocut     -> fill(*bestGenPair_nocut,genMet,genMetPhi,weight );
+      if( bestGenPair_nocut->type =="ee" && leptonic)   genpair_ee_nocut    -> fill(*bestGenPair_nocut,genMet,genMetPhi,weight );
       if( bestGenPair_nocut->type =="mm" && leptonic)   genpair_mm_nocut     -> fill(*bestGenPair_nocut,genMet,genMetPhi,weight );
       if( bestGenPair_nocut->type =="em" && leptonic)   genpair_em_nocut     -> fill( *bestGenPair_nocut,genMet,genMetPhi,weight );
       if( bestGenPair_nocut->type =="me" && leptonic)   genpair_me_nocut     -> fill(*bestGenPair_nocut,genMet,genMetPhi,weight );
@@ -643,8 +666,8 @@ int main(int argc, char **argv){
       if( bestGenPair_pteta->type =="em" && (fs=="tt" || fs=="et" || fs=="mt") )                 genpair_em_fromtau_pteta     -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
       if( bestGenPair_pteta->type =="me" && (fs=="tt" || fs=="et" || fs=="mt") )                 genpair_me_fromtau_pteta     -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
       if((bestGenPair_pteta->type =="em" ||  bestGenPair_pteta->type =="me") 
-       && (fs=="tLeptonPairPlotst" || fs=="et" || fs=="mt"))                                                    genpair_mixed_fromtau_pteta  -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
-      if( bestGenPair_pteta->type !="none" && leptonic && (fs=="tt" || fs=="et" || fs=="mt") )                                       genpair_all_fromtau_pteta    -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
+       && (fs=="tt" || fs=="et" || fs=="mt"))                                                    genpair_mixed_fromtau_pteta  -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
+      if( bestGenPair_pteta->type !="none" && leptonic && (fs=="tt" || fs=="et"|| fs=="mt") )    genpair_all_fromtau_pteta    -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
    
       
       
@@ -656,8 +679,16 @@ int main(int argc, char **argv){
        && !(fs=="tt" || fs=="et" || fs=="mt") && leptonic)                                       genpair_mixed_nofromtau_pteta  -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
       if( bestGenPair_pteta->type !="none" && leptonic && !(fs=="tt" || fs=="et" || fs=="mt") )  genpair_all_nofromtau_pteta    -> fill( *bestGenPair_pteta,genMet,genMetPhi,weight );
    
+      }
       
-      
+    //  Delete(trueelectrons_nocut);
+     //  for(vector<MyGenPart*>::iterator it=trueelectrons_nocut.begin();it!=trueelectrons_nocut.end();it++){
+     //  delete (*it);
+     //  }
+     
+      //   for (int i = 0; i < trueelectrons_nocut.size(); i++){  
+      //   delete trueelectrons_nocut.at(i);
+      //   }
       // ------vector<MyMuon*> *muons       = new vector<MyMuon*>();------- DATA  ------Event Selection ------------------
         
        int vtxId = getBestVertex(vertex);
@@ -680,7 +711,7 @@ int main(int argc, char **argv){
        
        
        if(l1trig->L1map["L1_SingleMuOpen"]) L1_SingleMuOpen+=weight;
-       if(l1trig->L1map["L1_SingleMu0*muons_ptEta = MuonFilter(*muons,vtxId, true, false, false, false);"])    L1_SingleMu0+=weight;
+       if(l1trig->L1map["L1_SingleMu0"])    L1_SingleMu0+=weight;
        if(l1trig->L1map["L1_SingleMu3"])    L1_SingleMu3+=weight;
        if(l1trig->L1map["L1_SingleMu7"])    L1_SingleMu7+=weight;
        if(l1trig->L1map["L1_SingleMu20"])   L1_SingleMu20+=weight;
@@ -801,7 +832,7 @@ int main(int argc, char **argv){
 	    
 	    
 	    
-	    //------------- Make Electrons Control Plots ------------------------
+	    //------------- Make Electrons Control Plots ------------------------genLeptonPair_pteta
        
            
        
@@ -826,7 +857,9 @@ int main(int argc, char **argv){
             muons_IsoCut   -> fill(*muons_iso, weight, vtxId);
             muons_IdCut    -> fill(*muons_id, weight, vtxId);
        
-            //------------- Make Electron Efficiency Plots ----------------------
+            if(Data=="NO"){
+	    
+	    //------------- Make Electron Efficiency Plots ----------------------
 
             RecoElecEff_PtEtaCut -> fill ( *trueelectrons_pteta , *electrons_ptEta_bfmcl      ,  weight );
             RecoElecEff_d0Cut    -> fill ( *trueelectrons_pteta , *electrons_d0_bfmcl         ,  weight );
@@ -843,7 +876,7 @@ int main(int argc, char **argv){
           
 	   // ------Lepton Pairs Creations --------------------------
       
-      
+            }
        
           vector<LeptonPair*> *pair_noCut = new vector<LeptonPair*>;
           vector<LeptonPair*> *pair_ptEta = new vector<LeptonPair*>;
@@ -913,7 +946,7 @@ int main(int argc, char **argv){
           bestPair_id      = findBestPair(*pair_id);
           bestPair_conv    = findBestPair(*pair_conv);
           
-	/*  
+	  
 	  if( bestPair_nocut->type =="ee" )   pair_noCut_ee     -> fill( *bestPair_nocut,tcMet,tcMetPhi,weight );
           if( bestPair_nocut->type =="em" )   pair_noCut_em     -> fill( *bestPair_nocut,tcMet,tcMetPhi,weight );
           if( bestPair_nocut->type =="me" )   pair_noCut_me     -> fill( *bestPair_nocut,tcMet,tcMetPhi,weight );
@@ -950,7 +983,7 @@ int main(int argc, char **argv){
 	   || bestPair_iso->type =="me" )   pair_IsoCut_mixed  -> fill( *bestPair_iso,tcMet,tcMetPhi,weight );
           if( bestPair_iso->type !="none" ) pair_IsoCut_all    -> fill( *bestPair_iso,tcMet,tcMetPhi,weight );
           
-	  =
+	  
 	  if( bestPair_id->type =="ee" )   pair_IdCut_ee     -> fill( *bestPair_id,tcMet,tcMetPhi,weight );
           if( bestPair_id->type =="em" )   pair_IdCut_em     -> fill( *bestPair_id,tcMet,tcMetPhi,weight );
           if( bestPair_id->type =="me" )   pair_IdCut_me     -> fill( *bestPair_id,tcMet,tcMetPhi,weight );
@@ -959,14 +992,14 @@ int main(int argc, char **argv){
 	   || bestPair_id->type =="me" )   pair_IdCut_mixed  -> fill( *bestPair_id,tcMet,tcMetPhi,weight );
           if( bestPair_id->type !="none" ) pair_IdCut_all    -> fill( *bestPair_id,tcMet,tcMetPhi,weight );
          
-	 */ 
 	  
-	 // if( bestPair_conv->type =="ee" )   pair_ConvCut_ee     -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
-        //  if( bestPair_conv->type =="em" )   pair_ConvCut_em     -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
-        //  if( bestPair_conv->type =="me" )   pair_ConvCut_me     -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
-         //   if( bestPair_conv->type =="mm" )   pair_ConvCut_mm     -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
-       //   if( bestPair_conv->type =="em" 
-	//   || bestPair_conv->type =="me" )   pair_ConvCut_mixed  -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
+	  
+	  if( bestPair_conv->type =="ee" )   pair_ConvCut_ee     -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
+          if( bestPair_conv->type =="em" )   pair_ConvCut_em     -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
+          if( bestPair_conv->type =="me" )   pair_ConvCut_me     -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
+          if( bestPair_conv->type =="mm" )   pair_ConvCut_mm     -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
+          if( bestPair_conv->type =="em" 
+	   || bestPair_conv->type =="me" )   pair_ConvCut_mixed  -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
          if( bestPair_conv->type !="none" )   pair_ConvCut_all    -> fill( *bestPair_conv,tcMet,tcMetPhi,weight );
    
          
@@ -1250,7 +1283,7 @@ int main(int argc, char **argv){
 	 
 	  } // HLT requirement
 
-      delete trueelectrons_nocut  ;  
+   //   delete trueelectrons_nocut  ;  
       delete trueelectrons_pteta  ;
       delete truemuons_nocut      ;
       delete truemuons_pteta      ;
@@ -1264,11 +1297,11 @@ int main(int argc, char **argv){
       delete genmuons_pteta      ;
       delete genLeptonPair_nocut ;
       delete genLeptonPair_pteta ;
-
-      
-      delete genLeptonPair_pteta;
+   
+      delete bestGenPair_nocut;
       delete bestGenPair_pteta;
-      
+     
+     
       delete muons_pt5;
       delete muons_pt10;
       delete electrons_bfmcl_pt5;
@@ -1918,7 +1951,69 @@ int main(int argc, char **argv){
    ofstream results;
    results.open(OutputTextFile.c_str());
    
+    results << " ------------- Trigger efficiencies ------------------------"   << endl;
+    results << "  "   << endl;
+    results << "          L1    "   << endl;
+    results << "  "   << endl;
    
+   
+    results<< " L1_SingleMuOpen=        "<<L1_SingleMuOpen/nevanalyzed    <<endl;
+    results<< " L1_SingleMu0=           "<<L1_SingleMu0/nevanalyzed    <<endl;
+    results<< " L1_SingleMu7=           "<<L1_SingleMu7/nevanalyzed    <<endl;
+    results<< " L1_DoubleMu3=           "<<L1_DoubleMu3/nevanalyzed    <<endl;
+    results<< " L1_SingleMu20=          "<<L1_SingleMu20/nevanalyzed    <<endl;
+    results<< " L1_SingleMu3=           "<<L1_SingleMu3/nevanalyzed    <<endl;
+    results<< " L1_DoubleMuOpen=        "<<L1_DoubleMuOpen/nevanalyzed    <<endl;
+    results<< " L1_SingleEG1=           "<<L1_SingleEG1/nevanalyzed    <<endl;
+    results<< " L1_SingleEG2=           "<<L1_SingleEG2/nevanalyzed    <<endl;
+    results<< " L1_SingleEG5=           "<<L1_SingleEG5/nevanalyzed    <<endl;
+    results<< " L1_SingleEG8=           "<<L1_SingleEG8/nevanalyzed    <<endl;
+    results<< " L1_SingleEG20=          "<<L1_SingleEG20/nevanalyzed    <<endl;
+    results<< " L1_DoubleEG5=           "<<L1_DoubleEG5/nevanalyzed    <<endl;
+
+    results << "  "   << endl;
+    results << "          HLT    "   << endl;
+    results << "  "   << endl;
+   
+   
+    results<< " HLT_L1MuOpen=           "<<HLT_L1MuOpen/nevanalyzed    <<endl;
+    results<< " HLT_L1Mu=               "<<HLT_L1Mu/nevanalyzed    <<endl;
+    results<< " HLT_Mu5=                "<<HLT_Mu5/nevanalyzed    <<endl;
+    results<< " HLT_Mu9=                "<<HLT_Mu9/nevanalyzed    <<endl;
+    results<< " HLT_L1DoubleMuOpen=     "<<HLT_L1DoubleMuOpen/nevanalyzed    <<endl;
+    results<< " HLT_DoubleMu0=          "<<HLT_DoubleMu0/nevanalyzed    <<endl;
+    results<< " HLT_DoubleMu3=          "<<HLT_DoubleMu3/nevanalyzed    <<endl;
+    results<< " HLT_L1SingleEG5=        "<<HLT_L1SingleEG5/nevanalyzed    <<endl;
+ //   results<< " HLT_Ele15_SW_EleId_L1R= "<<HLT_Ele15_SW_EleId_L1R/nevanalyzed    <<endl;
+    results<< " HLT_Ele15_LW_L1R=       "<<HLT_Ele15_LW_L1R/nevanalyzed    <<endl;
+    results<< " HLT_Ele15_SiStrip_L1R=  "<<HLT_Ele15_SiStrip_L1R/nevanalyzed    <<endl;
+       
+    
+    results <<" ------------------  Preselection for leptons ---------------------- " << endl;
+    
+    results <<" electrons  5 GeV  :" << nel5/nevanalyzed <<endl;
+    results <<" muons      5 GeV  :" << nmu5/nevanalyzed <<endl;
+    results <<" electrons 10 GeV  :" << nel10/nevanalyzed <<endl;
+    results <<" muons     10 GeV  :" << nmu10/nevanalyzed <<endl;
+    
+    results <<" ============================" << endl;
+    
+    results <<" pairs      5 GeV  :" << npair5/nevanalyzed <<endl;
+    results <<" pairs     10 GeV  :" << npair10/nevanalyzed <<endl;
+   
+    
+    
+    
+    
+    results<<"                                        "<<endl;
+    results<<"                                        "<<endl;
+    results<<"                                        "<<endl;
+    results<<"                                        "<<endl;
+    results<<" =============================          "<<endl;
+    results<<"                                        "<<endl;
+    results<<"(READ THIS FIRST ROUND ONLY !!)  Data Sample Weight for "<<Luminosity<<" pb-1 (sigma x Lumi)/(number of an. events): "<<CrossSection*Luminosity/nevanalyzed<<endl;
+    results<<"                                        "<<endl;
+    results<<"Total number of events analyzed                        : "<<nevanalyzed<<endl;
     results<<"============== Event Selection for all final states ============"<<endl;
     eff=0;
     if(nevanalyzed>0.)eff=double(hltpassed)/nevanalyzed;
