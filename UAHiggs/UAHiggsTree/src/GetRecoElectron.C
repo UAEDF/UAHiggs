@@ -108,7 +108,6 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
  
    
 
-   int iEl = 0;
    
    // Loop on Gsf Electron
    for (reco::GsfElectronCollection::const_iterator iElectron = gsfElectrons.begin();
@@ -117,9 +116,9 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
    
      MyElectron electron;
 
-     // Majid:
-     Ref<reco::GsfElectronCollection> electronRAWRef(gsfElectronsHandle,iEl);
- 
+     unsigned int iEl = iElectron - gsfElectrons.begin();
+     reco::GsfElectronRef eRef(gsfElectronsHandle,iEl);
+
      // Gsf Electron General 
 
      electron.pt  = iElectron->pt(); 
@@ -173,9 +172,22 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
     electron.HcalDepth1OverEcal      = iElectron->hcalDepth1OverEcal();
     electron.HcalDepth2OverEcal      = iElectron->hcalDepth2OverEcal();
 
-     
-     
-     
+  //  electron.expectedInnerHits = 0; 
+    
+  //  try{
+  //   printf("Ciao\n");
+    edm::Handle<edm::ValueMap<int> > vmEl;
+    iEvent.getByLabel("expectedHitsEle",vmEl);
+    // fill corrected expected inner hits
+    electron.expectedInnerHits      =  (*vmEl)[eRef];
+    //cout<<(*vmEl)[eRef]<<endl;
+   // cou<<"ciao"<<endl;
+  //  printf("Ciao\n");
+   //  }
+   // catch ( ... ) {
+   //  printf("Can't access expectedHitsEle\n");
+   // }
+   
      
      
      // Gsf Track Info
@@ -316,10 +328,10 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
  
    
      
-       electron.eidRobustLoose =        eIDmapRL[electronRAWRef] ;
-       electron.eidRobustTight =        eIDmapRT[electronRAWRef] ;
-       electron.eidLoose       =        eIDmapL[electronRAWRef]  ;
-       electron.eidTight       =        eIDmapT[electronRAWRef] ;
+       electron.eidRobustLoose =        eIDmapRL[eRef] ;
+       electron.eidRobustTight =        eIDmapRT[eRef] ;
+       electron.eidLoose       =        eIDmapL[eRef]  ;
+       electron.eidTight       =        eIDmapT[eRef] ;
             
      
     

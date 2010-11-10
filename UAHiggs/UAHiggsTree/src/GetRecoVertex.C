@@ -52,7 +52,12 @@ void UAHiggsTree::GetRecoVertex(const edm::Event& iEvent, const edm::EventSetup&
       myvertex.x         = p->x()  ;
       myvertex.y         = p->y()  ;
       myvertex.z         = p->z()  ;
-
+      myvertex.xerr      = p->xError()  ;
+      myvertex.yerr      = p->yError()  ;
+      myvertex.zerr      = p->zError()  ;
+     
+     
+     
       if (RecoVtxDebug)
         cout << myvertex.id << " " << p->position() << endl;
 
@@ -65,11 +70,27 @@ void UAHiggsTree::GetRecoVertex(const edm::Event& iEvent, const edm::EventSetup&
         myvertex.chi2n     = p->normalizedChi2() ;
       else
         myvertex.chi2n     = -99. ;
+      myvertex.chi2        = p->ndof();
+      myvertex.ndof        = p->chi2();
       myvertex.ntracks   = p->tracksSize() ;
 
+      Double_t sumpt = 0;
+  
+      for (reco::Vertex::trackRef_iterator iTrack = p->tracks_begin(); iTrack!=p->tracks_end(); ++iTrack) {
+           sumpt += (*iTrack)->pt();
+         //  cout << sumpt  << endl;
+      }
+     
+      myvertex.SumPtTracks   = sumpt ;
+   
+      
+      
+      
       VertexVector.push_back(myvertex);
       vtxid_xyz.push_back(p->position());
-
+  
+     
+   
    }   
 
 }

@@ -20,6 +20,9 @@ class MyMuon : public TObject {
     MyTracks    innerTrack;     // Track reconstructed in the tracker only
     MyTracks    outerTrack;     // Track reconstructed in the muon detector only
     
+    Int_t   nChambers;
+    Int_t   nChambersMatched;
+    
     // Basic properties            
     Double_t   isoR03sumPt   ;
     Double_t   isoR03emEt    ;

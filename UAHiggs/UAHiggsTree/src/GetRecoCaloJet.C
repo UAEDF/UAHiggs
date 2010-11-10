@@ -56,10 +56,10 @@ void UAHiggsTree::GetRecoCaloJet(const edm::Event& iEvent , const edm::EventSetu
   
    vector<double>::const_iterator it_alpha = Jet_Alpha.begin();
    vector<double>::const_iterator it_beta =  Jet_Beta.begin();  
-  
   */
- //  Handle<JetTagCollection> bjetsHandle;
-  // iEvent.getByLabel(BJetCollection_,bjetsHandle);
+  
+   
+ 
  //  const JetTagCollection &bjets = *(bjetsHandle.product());
 
   // JetTagCollection::const_iterator bjet = bjets.begin(); 
@@ -67,9 +67,18 @@ void UAHiggsTree::GetRecoCaloJet(const edm::Event& iEvent , const edm::EventSetu
    Handle<CaloJetCollection> CaloJets;
    iEvent.getByLabel(CaloJetCollection_,CaloJets);
   
+   Handle<JetTagCollection> bjetsHandle;
+   iEvent.getByLabel(BJetCollection_,bjetsHandle);
+
+   
+  
+  
     for(CaloJetCollection::const_iterator jet=CaloJets->begin();jet!=CaloJets->end();jet++){//,it_alpha++,it_beta++){
   //   for(CaloJetCollection::const_iterator jet=CaloJets->begin();jet!=CaloJets->end();jet++,it_alpha++,it_beta++){ 
     
+     reco::CaloJetRef jetRef(CaloJets, jet - CaloJets->begin());
+     reco::JetBaseRef jetBaseRef(jetRef);
+
      double alpha=0;
      double beta=0;
      double discriminator=-100;
@@ -90,6 +99,12 @@ void UAHiggsTree::GetRecoCaloJet(const edm::Event& iEvent , const edm::EventSetu
      myjet.alpha          = alpha;
      myjet.beta           = beta;
   
+  
+     discriminator =  (*(bjetsHandle.product()))[jetBaseRef];  
+     
+   
+   
+   
    //  if(bjet->second>0.001 && bjet->second<1000) {
   //   discriminator=bjet->second;
   //   bjet++;
@@ -97,7 +112,7 @@ void UAHiggsTree::GetRecoCaloJet(const edm::Event& iEvent , const edm::EventSetu
   //   else{discriminator=-100;bjet++;}
     
      myjet.discriminator  = discriminator;
-  
+     cout<<discriminator<<endl;
      JetVector.push_back(myjet);
   
    }//loop over jets

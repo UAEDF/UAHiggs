@@ -17,12 +17,30 @@ process.options = cms.untracked.PSet(
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
 process.MessageLogger.cerr.threshold = 'INFO'
 #process.MessageLogger.cout.placeholder = cms.untracked.bool(False)
-#process.MessageLogger.cerr.FwkReport.reportEvery = 1000
+process.MessageLogger.cerr.FwkReport.reportEvery = -1
 
 
 #Geometry --------------------------------------------------------------------------
 process.load("Configuration.StandardSequences.Geometry_cff")
 process.load("Configuration.StandardSequences.MagneticField_cff")
+
+
+#process.load('Configuration.StandardSequences.Services_cff')
+process.load('SimGeneral.HepPDTESSource.pythiapdt_cfi')
+#process.load('FWCore.MessageService.MessageLogger_cfi')
+process.load('Configuration.StandardSequences.MixingNoPileUp_cff')
+process.load('Configuration.StandardSequences.GeometryExtended_cff')
+process.load('Configuration.StandardSequences.MagneticField_38T_cff')
+process.load('Configuration.StandardSequences.RawToDigi_cff')
+process.load('Configuration.StandardSequences.L1Reco_cff')
+process.load('Configuration.StandardSequences.Reconstruction_cff')
+process.load('Configuration.StandardSequences.EndOfProcess_cff')
+process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
+process.load('Configuration.EventContent.EventContent_cff')
+
+
+
+
 
 
 # Data source -----------------------------------------------------------------------
@@ -34,8 +52,8 @@ process.source = cms.Source("PoolSource",
 #    fileNames = cms.untracked.vstring('file:///user/xjanssen/outCopy/MYCOPY_1.root')
 #   fileNames = cms.untracked.vstring('file:////user/xjanssen/data/CMSSW_3_2_6/DataCopy/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/data/DataCopy__CMSSW_3_2_6__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO_1.root')
 
-   fileNames = cms.untracked.vstring('file:/user/xjanssen/data/CMSSW_3_8_3/DataCopy_38x/__EG__Run2010A-Sep17ReReco_v2__RECO/DataCopy_38x__CMSSW_3_8_3__EG__Run2010A-Sep17ReReco_v2__RECO_1_1_Okg.root')
-
+#   fileNames = cms.untracked.vstring('file:/user/xjanssen/data/CMSSW_3_8_3/DataCopy_38x/__EG__Run2010A-Sep17ReReco_v2__RECO/DataCopy_38x__CMSSW_3_8_3__EG__Run2010A-Sep17ReReco_v2__RECO_1_1_Okg.root')
+fileNames = cms.untracked.vstring('file:/user/xjanssen/data/CMSSW_3_8_4_patch2/DataCopy_384p2/__WWTo2L2Nu_TuneZ2_7TeV-pythia6__Fall10-START38_V12-v1__GEN-SIM-RECO/DataCopy_384p2__CMSSW_3_8_4_patch2__WWTo2L2Nu_TuneZ2_7TeV-pythia6__Fall10-START38_V12-v1__GEN-SIM-RECO_1_1_SMC.root')
 
 )
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
@@ -82,7 +100,7 @@ process.GenPartList = cms.EDAnalyzer("ParticleListDrawer",
 # https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideFrontierConditions
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 #process.GlobalTag.globaltag = 'START3X_V26::All'
-process.GlobalTag.globaltag = 'GR_R_38X_V13A::All'
+process.GlobalTag.globaltag = 'START38_V12::All'
 
 # Electron Isolation collections ----( Majid )---------------------------------------
 
@@ -194,6 +212,28 @@ process.noscraping = cms.EDFilter("FilterOutScraping",
 
 process.load("RecoJets.Configuration.RecoTrackJets_cff")
 
+# -------------------Expected Hits Computer-------------------------------------
+
+
+
+
+import HiggsAnalysis.HiggsToWW2Leptons.expectedHitsComputer_cfi
+
+process.expectedHitsEle = HiggsAnalysis.HiggsToWW2Leptons.expectedHitsComputer_cfi.expectedHitsComputer.clone()
+process.expectedHitsEle.inputColl   = cms.InputTag("gsfElectrons")
+process.expectedHitsEle.useGsfTrack = cms.bool(True)
+
+process.expectedHitsMu  = HiggsAnalysis.HiggsToWW2Leptons.expectedHitsComputer_cfi.expectedHitsComputer.clone()
+process.expectedHitsMu.inputColl   = cms.InputTag("muons")
+process.expectedHitsMu.useGsfTrack = cms.bool(False)
+
+process.correctedExpectedHits = cms.Sequence(process.expectedHitsEle*process.expectedHitsMu)
+
+
+
+
+
+
 
 # HWW Preselection ------------------------------------------------------------------
 
@@ -222,7 +262,7 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
 # Preselection
 
   , doSingleLeptonPreselection = cms.bool(False)
-  , doLeptonPairPreselection   = cms.bool(True)
+  , doLeptonPairPreselection   = cms.bool(False)
   , doRandomPreskim            = cms.bool(False)
   
   , singleLeptonPtCut          = cms.double(5)
@@ -253,12 +293,33 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
   , requested_pfjets       = cms.vstring('ak5PFJets')
   , requested_trackjets    = cms.vstring('ak5TrackJets')
 
-  , requested_hlt_bits     = cms.vstring('HLT_L1MuOpen','HLT_L1Mu','HLT_Mu5','HLT_Mu9','HLT_L1DoubleMuOpen','HLT_DoubleMu0','HLT_DoubleMu3','HLT_L1SingleEG5','HLT_Ele15_SW_EleId_L1R','HLT_Ele15_SiStrip_L1R','HLT_Photon10_L1R','HLT_Photon15_Cleaned_L1R','HLT_Ele15_SW_CaloEleId_L1R','HLT_Ele15_LW_L1R')
+  , requested_hlt_bits     = cms.vstring('HLT_L1MuOpen',
+  					'HLT_L1Mu',
+					'HLT_Mu5',
+					'HLT_Mu9',
+					'HLT_L1DoubleMuOpen',
+					'HLT_DoubleMu0',
+					'HLT_DoubleMu3',
+					'HLT_Mu15_v1',
+					'HLT_L1SingleEG5',
+					'HLT_Ele10_LW_L1R',
+					'HLT_Ele15_SW_L1R',
+					'HLT_Ele15_SW_EleId_L1R',
+					'HLT_Ele15_SiStrip_L1R',
+					'HLT_Photon10_L1R',
+					'HLT_Photon15_Cleaned_L1R',
+					'HLT_Ele15_SW_CaloEleId_L1R',
+					'HLT_Ele15_LW_L1R',
+					'HLT_Ele17_SW_CaloEleId_L1R',
+					'HLT_Ele17_SW_TightEleId_L1R',
+					'HLT_Ele17_SW_TighterEleIdIsol_L1R_v2',
+					'HLT_Ele17_SW_TighterEleIdIsol_L1R_v3'
+					)
   , requested_L1_bits      = cms.vstring('L1_SingleMuOpen','L1_SingleMu0','L1_SingleMu7','L1_DoubleMu3','L1_SingleMu20','L1_SingleMu3','L1_DoubleMuOpen','L1_SingleEG1','L1_SingleEG2','L1_SingleEG5','L1_SingleEG8','L1_SingleEG20','L1_DoubleEG5')
 
   , requested_vertexs      = cms.vstring('offlinePrimaryVertices')#,'pixelVertices')
   , requested_tracks       = cms.vstring('generalTracks')#,'pixelTracks')
- 
+
 
 )
 
@@ -282,11 +343,13 @@ process.path = cms.Path( process.hltPhysicsDeclared*
 #			 process.recoGenJets*
 #                         process.KFactorProducer *
 #		         process.higgsToWW2LeptonsPreselectionSequence *
-                         process.recoAllTrackJets *
+#                         process.recoAllTrackJets *
+
 #			 process.jetvertexassociation *
 #			 process.eleIsoDepositEcalFromHits *
 #                         process.eleIsoFromDepsEcalFromHits *
 #                         process.eleIsoDepositTk * 
+                         process.correctedExpectedHits*
                          process.UAHiggsTree   
                        )
 

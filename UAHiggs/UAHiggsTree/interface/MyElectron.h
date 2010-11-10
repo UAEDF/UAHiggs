@@ -44,7 +44,7 @@ class MyElectron : public TObject {
     Bool_t      isMomentumCorr     ; 
     Int_t       nClus              ; 
     Int_t       classification     ; 
-    
+    Int_t       expectedInnerHits  ;
     
 
     // Extra Isolation variables 

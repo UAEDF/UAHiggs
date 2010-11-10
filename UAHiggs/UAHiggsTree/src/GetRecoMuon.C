@@ -78,7 +78,9 @@ void UAHiggsTree::GetRecoMuon(const edm::Event& iEvent, const edm::EventSetup& i
 
      // Global Properties
 
-    
+     muon.nChambers             = iMuon -> numberOfChambers();
+     muon.nChambersMatched      = iMuon -> numberOfMatches();
+     
      muon.AllGlobalMuons                          =  muon::isGoodMuon(*iMuon,muon::AllGlobalMuons);
      muon.AllStandAloneMuons                      =  muon::isGoodMuon(*iMuon,muon::AllStandAloneMuons);
      muon.AllTrackerMuons                         =  muon::isGoodMuon(*iMuon,muon::AllTrackerMuons);
