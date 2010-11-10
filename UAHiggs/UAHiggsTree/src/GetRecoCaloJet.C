@@ -112,7 +112,7 @@ void UAHiggsTree::GetRecoCaloJet(const edm::Event& iEvent , const edm::EventSetu
   //   else{discriminator=-100;bjet++;}
     
      myjet.discriminator  = discriminator;
-     cout<<discriminator<<endl;
+   //  cout<<discriminator<<endl;
      JetVector.push_back(myjet);
   
    }//loop over jets
