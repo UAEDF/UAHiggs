@@ -361,6 +361,6 @@ process.path = cms.Path( process.hltPhysicsDeclared*
                        )
 
 # EndPath (what to store) ------------------------------------------------------------
-process.outpath = cms.EndPath(process.out)
+#process.outpath = cms.EndPath(process.out)
 
 
