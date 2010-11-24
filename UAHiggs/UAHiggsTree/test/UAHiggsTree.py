@@ -186,6 +186,15 @@ process.jetvertexassociation = cms.Sequence(process.JVAak5        + process.JVBa
 			                    process.JVAiterativeCone5 + process.JVBiterativeCone5 +
                                             process.JVAsisCone5 + process.JVBsisCone5
                                             )
+# ------ Jet Enenergy Corrections ----------
+
+process.load('JetMETCorrections.Configuration.DefaultJEC_cff')
+process.ak5PFL2Relative.useCondDB = False
+process.ak5PFL3Absolute.useCondDB = False
+#process.ak5PFResidual.useCondDB = False
+
+
+
 
 # ----- Trigger Selection --------------------
 
@@ -254,8 +263,8 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
   , fileName = cms.untracked.string('UAHiggsTree.root')
 
 # Modules to execute
-  , StoreGenPart     = cms.bool(False)
-  , StoreGenKine     = cms.bool(False)
+  , StoreGenPart     = cms.bool(True)
+  , StoreGenKine     = cms.bool(True)
   , doJetVertexAlpha = cms.bool(False)
 
 
@@ -275,7 +284,7 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
   , hepMCColl     = cms.InputTag("generator")
   , hcalIsolation = cms.InputTag("egammaTowerIsolation")
   , trckIsolation = cms.InputTag("egammaElectronTkRelIsolation")
-  , bjets         = cms.InputTag("trackCountingHighPurBJetTags")
+  , bjets         = cms.InputTag("trackCountingHighEffBJetTags")
  
  
 # Data Collections --------------------
@@ -288,9 +297,9 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
   , requested_pfmets       = cms.vstring('pfMet')
   , requested_tcmets       = cms.vstring('tcMet')
 
-  , requested_genjets      = cms.vstring('iterativeCone5GenJets','sisCone5GenJets')
+  , requested_genjets      = cms.vstring('iterativeCone5GenJets')#'sisCone5GenJets')
   , requested_calojets     = cms.vstring('ak5CaloJets')
-  , requested_pfjets       = cms.vstring('ak5PFJets')
+  , requested_pfjets       = cms.vstring('ak5PFJets','ak5PFJetsL2L3')
   , requested_trackjets    = cms.vstring('ak5TrackJets')
 
   , requested_hlt_bits     = cms.vstring('HLT_L1MuOpen',
@@ -317,7 +326,7 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
 					)
   , requested_L1_bits      = cms.vstring('L1_SingleMuOpen','L1_SingleMu0','L1_SingleMu7','L1_DoubleMu3','L1_SingleMu20','L1_SingleMu3','L1_DoubleMuOpen','L1_SingleEG1','L1_SingleEG2','L1_SingleEG5','L1_SingleEG8','L1_SingleEG20','L1_DoubleEG5')
 
-  , requested_vertexs      = cms.vstring('offlinePrimaryVertices')#,'pixelVertices')
+  , requested_vertexs      = cms.vstring('offlinePrimaryVertices','offlinePrimaryVerticesWithBS')
   , requested_tracks       = cms.vstring('generalTracks')#,'pixelTracks')
 
 
@@ -325,35 +334,33 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
 
 
 # Data output ----------------------------------------------------------------------- 
-#process.out = cms.OutputModule("PoolOutputModule",
-#     verbose = cms.untracked.bool(False),
-#    fileName = cms.untracked.string('cmsdata.root')
-#)
+process.out = cms.OutputModule("PoolOutputModule",
+    verbose = cms.untracked.bool(False),
+    fileName = cms.untracked.string('cmsdata.root')
+)
 
 
 # PAth (what to do) ------------------------------------------------------------------
 process.path = cms.Path( process.hltPhysicsDeclared*
-                         process.noscraping*
-#			 process.l1GtUnpack *
-#                        process.l1extraParticles *
-#                        process.GenPartDecay * 
+                         process.noscraping*			 
+#		         process.GenPartDecay * 
 #                        process.GenPartTree *
 #                        process.GenPartList *  
-#                        process.genJetParticles*
-#			 process.recoGenJets*
-#                         process.KFactorProducer *
-#		         process.higgsToWW2LeptonsPreselectionSequence *
-#                         process.recoAllTrackJets *
+#                        process.KFactorProducer *
+#        	         process.higgsToWW2LeptonsPreselectionSequence *
+#                        process.recoAllTrackJets *
 
 #			 process.jetvertexassociation *
 #			 process.eleIsoDepositEcalFromHits *
-#                         process.eleIsoFromDepsEcalFromHits *
-#                         process.eleIsoDepositTk * 
+#                        process.eleIsoFromDepsEcalFromHits *
+#                        process.eleIsoDepositTk * 
                          process.correctedExpectedHits*
-                         process.UAHiggsTree   
+                         process.ak5PFJetsL2L3*
+			 process.UAHiggsTree
+			    
                        )
 
 # EndPath (what to store) ------------------------------------------------------------
-#process.outpath = cms.EndPath(process.out)
+process.outpath = cms.EndPath(process.out)
 
 

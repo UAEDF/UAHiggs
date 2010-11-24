@@ -70,8 +70,8 @@ void UAHiggsTree::GetRecoVertex(const edm::Event& iEvent, const edm::EventSetup&
         myvertex.chi2n     = p->normalizedChi2() ;
       else
         myvertex.chi2n     = -99. ;
-      myvertex.chi2        = p->ndof();
-      myvertex.ndof        = p->chi2();
+      myvertex.chi2        = p->chi2();
+      myvertex.ndof        = p->ndof();
       myvertex.ntracks   = p->tracksSize() ;
 
       Double_t sumpt = 0;
