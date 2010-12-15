@@ -53,9 +53,17 @@ process.source = cms.Source("PoolSource",
 #   fileNames = cms.untracked.vstring('file:////user/xjanssen/data/CMSSW_3_2_6/DataCopy/__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO/data/DataCopy__CMSSW_3_2_6__WW__Summer09-MC_31X_V3-v1__GEN-SIM-RECO_1.root')
 
 #   fileNames = cms.untracked.vstring('file:/user/xjanssen/data/CMSSW_3_8_3/DataCopy_38x/__EG__Run2010A-Sep17ReReco_v2__RECO/DataCopy_38x__CMSSW_3_8_3__EG__Run2010A-Sep17ReReco_v2__RECO_1_1_Okg.root')
-fileNames = cms.untracked.vstring('file:/user/xjanssen/data/CMSSW_3_8_4_patch2/DataCopy_384p2/__WWTo2L2Nu_TuneZ2_7TeV-pythia6__Fall10-START38_V12-v1__GEN-SIM-RECO/DataCopy_384p2__CMSSW_3_8_4_patch2__WWTo2L2Nu_TuneZ2_7TeV-pythia6__Fall10-START38_V12-v1__GEN-SIM-RECO_1_1_SMC.root')
-
-)
+#fileNames = cms.untracked.vstring('file:/user/xjanssen/data/CMSSW_3_8_4_patch2/DataCopy_384p2/__WWTo2L2Nu_TuneZ2_7TeV-pythia6__Fall10-START38_V12-v1__GEN-SIM-RECO/DataCopy_384p2__CMSSW_3_8_4_patch2__WWTo2L2Nu_TuneZ2_7TeV-pythia6__Fall10-START38_V12-v1__GEN-SIM-RECO_1_1_SMC.root')
+#fileNames = cms.untracked.vstring('file:/user/xjanssen/data/CMSSW_3_8_6/DataFetch_386_b/__EG__Run2010A-Nov4ReReco_v1__RECO/DataFetch_386_b__CMSSW_3_8_6__EG__Run2010A-Nov4ReReco_v1__RECO_1_2_A0r.root',
+#                                  'file:/user/xjanssen/data/CMSSW_3_8_6/DataFetch_386_b/__Electron__Run2010B-Nov4ReReco_v1__RECO/DataFetch_386_b__CMSSW_3_8_6__Electron__Run2010B-Nov4ReReco_v1__RECO_1_1_hLe.root') 
+#				     )
+fileNames = cms.untracked.vstring(
+'file:/user/xjanssen/data/CMSSW_3_8_6/DataFetch_386_b/__Mu__Run2010A-Nov4ReReco_v1__RECO/DataFetch_386_b__CMSSW_3_8_6__Mu__Run2010A-Nov4ReReco_v1__RECO_1_1_JCf.root',
+'file:/user/xjanssen/data/CMSSW_3_8_6/DataFetch_386_b/__Mu__Run2010B-Nov4ReReco_v1__RECO/DataFetch_386_b__CMSSW_3_8_6__Mu__Run2010B-Nov4ReReco_v1__RECO_1_2_4dK.root',
+'file:/user/xjanssen/data/CMSSW_3_8_6/DataFetch_386_b/__Mu__Run2010B-Nov4ReReco_v1__RECO/DataFetch_386_b__CMSSW_3_8_6__Mu__Run2010B-Nov4ReReco_v1__RECO_2_0_e1c.root',
+'file:/user/xjanssen/data/CMSSW_3_8_6/DataFetch_386_b/__Mu__Run2010B-Nov4ReReco_v1__RECO/DataFetch_386_b__CMSSW_3_8_6__Mu__Run2010B-Nov4ReReco_v1__RECO_3_0_bMl.root',
+'file:/user/xjanssen/data/CMSSW_3_8_6/DataFetch_386_b/__Mu__Run2010B-Nov4ReReco_v1__RECO/DataFetch_386_b__CMSSW_3_8_6__Mu__Run2010B-Nov4ReReco_v1__RECO_4_0_qic.root'
+))
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 # L1 extra --------------------------------------------------------------------------
@@ -261,7 +269,8 @@ process.correctedExpectedHits = cms.Sequence(process.expectedHitsEle*process.exp
 process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
 
   , fileName = cms.untracked.string('UAHiggsTree.root')
-
+  # , fileName = cms.untracked.string('DataTreeEle.root')
+   #, fileName = cms.untracked.string('DataTreeMu.root')
 # Modules to execute
   , StoreGenPart     = cms.bool(False)
   , StoreGenKine     = cms.bool(False)

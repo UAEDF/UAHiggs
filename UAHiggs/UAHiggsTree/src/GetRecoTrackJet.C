@@ -22,6 +22,14 @@
 #include "DataFormats/BTauReco/interface/TrackCountingTagInfo.h"
 #include "DataFormats/BTauReco/interface/JetTag.h"
 
+
+//Tracks and vertices
+
+
+#include "DataFormats/TrackReco/interface/Track.h"
+#include "DataFormats/TrackReco/interface/TrackFwd.h"
+
+
 // UAHiggsTree UAHiggs class decleration
 #include "UAHiggs/UAHiggsTree/interface/UAHiggsTree.h"
 
@@ -71,6 +79,11 @@ void UAHiggsTree::GetRecoTrackJet(const edm::Event& iEvent , const edm::EventSet
    //  else{discriminator=-100;bjet++;}
     
      myjet.discriminator  = discriminator;
+     
+     
+     
+     
+     
      
      
      JetVector.push_back(myjet);

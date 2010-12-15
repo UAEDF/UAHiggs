@@ -20,15 +20,21 @@
 #include "DataFormats/BTauReco/interface/TrackCountingTagInfo.h"
 #include "DataFormats/BTauReco/interface/JetTag.h"
 
+//Tracks and vertices
+
+
+#include "DataFormats/TrackReco/interface/Track.h"
+#include "DataFormats/TrackReco/interface/TrackFwd.h"
+
 // UAHiggsTree UAHiggs class decleration
 #include "UAHiggs/UAHiggsTree/interface/UAHiggsTree.h"
-
+#include "UAHiggs/UAHiggsTree/interface/MyTracks.h"
 
 
 void UAHiggsTree::GetRecoPFJet(const edm::Event& iEvent , const edm::EventSetup& iSetup,
                             const string PFJetCollection_ , vector<MyJet>& JetVector )
 {
-
+  
   using namespace std;
   using namespace edm;
   using namespace reco;
@@ -82,6 +88,84 @@ void UAHiggsTree::GetRecoPFJet(const edm::Event& iEvent , const edm::EventSetup&
     
      myjet.discriminator  = discriminator;
   
+     // ----Get Tracks associated to PF Jet
+     myjet.nTracks = 0;
+     
+     if(jet->getTrackRefs().isAvailable()){
+     
+       reco::TrackRefVector vtracks = jet->getTrackRefs();
+       myjet.nTracks = vtracks.size();
+       MyTracks track;
+       for(unsigned int i=0; i<vtracks.size();i++){
+         if(jet->getTrackRefs().at(i).isAvailable()){
+	 reco::TrackRef trackref = jet->getTrackRefs().at(i);
+         
+         track.Part.v.SetPxPyPzE(trackref->momentum().x(),
+                                         trackref->momentum().y(),
+                                         trackref->momentum().z(),
+                                         sqrt(trackref->momentum().mag2()+MASS_MU*MASS_MU));
+
+    	 track.Part.charge = trackref->charge();
+    	 track.numberOfValidTkHits    =  trackref->hitPattern().numberOfValidTrackerHits();
+    	 track.numberOfValidMuonHits  =  trackref->hitPattern().numberOfValidMuonHits();
+     
+  	 //  cout<<trackref->hitPattern().numberOfValidTrackerHits()<<endl;
+  	 //  cout<<trackref->hitPattern().numberOfValidMuonHits()<<endl;
+     
+     
+    	 track.numberOfValidStripHits    =  trackref->hitPattern().numberOfValidStripHits();
+   	 track.numberOfValidPixelHits    =  trackref->hitPattern().numberOfValidPixelHits();
+   	 track.numberOfValidMuonRPCHits  =  trackref->hitPattern().numberOfValidMuonRPCHits();
+   	 track.numberOfValidMuonCSCHits  =  trackref->hitPattern().numberOfValidMuonCSCHits();
+   	 track.numberOfValidMuonDTHits   =  trackref->hitPattern().numberOfValidMuonDTHits();
+     
+    
+    
+   	 track.nhit  =  trackref->hitPattern().numberOfValidHits();
+   	 track.chi2n =  trackref->normalizedChi2();
+   	 track.dz    =  trackref->dz();
+         track.d0    =  trackref->d0();
+
+   	 track.edz   =  trackref->dzError();
+         track.ed0   =  trackref->d0Error();
+         track.ept   =  trackref->ptError();
+
+         track.vx    =  trackref->vertex().x();
+         track.vy    =  trackref->vertex().y();
+         track.vz    =  trackref->vertex().z();
+
+         track.quality[0] = trackref->quality(reco::TrackBase::qualityByName("loose"));
+         track.quality[1] = trackref->quality(reco::TrackBase::qualityByName("tight"));
+         track.quality[2] = trackref->quality(reco::TrackBase::qualityByName("highPurity"));
+
+         track.vtxid.clear();
+         track.vtxdxy.clear();
+         track.vtxdz.clear();  
+     
+         for ( int j = 0 ; j != vtxid ; j++ )
+          {
+           track.vtxid.push_back( j );
+           track.vtxdxy.push_back( trackref->dxy( vtxid_xyz[j] ) );
+           track.vtxdz.push_back(  trackref->dz( vtxid_xyz[j] )  );
+          }
+         }	 
+	 
+     else {
+     
+      track.d0 = -999;
+      for ( int j = 0 ; j != vtxid ; j++ )
+       {
+         
+	  track.vtxid.push_back( j );
+          track.vtxdxy.push_back( -999 );
+          track.vtxdz.push_back( -999 );
+       }
+      }
+      myjet.tracks.push_back(track);
+     
+      } // end loop over track for 1 jet
+      } // track collection available
+      cout<<myjet.nTracks<<endl;
      JetVector.push_back(myjet);
   
    }//loop over jets

@@ -13,7 +13,7 @@
 //
 // Original Author:  "local user"
 //         Created:  Wed Nov 18 10:39:03 CET 2009
-// $Id: UAHiggsTree.C,v 1.6 2010/10/19 13:28:38 selvaggi Exp $
+// $Id: UAHiggsTree.C,v 1.7 2010/10/20 11:29:55 selvaggi Exp $
 //
 //
 
@@ -142,7 +142,6 @@ UAHiggsTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    using namespace edm;
    bool keepEvent = true;
    ntot++;
-   
    // EvtId and L1,HLT trig
    GetEvtId(iEvent); 
    GetL1Trig(iEvent,iSetup);

@@ -54,7 +54,7 @@ process.source = cms.Source("PoolSource",
 
 #   fileNames = cms.untracked.vstring('file:/user/xjanssen/data/CMSSW_3_8_3/DataCopy_38x/__EG__Run2010A-Sep17ReReco_v2__RECO/DataCopy_38x__CMSSW_3_8_3__EG__Run2010A-Sep17ReReco_v2__RECO_1_1_Okg.root')
 fileNames = cms.untracked.vstring('file:/user/xjanssen/data/CMSSW_3_8_4_patch2/DataCopy_384p2/__WWTo2L2Nu_TuneZ2_7TeV-pythia6__Fall10-START38_V12-v1__GEN-SIM-RECO/DataCopy_384p2__CMSSW_3_8_4_patch2__WWTo2L2Nu_TuneZ2_7TeV-pythia6__Fall10-START38_V12-v1__GEN-SIM-RECO_1_1_SMC.root')
-
+#fileNames = cms.untracked.vstring('file:/user/selvaggi/cms/UserCode/CMSSW_3_8_7/src/DataFetch_387__CMSSW_3_8_7__GluGluToHToWWTo2L2Nu_M-160_7TeV-powheg-pythia6__jfernan2-MixingE7TeV_AVE_16_BX50_PU_HLTMenu381V26-b3f5208506b70085d86c2ab9b13dc2b4__USER_2_1_YT2.root')
 )
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
@@ -99,8 +99,9 @@ process.GenPartList = cms.EDAnalyzer("ParticleListDrawer",
 # configure modules via Global Tag --------------------------------------------------
 # https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideFrontierConditions
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
+#process.GlobalTag.globaltag = 'START38_V12::All'
 #process.GlobalTag.globaltag = 'START3X_V26::All'
-process.GlobalTag.globaltag = 'START38_V12::All'
+process.GlobalTag.globaltag = 'START38_V14::All'
 
 # Electron Isolation collections ----( Majid )---------------------------------------
 
@@ -326,7 +327,7 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
 					)
   , requested_L1_bits      = cms.vstring('L1_SingleMuOpen','L1_SingleMu0','L1_SingleMu7','L1_DoubleMu3','L1_SingleMu20','L1_SingleMu3','L1_DoubleMuOpen','L1_SingleEG1','L1_SingleEG2','L1_SingleEG5','L1_SingleEG8','L1_SingleEG20','L1_DoubleEG5')
 
-  , requested_vertexs      = cms.vstring('offlinePrimaryVertices','offlinePrimaryVerticesWithBS')
+  , requested_vertexs      = cms.vstring('offlinePrimaryVertices')#,'offlinePrimaryVerticesWithBS')
   , requested_tracks       = cms.vstring('generalTracks')#,'pixelTracks')
 
 
@@ -334,10 +335,10 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
 
 
 # Data output ----------------------------------------------------------------------- 
-process.out = cms.OutputModule("PoolOutputModule",
-    verbose = cms.untracked.bool(False),
-    fileName = cms.untracked.string('cmsdata.root')
-)
+#process.out = cms.OutputModule("PoolOutputModule",
+ #   verbose = cms.untracked.bool(False),
+ #   fileName = cms.untracked.string('cmsdata.root')
+#)
 
 
 # PAth (what to do) ------------------------------------------------------------------
@@ -348,7 +349,7 @@ process.path = cms.Path( process.hltPhysicsDeclared*
 #                        process.GenPartList *  
 #                        process.KFactorProducer *
 #        	         process.higgsToWW2LeptonsPreselectionSequence *
-#                        process.recoAllTrackJets *
+#                         process.recoAllTrackJets *
 
 #			 process.jetvertexassociation *
 #			 process.eleIsoDepositEcalFromHits *

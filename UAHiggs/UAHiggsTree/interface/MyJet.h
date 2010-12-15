@@ -23,7 +23,9 @@ class MyJet : public TObject {
     Int_t    NeutralMultiplicity;
     Int_t    MuonMultiplicity;
 
-
+    vector<MyTracks>    tracks;
+    Int_t nTracks; 
+  
   private:
 
   ClassDef (MyJet,1)
