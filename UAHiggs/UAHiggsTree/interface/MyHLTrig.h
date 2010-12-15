@@ -11,12 +11,8 @@ class MyHLTrig : public TObject {
   MyHLTrig(){;}
   ~MyHLTrig(){;}
 
- 
-  
   map<string,bool> HLTmap;
-
-
- 
+  map<string,double> HLTprescale;
 
   private:
 
@@ -24,3 +20,6 @@ class MyHLTrig : public TObject {
 };
 
 #endif
+
+
+

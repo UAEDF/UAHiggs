@@ -95,10 +95,11 @@ void UAHiggsTree::GetGenJet(const edm::Event& iEvent , const edm::EventSetup& iS
          genpart.py   = p->py();
          genpart.pz   = p->pz();
          genpart.m    = p->mass();
-         genpart.v.SetPxPyPzE( p->px() , p->py() , p->pz() , p->energy() );
+         genpart.Part.v.SetPxPyPzE( p->px() , p->py() , p->pz() , p->energy() );
 
          // Extra properties
 
+         genpart.Part.charge  = p->charge();
          genpart.charge  = p->charge();
          genpart.pdgId   = p->pdgId();
          genpart.name    = (pdt->particle(p->pdgId()))->name();

@@ -13,7 +13,7 @@
 //
 // Original Author:  "local user"
 //         Created:  Wed Nov 18 10:39:03 CET 2009
-// $Id: UAHiggsTree.C,v 1.7 2010/10/20 11:29:55 selvaggi Exp $
+// $Id: UAHiggsTree.C,v 1.8 2010/12/15 12:20:43 selvaggi Exp $
 //
 //
 
@@ -44,6 +44,7 @@
 
 #include "L1Trigger/GlobalTriggerAnalyzer/interface/L1GtUtils.h"
 */
+
 
 
 #include "TRandom.h"
@@ -288,6 +289,18 @@ UAHiggsTree::beginJob()
    n_single_presel=0;
    n_pair_presel=0;
    n_random_rej=0;
+
+}
+
+
+//-- method called to for each run
+void UAHiggsTree::beginRun(edm::Run const & iRun, edm::EventSetup const& iSetup)
+{
+  using namespace std;
+  using namespace edm;
+
+  bool changed = true;
+  isValidHltConfig_ = hltConfig.init(iRun,iSetup,"HLT",changed);
 
 }
    

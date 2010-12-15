@@ -6,6 +6,7 @@
 #include <iostream>
 #include <algorithm>
 #include <string>
+#include "MyPart.h"
 
 class MyGenPart : public TObject {
 
@@ -13,8 +14,9 @@ class MyGenPart : public TObject {
   MyGenPart(){;}
   ~MyGenPart(){;}
 
+  MyPart Part;
   Double_t pt,eta,phi,charge,e,px,py,pz,m; 
-  TLorentzVector v;
+  //TLorentzVector v;
   Int_t    pdgId,status,mo1,mo2,da1,da2;
   std::string   name; 
  

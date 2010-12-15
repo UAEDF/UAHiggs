@@ -43,6 +43,7 @@ edm::InputTag srcTriggerResults_("TriggerResults");
   // Loop on requested triggers by user (config file)
   for(vector<string>::iterator requested_hlt_bit=hlt_bits.begin() ; requested_hlt_bit!=hlt_bits.end();requested_hlt_bit++){
     HLTrig.HLTmap[*requested_hlt_bit]= hasFired(*requested_hlt_bit, trgNames,*trgResults);
+    HLTrig.HLTprescale[*requested_hlt_bit]= hltConfig.prescaleValue(iEvent,iSetup,*requested_hlt_bit);
     // cout << (*requested_hlt_bit).c_str() << " = " << hasFired(*requested_hlt_bit, trgNames,*trgResults) << endl ;
   }
 

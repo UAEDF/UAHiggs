@@ -77,6 +77,11 @@ using namespace std;
 // Reco Jets
 
 
+// Trigger
+#include "FWCore/Common/interface/TriggerNames.h"
+#include "DataFormats/HLTReco/interface/TriggerEvent.h"
+#include "DataFormats/Common/interface/TriggerResults.h"
+#include "HLTrigger/HLTcore/interface/HLTConfigProvider.h"
 
 
 class UAHiggsTree : public edm::EDAnalyzer {
@@ -87,6 +92,7 @@ class UAHiggsTree : public edm::EDAnalyzer {
 
    private:
       virtual void beginJob() ;
+      virtual void beginRun(edm::Run const &, edm::EventSetup const&) ;
       virtual void analyze(const edm::Event&, const edm::EventSetup&);
       virtual void endJob() ;
 
@@ -317,6 +323,11 @@ class UAHiggsTree : public edm::EDAnalyzer {
       
       map<int,string> L1_map;
       map<int,string> HLT_map;
+
+      // ---------- Needed for retrieving HLT ---------------------------
+      bool isValidHltConfig_;
+      HLTConfigProvider hltConfig;
+
 };
 
 
