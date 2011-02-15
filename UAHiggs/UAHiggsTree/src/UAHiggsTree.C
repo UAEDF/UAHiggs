@@ -13,7 +13,7 @@
 //
 // Original Author:  "local user"
 //         Created:  Wed Nov 18 10:39:03 CET 2009
-// $Id: UAHiggsTree.C,v 1.8 2010/12/15 12:20:43 selvaggi Exp $
+// $Id: UAHiggsTree.C,v 1.9 2010/12/15 15:05:21 rougny Exp $
 //
 //
 
@@ -140,6 +140,7 @@ UAHiggsTree::~UAHiggsTree()
 void
 UAHiggsTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
+   
    using namespace edm;
    bool keepEvent = true;
    ntot++;
@@ -152,7 +153,7 @@ UAHiggsTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    if (StoreGenPart) GetGenPart(iEvent,iSetup);
    if (StoreGenKine) GetGenKin (iEvent);
    if (StoreGenPart) GetAllGenJets(iEvent,iSetup,genjets,allGenJets); 
-   if (StoreGenPart) GetAllGenMETs(iEvent,iSetup,genmets,allGenMETs);
+  // if (StoreGenPart) GetAllGenMETs(iEvent,iSetup,genmets,allGenMETs);
    
    // Reset vtx id and vector
    vtxid = 0;
@@ -217,10 +218,10 @@ UAHiggsTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    
   
     if( (gRandom->Rndm() > preskimFraction) && (DoRandomPreskim) ) {keepEvent = false; n_random_rej++;}
- 
+   
    
    if(keepEvent)tree->Fill();
-
+   cout<<"ntot = "<<ntot<<endl;
 }
 
 

@@ -76,17 +76,7 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
    }
    const reco::GsfElectronCollection gsfElectrons = *(gsfElectronsHandle.product());
 
-   // get the association of the clusters to their shapes for EB
-   edm::Handle<reco::BasicClusterShapeAssociationCollection> barrelClShpHandle ;
-   try { 
-     iEvent.getByLabel ("hybridSuperClusters","hybridShapeAssoc", barrelClShpHandle);
-   }
-   catch ( cms::Exception& ex ) {
-     printf("Can't get ECAL barrel Cluster Shape Collection\n");
-   }
-   const reco::BasicClusterShapeAssociationCollection& barrelClShpMap = *barrelClShpHandle ;
-
-
+  
    // Tracker Isolation handle (Guillelmo)
    edm::Handle< reco::GsfElectronIsoCollection > tkIsolationHandle;
    try {

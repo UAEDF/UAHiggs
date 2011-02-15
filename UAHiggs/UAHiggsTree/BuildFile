@@ -25,6 +25,7 @@
 <use name=DataFormats/JetReco>
 <use name=DataFormats/BTauReco>
 <use name=RecoEgamma/EgammaTools>
+<use name=JetMETCorrections/Modules>
 <export>
    
    
@@ -56,6 +57,6 @@
    <use name=DataFormats/JetReco>
    <use name=DataFormats/BTauReco>
    <use name=RecoEgamma/EgammaTools>
-
+   <use name=JetMETCorrections/Modules>
 </export>
 <flags EDM_PLUGIN=1>

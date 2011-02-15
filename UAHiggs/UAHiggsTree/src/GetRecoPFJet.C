@@ -50,7 +50,9 @@ void UAHiggsTree::GetRecoPFJet(const edm::Event& iEvent , const edm::EventSetup&
    Handle<PFJetCollection> PFJets;
    iEvent.getByLabel(PFJetCollection_,PFJets);
   
-
+   Handle<double>  rho;
+   iEvent.getByLabel(InputTag("kt6PFJets:rho"),rho);
+  
 //   for(PFJetCollection::const_iterator jet=PFJets->begin();jet!=PFJets->end();jet++,bjet++){
    for(PFJetCollection::const_iterator jet=PFJets->begin();jet!=PFJets->end();jet++){
          
@@ -66,7 +68,8 @@ void UAHiggsTree::GetRecoPFJet(const edm::Event& iEvent , const edm::EventSetup&
      myjet.px             = jet->px();
      myjet.py             = jet->py();
      myjet.pz             = jet->pz();
-   
+     myjet.Area           = jet->jetArea();
+     myjet.rho            = *(rho.product());
      myjet.ChargedHadronEnergy = jet->chargedHadronEnergy();
      myjet.NeutralHadronEnergy = jet->neutralHadronEnergy();
      myjet.ChargedEmEnergy = jet->chargedEmEnergy();
@@ -165,7 +168,7 @@ void UAHiggsTree::GetRecoPFJet(const edm::Event& iEvent , const edm::EventSetup&
      
       } // end loop over track for 1 jet
       } // track collection available
-      cout<<myjet.nTracks<<endl;
+   //   cout<<myjet.nTracks<<endl;
      JetVector.push_back(myjet);
   
    }//loop over jets

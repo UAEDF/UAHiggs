@@ -19,6 +19,8 @@ class MyJet : public TObject {
     Double_t ChargedEmEnergy;
     Double_t ChargedMuEnergy;
     Double_t NeutralEmEnergy;
+    Double_t Area;
+    Double_t rho;
     Int_t    ChargedMultiplicity;
     Int_t    NeutralMultiplicity;
     Int_t    MuonMultiplicity;
