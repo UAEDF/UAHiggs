@@ -61,7 +61,7 @@ void UAHiggsTree::GetRecoTrack(const edm::Event& iEvent, const edm::EventSetup& 
      mytrack.Part.charge = tr->charge();
      mytrack.Part.v.SetPtEtaPhiM(tr->pt(),tr->eta(),tr->phi(), mpion );  
 
-     mytrack.nhit  =  tr->recHitsSize();
+     mytrack.nhit  =  tr->hitPattern().numberOfValidHits();
      mytrack.chi2n =  tr->normalizedChi2();
      mytrack.dz    =  tr->dz();
      mytrack.d0    =  tr->d0();

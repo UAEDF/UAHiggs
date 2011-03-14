@@ -79,7 +79,7 @@ void UAHiggsTree::GetRecoPFJet(const edm::Event& iEvent , const edm::EventSetup&
      myjet.NeutralMultiplicity = jet->neutralMultiplicity();
      myjet.MuonMultiplicity = jet->muonMultiplicity();   
 
-
+    // cout<<PFJetCollection_<<" pt, eta : "<<jet->pt()<<" , "<<jet->eta()<<endl;
 
 
 

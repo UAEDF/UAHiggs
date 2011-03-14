@@ -1,9 +1,9 @@
 # Import configurations
 import FWCore.ParameterSet.Config as cms
 
-from Configuration.StandardSequences.Generator_cff import *
-from RecoJets.Configuration.RecoGenJets_cff import *
-from RecoJets.Configuration.GenJetParticles_cff import *
+#from Configuration.StandardSequences.Generator_cff import *
+#from RecoJets.Configuration.RecoGenJets_cff import *
+#from RecoJets.Configuration.GenJetParticles_cff import *
 
 # set up process
 process = cms.Process("UAHiggs")
@@ -58,7 +58,7 @@ process.source = cms.Source("PoolSource",
 #fileNames = cms.untracked.vstring('file:/user/xjanssen/data/CMSSW_3_8_4_patch2/DataCopy_384p2/__WWTo2L2Nu_TuneZ2_7TeV-pythia6__Fall10-START38_V12-v1__GEN-SIM-RECO/DataCopy_384p2__CMSSW_3_8_4_patch2__WWTo2L2Nu_TuneZ2_7TeV-pythia6__Fall10-START38_V12-v1__GEN-SIM-RECO_1_1_SMC.root')
 fileNames = cms.untracked.vstring(
 #'dcap:///pnfs/iihe/cms/store/user/xjanssen/data/CMSSW_3_9_7/DataCopy_397/__Electron__Run2010B-Dec22ReReco_v1__RECO/DataCopy_397__CMSSW_3_9_7__Electron__Run2010B-Dec22ReReco_v1__RECO_1_1_Cru.root',				  
-'file:/user/selvaggi/step2_RAW2DIGI_L1Reco_RECO_9_1_XqK.root'
+#'file:/user/selvaggi/step2_RAW2DIGI_L1Reco_RECO_9_1_XqK.root'
 #'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_100_1_5mB.root',
 #'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_101_1_0lI.root',
 #'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_10_1_jLy.root',
@@ -169,23 +169,24 @@ fileNames = cms.untracked.vstring(
 #'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_98_1_yCq.root',
 #'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_99_1_Ozl.root'
 #'file:/user/selvaggi/step2_RAW2DIGI_L1Reco_RECO_9_4_HKd.root'			 
-				 
-				 
-				 )
+#'file:/user/selvaggi/BA62B277-02E4-DF11-941B-001EC9ED7E8F.root',				 
+#'file:/user/selvaggi/7EFE3196-04E4-DF11-B926-00266CF25F34.root'
+'dcap:///pnfs/iihe/cms/store/user/xjanssen/data/CMSSW_3_9_7/DataCopy_397/__GluGluToHToWWTo2L2Nu_M-160_7TeV-powheg-pythia6__Winter10-E7TeV_ProbDist_2011Flat_BX156_START39_V8-v1__GEN-SIM-RECO/DataCopy_397__CMSSW_3_9_7__GluGluToHToWWTo2L2Nu_M-160_7TeV-powheg-pythia6__Winter10-E7TeV_ProbDist_2011Flat_BX156_START39_V8-v1__GEN-SIM-RECO_1_1_RJI.root')					 
+#'dcap:///pnfs/iihe/cms/store/user/xjanssen/data/CMSSW_3_9_7/DataCopy_397/__GluGluToHToWWTo2L2Nu_M-160_7TeV-powheg-pythia6__Winter10-E7TeV_ProbDist_2011Flat_BX156_START39_V8-v1__AODSIM/DataCopy_397__CMSSW_3_9_7__GluGluToHToWWTo2L2Nu_M-160_7TeV-powheg-pythia6__Winter10-E7TeV_ProbDist_2011Flat_BX156_START39_V8-v1__AODSIM_1_2_auo.root'				 )
 )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(5) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(3000) )
 
 # L1 extra --------------------------------------------------------------------------
 #process.load("L1Trigger.L1ExtraFromDigis.l1extra_cff")
 #process.load("EventFilter.L1GlobalTriggerRawToDigi.l1GtUnpack_cfi")
-#process.l1GtUnpack.DaqGtInputTag = 'source'
+#process.l1GtUnpack.DaqGtInputTag = 'source'http://hari.b-rail.be/HAFAS/bin/query.exe/fn?seqnr=3&ident=g6.02642811.1298043529&REQ0HafasScrollDir=1
 #process.load("L1Trigger.L1ExtraFromDigis.l1extraParticles_cff")
 
 
 # gen particles printouts -----------------------------------------------------------
-process.load('JetMETCorrections.Configuration.DefaultJEC_cff')
-process.ak5PFL2Relative.useCondDB = False
-process.ak5PFL3Absolute.useCondDB = False
+#process.load('JetMETCorrections.Configuration.DefaultJEC_cff')
+#process.ak5PFL2Relative.useCondDB = False
+#process.ak5PFL3Absolute.useCondDB = False
 process.load("SimGeneral.HepPDTESSource.pythiapdt_cfi")
 
 process.GenPartDecay = cms.EDAnalyzer("ParticleDecayDrawer",
@@ -223,22 +224,29 @@ process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 #process.GlobalTag.globaltag =  'START38_V14::All'
 #process.GlobalTag.globaltag = 'FT_R_39X_V4A::All'
 process.GlobalTag.globaltag = 'START39_V8::All'
+
+
 # ------ Jet Enenergy Corrections ----------
+process.load('JetMETCorrections.Configuration.DefaultJEC_cff')
+process.load('RecoJets.Configuration.RecoPFJets_cff')
+#process.load('JetMETCorrections.Configuration.JetCorrectionServices_cff')
+#process.load('JetMETCorrections.Configuration.JetCorrectionProducersAllAlgos_cff')
 
 # ------ Calculate jet area A
-process.load('RecoJets.JetProducers.ak5PFJets_cfi')
+#process.load('RecoJets.JetProducers.ak5PFJets_cfi')
 process.ak5PFJets.doAreaFastjet = True
 process.ak5PFJets.Rho_EtaMax = cms.double(4.5)
 
 
 #------- Calculate event rho
-process.load('RecoJets.JetProducers.kt4PFJets_cfi')
-process.kt6PFJets = process.kt4PFJets.clone( rParam = 0.6, doRhoFastjet = True, doAreaFastjet = True, Rho_EtaMax= cms.double(4.4) )
-
+#process.load('RecoJets.JetProducers.kt4PFJets_cfi')
+#process.kt6PFJets = process.kt4PFJets.clone( rParam = 0.6, doRhoFastjet = True, doAreaFastjet = True, Rho_EtaMax= cms.double(4.4) )
+process.kt6PFJets.doRhoFastjet = True
+process.kt6PFJets.Rho_EtaMax= cms.double(4.4)
 
 
 #------- Configure Jet Energy Correction Producer
-process.load('JetMETCorrections.Configuration.JetCorrectionProducersAllAlgos_cff')
+#process.load('JetMETCorrections.Configuration.JetCorrectionProducersAllAlgos_cff')
 #process.L1Fastjet.algorithm = cms.string('AK5Calo') #DUMMY needs to read an existing file
 #process.L1Fastjet.era = 'Spring10'                  #DUMMY needs to read an existing file
 #process.L1Fastjet.level = cms.string('L2Relative') #DUMMY needs to read an existing file
@@ -252,8 +260,9 @@ process.load('JetMETCorrections.Configuration.JetCorrectionProducersAllAlgos_cff
 
 
 
-process.load('JetMETCorrections.Configuration.DefaultJEC_cff')
-process.load('JetMETCorrections.Configuration.JetCorrectionServices_cff')
+#process.load('JetMETCorrections.Configuration.DefaultJEC_cff')
+#process.load('JetMETCorrections.Configuration.JetCorrectionProducers_cff')
+#process.load('JetMETCorrections.Configuration.JetCorrectionServicesAllAlgos_cff')
 
 #process.ak5PFL2Relative.useCondDB = False
 #process.ak5PFL3Absolute.useCondDB = False
@@ -264,21 +273,37 @@ process.load('JetMETCorrections.Configuration.JetCorrectionServices_cff')
 process.ak5PFL1Offset.useCondDB = False
 process.ak5PFL1Fastjet.useCondDB  = False
 
-process.ak5PFJetsL2L3onL1Area = process.ak5PFJetsL2L3.clone()
-process.ak5PFJetsL2L3onL1Area.src = cms.InputTag('ak5PFJetsL1FastJet')
+process.ak5PFJetsL1Offset   = process.ak5PFJetsL2L3.clone(correctors = ['ak5PFL1Offset'])
+process.ak5PFJetsL1Area     = process.ak5PFJetsL2L3.clone(correctors = ['ak5PFL1Fastjet'])
 
+process.ak5PFJetsL1FastJet  = cms.Sequence(process.kt6PFJets* process.ak5PFJets * process.ak5PFJetsL1Area)
 
-#process.ak5PFJetsL1AreaL2L3   = cms.Sequence( process.ak5PFJetsL1Area * process.ak5PFJetsL2L3onL1Area)   
 process.ak5PFJetsL1OffsetL2L3  = process.ak5PFJetsL1L2L3.clone()
+process.ak5PFJetsL1FastJetL2L3 = cms.Sequence(process.kt6PFJets *process.ak5PFJets *  process.ak5PFJetsL1FastL2L3)
 
-process.ak5PFJetsL1AreaL2L3    = process.ak5PFJetsL1.clone(correctors = ['ak5PFL1FastL2L3'])
+# ---- With DA Vertex -------
 
-process.ak5PFJetsL1FastJetL2L3 = cms.Sequence(process.ak5PFJets * process.kt6PFJets* process.ak5PFJetsL1AreaL2L3)
+process.ak5CaloL1OffsetDA = cms.ESSource(
+    'L1OffsetCorrectionService',
+    era = cms.string('Fall10'),
+    level = cms.string('L1Offset'),
+    section   = cms.string(''),
+    algorithm = cms.string('AK5Calo'),
+    useCondDB = cms.untracked.bool(False),
+    vertexCollection = cms.string('offlinePrimaryVerticesDA'),
+    minVtxNdof = cms.int32(4)
+    )
+
+process.ak5PFL1OffsetDA = process.ak5CaloL1OffsetDA.clone(algorithm = 'AK5PF')
 
 
-#process.ak5PFJetsL1ciccioJetL2L3 = process.ak5PFL1FastL2L3.clone()
+process.ak5PFL1DAL2L3 = cms.ESSource(
+    'JetCorrectionServiceChain',
+    correctors = cms.vstring('ak5PFL1OffsetDA','ak5PFL2Relative','ak5PFL3Absolute')
+    )
 
-
+process.ak5PFJetsL1OffsetDA       = process.ak5PFJetsL2L3.clone(correctors = ['ak5PFL1OffsetDA'])
+process.ak5PFJetsL1OffsetDAL2L3   = process.ak5PFJetsL2L3.clone(correctors = ['ak5PFL1DAL2L3']) 
 
 #------ Create GenJet collections -------------
 
@@ -302,11 +327,11 @@ process.hltPhysicsDeclared.L1GtReadoutRecordTag = 'gtDigis'
 
 
 process.noscraping = cms.EDFilter("FilterOutScraping",
-                                applyfilter = cms.untracked.bool(True),
-                                debugOn = cms.untracked.bool(False),
-                                numtrack = cms.untracked.uint32(10),
-                                thresh = cms.untracked.double(0.25)
-                                )
+				applyfilter = cms.untracked.bool(True),
+				debugOn = cms.untracked.bool(False),
+				numtrack = cms.untracked.uint32(10),
+				thresh = cms.untracked.double(0.25)
+				)
 
 
 
@@ -394,7 +419,8 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
 
   , requested_genjets      = cms.vstring('ak5GenJets')#'sisCone5GenJets')
   , requested_calojets     = cms.vstring('ak5CaloJets')
-  , requested_pfjets       = cms.vstring('ak5PFJets','ak5PFJetsL2L3','ak5PFJetsL1OffsetL2L3','ak5PFJetsL1AreaL2L3')#'kt6PFJetsL2L3','kt6PFJetsPUL2L3',)
+  , requested_pfjets       = cms.vstring('ak5PFJets','ak5PFJetsL1Offset','ak5PFJetsL1Area','ak5PFJetsL2L3','ak5PFJetsL1OffsetL2L3','ak5PFJetsL1FastL2L3',
+                                                     'ak5PFJetsL1OffsetDA','ak5PFJetsL1OffsetDAL2L3' )#'kt6PFJetsL2L3','kt6PFJetsPUL2L3',)
   , requested_trackjets    = cms.vstring('ak5TrackJets')
 
   , requested_hlt_bits     = cms.vstring('HLT_L1MuOpen',
@@ -421,18 +447,53 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
 					)
   , requested_L1_bits      = cms.vstring('L1_SingleMuOpen','L1_SingleMu0','L1_SingleMu7','L1_DoubleMu3','L1_SingleMu20','L1_SingleMu3','L1_DoubleMuOpen','L1_SingleEG1','L1_SingleEG2','L1_SingleEG5','L1_SingleEG8','L1_SingleEG20','L1_DoubleEG5')
 
-  , requested_vertexs      = cms.vstring('offlinePrimaryVertices')#,'offlinePrimaryVerticesWithBS')
+  , requested_vertexs      = cms.vstring('offlinePrimaryVertices','offlinePrimaryVerticesDA')#,'offlinePrimaryVerticesWithBS')
   , requested_tracks       = cms.vstring('generalTracks')#,'pixelTracks')
 
 
 )
 
 
-# Data output ----------------------------------------------------------------------- 
-process.out = cms.OutputModule("PoolOutputModule",
-  #  verbose = cms.untracked.bool(False),
-    fileName = cms.untracked.string('cmsdata.root')
+# DA vertex -------------------------------------------------------------------------
+
+from RecoVertex.PrimaryVertexProducer.OfflinePrimaryVertices_cfi import *
+
+process.offlinePrimaryVerticesDA = cms.EDProducer("PrimaryVertexProducer",
+    verbose = cms.untracked.bool(False),
+    algorithm = cms.string('AdaptiveVertexFitter'),
+    TrackLabel = cms.InputTag("generalTracks"),
+    useBeamConstraint = cms.bool(False),
+    beamSpotLabel = cms.InputTag("offlineBeamSpot"),
+    minNdof  = cms.double(0.0),
+    PVSelParameters = cms.PSet(
+        maxDistanceToBeam = cms.double(2.0)
+    ),
+    TkFilterParameters = cms.PSet(
+        algorithm=cms.string('filter'),
+        maxNormalizedChi2 = cms.double(5.0),
+        minPixelLayersWithHits=cms.int32(2),
+        minSiliconLayersWithHits = cms.int32(5),
+        maxD0Significance = cms.double(5.0), 
+        minPt = cms.double(0.0),
+        trackQuality = cms.string("any")
+    ),
+
+    TkClusParameters = cms.PSet(
+        algorithm   = cms.string("DA"),
+        TkDAClusParameters = cms.PSet( 
+            coolingFactor = cms.double(0.8),  #  rather slow annealing for now
+            Tmin = cms.double(9.),            #  end of annealing
+            vertexSize = cms.double(0.01)     #  ~ resolution
+        )
+    )
 )
+
+
+
+# Data output ----------------------------------------------------------------------- 
+#process.out = cms.OutputModule("PoolOutputModule",
+#    fileName = cms.untracked.string('cmsdata.root')
+#)
 
 
 # PAth (what to do) ------------------------------------------------------------------
@@ -445,15 +506,21 @@ process.path = cms.Path( process.hltPhysicsDeclared*
 #        	         process.higgsToWW2LeptonsPreselectionSequence *
 #                         process.recoAllTrackJets *
 #                         process.produceAk5GenJets*
-			 process.correctedExpectedHits*
+
+                         process.offlinePrimaryVerticesDA*		        
+			 process.ak5PFJetsL1Offset*
+		         process.ak5PFJetsL1FastJet*
 			 process.ak5PFJetsL2L3*
                          process.ak5PFJetsL1OffsetL2L3*
 			 process.ak5PFJetsL1FastJetL2L3*
+                         process.ak5PFJetsL1OffsetDA*
+                         process.ak5PFJetsL1OffsetDAL2L3*
+#			 process.correctedExpectedHits*
 			 process.UAHiggsTree
 			    
                        )
 
 # EndPath (what to store) ------------------------------------------------------------
-process.outpath = cms.EndPath(process.out)
+#process.outpath = cms.EndPath(process.out)
 
 

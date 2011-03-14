@@ -166,10 +166,10 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
     
   //  try{
   //   printf("Ciao\n");
-    edm::Handle<edm::ValueMap<int> > vmEl;
-    iEvent.getByLabel("expectedHitsEle",vmEl);
+    //  edm::Handle<edm::ValueMap<int> > vmEl;
+    //  iEvent.getByLabel("expectedHitsEle",vmEl);
     // fill corrected expected inner hits
-    electron.expectedInnerHits      =  (*vmEl)[eRef];
+    electron.expectedInnerHits      =  ((iElectron->gsfTrack())->trackerExpectedHitsInner()).numberOfLostHits() ; 
     //cout<<(*vmEl)[eRef]<<endl;
    // cou<<"ciao"<<endl;
   //  printf("Ciao\n");
@@ -178,7 +178,7 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
    //  printf("Can't access expectedHitsEle\n");
    // }
    
-     
+    // electron.expectedInnerHits =1;
      
      // Gsf Track Info
      

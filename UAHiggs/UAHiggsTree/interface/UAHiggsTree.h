@@ -50,6 +50,8 @@ using namespace std;
 #include "UAHiggs/UAHiggsTree/interface/MyGenJet.h"
 #include "UAHiggs/UAHiggsTree/interface/MyGenKin.h"
 #include "UAHiggs/UAHiggsTree/interface/MyGenMET.h"
+#include "UAHiggs/UAHiggsTree/interface/MyPUSumInfo.h"
+
 
 // Reco Tracks and vertex
 #include "UAHiggs/UAHiggsTree/interface/MyBeamSpot.h"
@@ -171,7 +173,8 @@ class UAHiggsTree : public edm::EDAnalyzer {
       virtual void GetRecoTrackJet(const edm::Event& , const edm::EventSetup& ,
                                                  const string ,  vector<MyJet>&);
 
-     
+    
+      virtual void GetPUSumInfo(    const edm::Event& ); 
        
  
       //  -------Get all collections ----------------------------------------
@@ -263,6 +266,9 @@ class UAHiggsTree : public edm::EDAnalyzer {
       
       edm::InputTag  BJetCollection_;
       
+
+      edm::InputTag         pusuminfo_;
+
       // ----------Tree & File ---------------------------
 
       string fOutputFileName ;
@@ -281,6 +287,7 @@ class UAHiggsTree : public edm::EDAnalyzer {
       MyHLTrig          HLTrig;
       MyGenKin          GenKin;
 
+      MyPUSumInfo                   pusuminfo;
       vector<MyGenPart> GenPart;
       vector<MyGenPart> GenElec;
       vector<MyGenPart> GenMu;
@@ -303,7 +310,7 @@ class UAHiggsTree : public edm::EDAnalyzer {
       vector<MyGenMET>   allGenMETs[5];
       
       vector<MyJet>      allCaloJets[5];
-      vector<MyJet>      allPFJets[5];
+      vector<MyJet>      allPFJets[10];
       vector<MyJet>      allTrackJets[5];
       vector<MyGenJet>   allGenJets[5];
     

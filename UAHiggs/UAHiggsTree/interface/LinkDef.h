@@ -8,6 +8,7 @@
 #pragma link C++ class MyL1Trig+;
 #pragma link C++ class MyHLTrig+;
 #pragma link C++ class MyPart+;
+#pragma link C++ class MyPUSumInfo+;
 
 #pragma link C++ class MyGenKin+;
 

@@ -7,6 +7,7 @@ rootcint -f eventdict.cc -c -I${PWD}/../../.. \
 	    UAHiggs/UAHiggsTree/interface/MyPart.h \
  	    UAHiggs/UAHiggsTree/interface/MyGenKin.h \
             UAHiggs/UAHiggsTree/interface/MyGenPart.h \
+            UAHiggs/UAHiggsTree/interface/MyPUSumInfo.h \
 	    UAHiggs/UAHiggsTree/interface/MyGenJet.h \
 	    UAHiggs/UAHiggsTree/interface/MyBeamSpot.h \
 	    UAHiggs/UAHiggsTree/interface/MyVertex.h \
