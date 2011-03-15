@@ -1,7 +1,0 @@
-28049
-100
-1
-NO
-output/outWjets.root
-output/outWjets.txt
-/user/xjanssen/data/CMSSW_3_5_7/WW_v01d/__WJets-madgraph__Spring10-START3X_V26_S09-v1__GEN-SIM-RECO/WW_v01d__CMSSW_3_5_7__WJets-madgraph__Spring10-START3X_V26_S09-v1__GEN-SIM-RECO_1_1_DPn.root
