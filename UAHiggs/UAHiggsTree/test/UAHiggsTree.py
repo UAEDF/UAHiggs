@@ -174,7 +174,7 @@ fileNames = cms.untracked.vstring(
 'dcap:///pnfs/iihe/cms/store/user/xjanssen/data/CMSSW_3_9_7/DataCopy_397/__GluGluToHToWWTo2L2Nu_M-160_7TeV-powheg-pythia6__Winter10-E7TeV_ProbDist_2011Flat_BX156_START39_V8-v1__GEN-SIM-RECO/DataCopy_397__CMSSW_3_9_7__GluGluToHToWWTo2L2Nu_M-160_7TeV-powheg-pythia6__Winter10-E7TeV_ProbDist_2011Flat_BX156_START39_V8-v1__GEN-SIM-RECO_1_1_RJI.root')					 
 #'dcap:///pnfs/iihe/cms/store/user/xjanssen/data/CMSSW_3_9_7/DataCopy_397/__GluGluToHToWWTo2L2Nu_M-160_7TeV-powheg-pythia6__Winter10-E7TeV_ProbDist_2011Flat_BX156_START39_V8-v1__AODSIM/DataCopy_397__CMSSW_3_9_7__GluGluToHToWWTo2L2Nu_M-160_7TeV-powheg-pythia6__Winter10-E7TeV_ProbDist_2011Flat_BX156_START39_V8-v1__AODSIM_1_2_auo.root'				 )
 )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(3000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 # L1 extra --------------------------------------------------------------------------
 #process.load("L1Trigger.L1ExtraFromDigis.l1extra_cff")
@@ -223,7 +223,8 @@ process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 #process.GlobalTag.globaltag = 'START3X_V26::All'
 #process.GlobalTag.globaltag =  'START38_V14::All'
 #process.GlobalTag.globaltag = 'FT_R_39X_V4A::All'
-process.GlobalTag.globaltag = 'START39_V8::All'
+process.GlobalTag.globaltag = 'START38_V12::All'
+#process.GlobalTag.globaltag = 'START39_V8::All'
 
 
 # ------ Jet Enenergy Corrections ----------

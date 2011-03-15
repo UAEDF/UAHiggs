@@ -13,7 +13,7 @@
 //
 // Original Author:  "local user"
 //         Created:  Wed Nov 18 10:39:03 CET 2009
-// $Id: UAHiggsTree.C,v 1.10 2011/02/15 10:22:13 selvaggi Exp $
+// $Id: UAHiggsTree.C,v 1.11 2011/03/14 12:59:11 selvaggi Exp $
 //
 //
 
@@ -144,23 +144,23 @@ UAHiggsTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    using namespace edm;
    bool keepEvent = true;
    ntot++;
-   cout <<" EvtId and L1,HLT trig "<<endl;
+ //  cout <<" EvtId and L1,HLT trig "<<endl;
    GetEvtId(iEvent); 
    GetL1Trig(iEvent,iSetup);
    GetHLTrig(iEvent,iSetup);
    
-   cout <<" Generator level"<<endl;
+ //  cout <<" Generator level"<<endl;
    if (StoreGenPart) GetGenPart(iEvent,iSetup);
    if (StoreGenKine) GetGenKin (iEvent);
    if (StoreGenPart) GetAllGenJets(iEvent,iSetup,genjets,allGenJets); 
   // if (StoreGenPart) GetAllGenMETs(iEvent,iSetup,genmets,allGenMETs);
    if (StoreGenPart) GetPUSumInfo(iEvent);  
  
-   cout <<" Reset vtx id and vector"<<endl;
+//   cout <<" Reset vtx id and vector"<<endl;
    vtxid = 0;
    vtxid_xyz.clear();
    
-   cout <<" ... BeamSpot"<<endl;
+ //  cout <<" ... BeamSpot"<<endl;
 
    edm::Handle<reco::BeamSpot>      beamSpotHandle;
    iEvent.getByLabel("offlineBeamSpot", beamSpotHandle);
@@ -182,26 +182,26 @@ UAHiggsTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    beamSpot.eBeamWidthX = theBeamSpot->BeamWidthXError();
    beamSpot.eBeamWidthY = theBeamSpot->BeamWidthYError();
 
-   cout <<" BeamSpot is vtx with id=0 "<<endl;
+  // cout <<" BeamSpot is vtx with id=0 "<<endl;
    vtxid++;
    vtxid_xyz.push_back(theBeamSpot->position());
 
-   cout <<" ... Vertex"<<endl;
+ //  cout <<" ... Vertex"<<endl;
    GetAllVertexs(iEvent,iSetup,vertexs,allVertexs);
-   cout <<" ... Tracks"<<endl;
+  // cout <<" ... Tracks"<<endl;
    GetAllTracks(iEvent,iSetup,tracks,allTracks);
 
-   cout <<" ... Electron"<<endl;
+ //  cout <<" ... Electron"<<endl;
    GetAllElectrons(iEvent,iSetup,gsfelectrons,allElectrons);
    
-   cout <<" ... Muon"<<endl;
+ //  cout <<" ... Muon"<<endl;
    GetAllMuons(iEvent,iSetup,muons,allMuons);
    
-   cout <<" ... Jet"<<endl;
+ //  cout <<" ... Jet"<<endl;
    GetAllCaloJets  (iEvent,iSetup,calojets,allCaloJets);
    GetAllPFJets    (iEvent,iSetup,pfjets,  allPFJets);
    GetAllTrackJets (iEvent,iSetup,trackjets,allTrackJets);
-   cout <<"    MET"<<endl;
+ //  cout <<"    MET"<<endl;
    
    GetAllCaloMETs(iEvent,iSetup,calomets,allCaloMETs);
    GetAllPFMETs(iEvent,iSetup,pfmets,allPFMETs);
@@ -222,7 +222,7 @@ UAHiggsTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    
    
    if(keepEvent)tree->Fill();
-   cout<<"ntot = "<<ntot<<endl;
+ //  cout<<"ntot = "<<ntot<<endl;
 }
 
 
