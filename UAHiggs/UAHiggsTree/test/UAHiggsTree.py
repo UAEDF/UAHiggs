@@ -364,50 +364,50 @@ process.pfPileUp.Vertices = "goodOfflinePrimaryVerticesDA"
 
 
 # pat sequence
-process.load("PhysicsTools.PatAlgos.patSequences_cff")
+#process.load("PhysicsTools.PatAlgos.patSequences_cff")
 
 # Configure PAT to use PF2PAT instead of AOD sources
 # this function will modify the PAT sequences. It is currently 
 # not possible to run PF2PAT+PAT and standart PAT at the same time
-from PhysicsTools.PatAlgos.tools.pfTools import *
-postfix = "PFlow"
+#from PhysicsTools.PatAlgos.tools.pfTools import *
+#postfix = "PFlow"
 
-usePF2PAT(process,runPF2PAT=True, jetAlgo='AK5', runOnMC=False, postfix=postfix)
-process.pfPileUpPFlow.Enable = True
-process.pfPileUpPFlow.checkClosestZVertex = cms.bool(False)
-process.pfPileUpPFlow.Vertices = cms.InputTag('goodOfflinePrimaryVerticesDA')
-process.pfJetsPFlow.doAreaFastjet = True
-process.pfJetsPFlow.doRhoFastjet = False
+#usePF2PAT(process,runPF2PAT=True, jetAlgo='AK5', runOnMC=False, postfix=postfix)
+#process.pfPileUpPFlow.Enable = True
+#process.pfPileUpPFlow.checkClosestZVertex = cms.bool(False)
+#process.pfPileUpPFlow.Vertices = cms.InputTag('goodOfflinePrimaryVerticesDA')
+#process.pfJetsPFlow.doAreaFastjet = True
+#process.pfJetsPFlow.doRhoFastjet = False
 
 # Compute the mean pt per unit area (rho) from the
 # PFchs inputs
-from RecoJets.JetProducers.kt4PFJets_cfi import kt4PFJets
-process.kt6PFJetsPFlow = kt4PFJets.clone(
-    rParam = cms.double(0.6),
-    src = cms.InputTag('pfNoElectron'+postfix),
-    doAreaFastjet = cms.bool(True),
-    doRhoFastjet = cms.bool(True),
-    voronoiRfact = cms.double(0.9)
-    )
-process.patJetCorrFactorsPFlow.rho = cms.InputTag("kt6PFJetsPFlow", "rho")
-process.patJetCorrFactorsPFlow.levels = ['L1FastJet','L2Relative','L3Absolute']
+#from RecoJets.JetProducers.kt4PFJets_cfi import kt4PFJets
+#process.kt6PFJetsPFlow = kt4PFJets.clone(
+#    rParam = cms.double(0.6),
+#    src = cms.InputTag('pfNoElectron'+postfix),
+#    doAreaFastjet = cms.bool(True),
+#    doRhoFastjet = cms.bool(True),
+#    voronoiRfact = cms.double(0.9)
+#    )
+#process.patJetCorrFactorsPFlow.rho = cms.InputTag("kt6PFJetsPFlow", "rho")
+#process.patJetCorrFactorsPFlow.levels = ['L1FastJet','L2Relative','L3Absolute']
 
 # Add the PV selector and KT6 producer to the sequence
-getattr(process,"patPF2PATSequence"+postfix).replace(
-    getattr(process,"pfNoElectron"+postfix),
-    getattr(process,"pfNoElectron"+postfix)*process.kt6PFJetsPFlow )
+##getattr(process,"patPF2PATSequence"+postfix).replace(
+#    getattr(process,"pfNoElectron"+postfix),
+#    getattr(process,"pfNoElectron"+postfix)*process.kt6PFJetsPFlow )
 
-process.patseq = cms.Sequence(    
-    process.goodOfflinePrimaryVerticesDA*
-    getattr(process,"patPF2PATSequence"+postfix)
-    )
+#process.patseq = cms.Sequence(    
+#    process.goodOfflinePrimaryVerticesDA*
+#    getattr(process,"patPF2PATSequence"+postfix)
+#    )
 
 # Adjust the event content
-process.out.outputCommands += [
-    'keep *_selectedPat*_*_*',
-    'keep *_goodOfflinePrimaryVerticesDA*_*_*',    
-    'keep double_*PFlow*_*_PAT'
-]
+#process.out.outputCommands += [
+#    'keep *_selectedPat*_*_*',
+#    'keep *_goodOfflinePrimaryVerticesDA*_*_*',    
+#    'keep double_*PFlow*_*_PAT'
+#]
 
 
 
@@ -745,7 +745,7 @@ process.path = cms.Path( process.hltPhysicsDeclared*
                          process.chargedMetProducer*
                          process.chargedPlusNeutralMetProducer*
 		         process.goodOfflinePrimaryVerticesDA*		        
-			 process.patseq*
+		#	 process.patseq*
 			 process.pfNoPileUpSequence*
 			 process.electronIDLH*
 			 process.kt6PFJetsIso*
@@ -768,6 +768,6 @@ process.path = cms.Path( process.hltPhysicsDeclared*
                        )
 
 # EndPath (what to store) ------------------------------------------------------------
-process.outpath = cms.EndPath(process.out)
+#process.outpath = cms.EndPath(process.out)
 
 
