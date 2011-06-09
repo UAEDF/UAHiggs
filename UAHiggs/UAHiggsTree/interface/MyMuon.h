@@ -20,6 +20,17 @@ class MyMuon : public TObject {
     MyTracks    innerTrack;     // Track reconstructed in the tracker only
     MyTracks    outerTrack;     // Track reconstructed in the muon detector only
     
+    std::vector<Int_t>     vtxid;
+    std::vector<Double_t>  tip     ;
+    std::vector<Double_t>  tipErr  ;
+    std::vector<Double_t>  ip      ;
+    std::vector<Double_t>  ipErr   ;
+    std::vector<Double_t>  tip2     ;
+    std::vector<Double_t>  tip2Err  ;
+    std::vector<Double_t>  ip2      ;
+    std::vector<Double_t>  ip2Err   ;
+
+
     Int_t   nChambers;
     Int_t   nChambersMatched;
     

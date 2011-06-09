@@ -33,6 +33,12 @@
 
 #include "DataFormats/BeamSpot/interface/BeamSpot.h"
 
+//----------------Trigger------------------------
+#include "DataFormats/HLTReco/interface/TriggerEvent.h"
+#include "DataFormats/Common/interface/TriggerResults.h"
+#include "FWCore/Common/interface/TriggerNames.h"
+
+
 /*
 #include "CondFormats/L1TObjects/interface/L1GtTriggerMenu.h"
 #include "CondFormats/DataRecord/interface/L1GtTriggerMenuRcd.h"
@@ -95,6 +101,7 @@ UAHiggsTree::UAHiggsTree(const edm::ParameterSet& iConfig)
    genjets                   = iConfig.getParameter<vector<string> >("requested_genjets");
    calojets                  = iConfig.getParameter<vector<string> >("requested_calojets");
    pfjets                    = iConfig.getParameter<vector<string> >("requested_pfjets");
+   neutrals                    = iConfig.getParameter<vector<string> >("requested_neutrals");
    trackjets                 = iConfig.getParameter<vector<string> >("requested_trackjets");
 
    //Trigger inputs
@@ -143,24 +150,39 @@ UAHiggsTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    
    using namespace edm;
    bool keepEvent = true;
-   ntot++;
- //  cout <<" EvtId and L1,HLT trig "<<endl;
+   
+   //cout <<" EvtId and L1,HLT trig "<<endl;
    GetEvtId(iEvent); 
    GetL1Trig(iEvent,iSetup);
    GetHLTrig(iEvent,iSetup);
    
- //  cout <<" Generator level"<<endl;
+   //cout <<" Generator level"<<endl;
    if (StoreGenPart) GetGenPart(iEvent,iSetup);
-   if (StoreGenKine) GetGenKin (iEvent);
+   if (StoreGenKine) { GetGenKin (iEvent) ; ntot_kfac+=GenKin.kfactor ; }
    if (StoreGenPart) GetAllGenJets(iEvent,iSetup,genjets,allGenJets); 
   // if (StoreGenPart) GetAllGenMETs(iEvent,iSetup,genmets,allGenMETs);
-   if (StoreGenPart) GetPUSumInfo(iEvent);  
+   
+   ntot++;
+   
+   // ---- only do for WW bck in VVto4L ------
+  /* int nWmin  =0;
+   int nWplus =0;
+   for(vector<MyGenPart>::iterator itgen=GenPart.begin();itgen!=GenPart.end();itgen++){
+      if(itgen->name=="W+")++nWplus;
+      if(itgen->name=="W-")++nWmin ;
+      }
+   if( (nWmin ==1 && nWplus ==1) ) ++ntot;
+   // cout<<nWplus<<","<<nWmin<<endl;   */
+   //-------------------------------------------
+   
+   
+   GetPUSumInfo(iEvent);  
  
-//   cout <<" Reset vtx id and vector"<<endl;
+   //cout <<" Reset vtx id and vector"<<endl;
    vtxid = 0;
    vtxid_xyz.clear();
    
- //  cout <<" ... BeamSpot"<<endl;
+   //cout <<" ... BeamSpot"<<endl;
 
    edm::Handle<reco::BeamSpot>      beamSpotHandle;
    iEvent.getByLabel("offlineBeamSpot", beamSpotHandle);
@@ -182,47 +204,76 @@ UAHiggsTree::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    beamSpot.eBeamWidthX = theBeamSpot->BeamWidthXError();
    beamSpot.eBeamWidthY = theBeamSpot->BeamWidthYError();
 
-  // cout <<" BeamSpot is vtx with id=0 "<<endl;
+   //cout <<" BeamSpot is vtx with id=0 "<<endl;
    vtxid++;
    vtxid_xyz.push_back(theBeamSpot->position());
 
- //  cout <<" ... Vertex"<<endl;
+   //cout <<" ... Vertex"<<endl;
    GetAllVertexs(iEvent,iSetup,vertexs,allVertexs);
-  // cout <<" ... Tracks"<<endl;
-   GetAllTracks(iEvent,iSetup,tracks,allTracks);
+   //cout <<" ... Tracks"<<endl;
+   //GetAllTracks(iEvent,iSetup,tracks,allTracks);
+   //GetAllNeutralParts(iEvent,iSetup,neutrals,allNeutrals);
 
- //  cout <<" ... Electron"<<endl;
+   //cout <<" ... Electron"<<endl;
    GetAllElectrons(iEvent,iSetup,gsfelectrons,allElectrons);
    
- //  cout <<" ... Muon"<<endl;
+   //cout <<" ... Muon"<<endl;
    GetAllMuons(iEvent,iSetup,muons,allMuons);
    
- //  cout <<" ... Jet"<<endl;
+   //cout <<" ... Jet"<<endl;
    GetAllCaloJets  (iEvent,iSetup,calojets,allCaloJets);
    GetAllPFJets    (iEvent,iSetup,pfjets,  allPFJets);
    GetAllTrackJets (iEvent,iSetup,trackjets,allTrackJets);
- //  cout <<"    MET"<<endl;
+   //cout <<"    MET"<<endl;
    
    GetAllCaloMETs(iEvent,iSetup,calomets,allCaloMETs);
    GetAllPFMETs(iEvent,iSetup,pfmets,allPFMETs);
    GetAllTcMETs(iEvent,iSetup,tcmets,allTcMETs);
+   GetChargedMET(iEvent,iSetup);
+
 
    
    if(DoSingleLeptonPreselection) {
       keepEvent = PassLeptonFilter(allElectrons,allMuons,SingleLeptonPtCut);      
-      if(keepEvent) n_single_presel++;}
-   
+    //  cout<<keepEvent<<endl;
+      if (keepEvent) { 
+        n_single_presel++;
+        if (StoreGenKine) n_single_presel_kfac+=GenKin.kfactor ; 
+      }
+   }
+   //--------------- WARNING!!! CHECK IF NOT VVTo4L -----------------------------------------
    if(DoLeptonPairPreselection)   {
-      keepEvent = PassLeptonPairFilter(allElectrons,allMuons,SingleLeptonPtCut); 
-      if(keepEvent) n_pair_presel++;}   
+     // cout<<keepEvent<<endl;
+      keepEvent = keepEvent && PassLeptonPairFilter(allElectrons,allMuons,LeptonPairPtCut);// && (nWmin ==1 && nWplus ==1); 
+     // cout<<keepEvent<<endl;
+      if(keepEvent) {
+        n_pair_presel++;
+        if (StoreGenKine) n_pair_presel_kfac+=GenKin.kfactor ;
+      }
+    /*  else {
+      cout<<"----- ele -----"<<endl;
+      for(vector<MyElectron>::iterator itele = allElectrons[0].begin() ; itele != allElectrons[0].end() ; ++itele){
+        cout<<"pt,eta,charge: " <<itele->pt<<","<<itele->eta<<","<<itele->Part.charge<<endl;
+       }
+      cout<<"----- mu -----"<<endl;
+      for(vector<MyMuon>::iterator itele = allMuons[0].begin() ; itele != allMuons[0].end() ; ++itele){
+        cout<<"pt,eta,charge: " <<itele->pt<<","<<itele->eta<<","<<itele->Part.charge<<endl;
+       }
+      
+      }*/
+      
+      
+   
+   
+   }   
       
    
   
-    if( (gRandom->Rndm() > preskimFraction) && (DoRandomPreskim) ) {keepEvent = false; n_random_rej++;}
+   // if( (gRandom->Rndm() > preskimFraction) && (DoRandomPreskim) ) {keepEvent = false; n_random_rej++;}
    
    
    if(keepEvent)tree->Fill();
- //  cout<<"ntot = "<<ntot<<endl;
+   //cout<<"ntot = "<<ntot<<endl;
 }
 
 
@@ -235,8 +286,11 @@ UAHiggsTree::beginJob()
    tree_extra = new TTree("tree_extra","tree_extra");
    
    tree_extra ->Branch("ntot",&ntot); 
+   tree_extra ->Branch("ntot_kfac",&ntot_kfac); 
    tree_extra ->Branch("n_single_presel",&n_single_presel);
+   tree_extra ->Branch("n_single_presel_kfac",&n_single_presel_kfac);
    tree_extra ->Branch("n_pair_presel",&n_pair_presel); 
+   tree_extra ->Branch("n_pair_presel_kfac",&n_pair_presel_kfac); 
    tree_extra ->Branch("n_random_rej",&n_random_rej); 
    tree_extra ->Branch("preskimFraction",&preskimFraction); 
    tree_extra ->Branch("DoSingleLeptonPreselection",&DoSingleLeptonPreselection );
@@ -261,7 +315,7 @@ UAHiggsTree::beginJob()
    if (StoreGenPart) tree->Branch("GenMu",&GenMu);
    if (StoreGenPart) tree->Branch("GenNu",&GenNu);
    //if (StoreGenPart) tree->Branch("GenJet",&GenJet);
-   if (StoreGenPart) tree->Branch("puinfo",&pusuminfo);  
+   tree->Branch("puinfo",&pusuminfo);  
  
    if (StoreGenPart) InitGenMET(genmets,tree);
    if (StoreGenPart) InitGenJet(genjets,tree);
@@ -276,9 +330,13 @@ UAHiggsTree::beginJob()
    InitRecoCaloMET(calomets,tree);
    InitRecoTcMET  (tcmets,tree);
    InitRecoPFMET  (pfmets,tree);
+   tree->Branch("iVtxChargedMet",&iVtxChargedMET);
+   tree->Branch("ChargedMet",&ChargedMET);
+   tree->Branch("ChargedPlusNeutralMet",&ChargedPlusNeutralMET);
    
    InitRecoCaloJet (calojets,tree);
    InitRecoPFJet   (pfjets,tree);
+   InitNeutralPart (neutrals,tree);
    InitRecoTrackJet(trackjets,tree);
    
    tree->Branch("beamSpot",&beamSpot);
@@ -289,10 +347,13 @@ UAHiggsTree::beginJob()
    fill_L1_map = true;
    
    ntot=0;
+   ntot_kfac=0;
    n_single_presel=0;
+   n_single_presel_kfac=0;
    n_pair_presel=0;
+   n_pair_presel_kfac=0;
    n_random_rej=0;
-
+   run=0;
 }
 
 
@@ -304,8 +365,8 @@ void UAHiggsTree::beginRun(edm::Run const & iRun, edm::EventSetup const& iSetup)
 
   bool changed = true;
   isValidHltConfig_ = hltConfig.init(iRun,iSetup,"HLT",changed);
-
-}
+ // cout<<isValidHltConfig_<<endl;
+ }
    
 
 // ------------ method called once each job just after ending the event loop  ------------

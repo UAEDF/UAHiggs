@@ -26,6 +26,10 @@
 #pragma link C++ class MyTracks+;
 #pragma link C++ class vector<MyTracks>+;
 
+#pragma link C++ class MyNeutralPart+;
+#pragma link C++ class vector<MyNeutralPart>+;
+
+
 #pragma link C++ class MyElectron+;
 #pragma link C++ class vector<MyElectron>+;
 

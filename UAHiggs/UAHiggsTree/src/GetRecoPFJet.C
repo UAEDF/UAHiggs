@@ -14,6 +14,8 @@
 #include "DataFormats/Common/interface/Handle.h"
 #include "DataFormats/Candidate/interface/Candidate.h"
 #include "DataFormats/Candidate/interface/CandidateFwd.h"
+#include "DataFormats/ParticleFlowCandidate/interface/PFCandidateFwd.h"
+#include "DataFormats/ParticleFlowCandidate/interface/PFCandidate.h"
 #include "DataFormats/JetReco/interface/Jet.h"
 #include "DataFormats/JetReco/interface/CaloJetCollection.h"
 #include "DataFormats/JetReco/interface/PFJetCollection.h"
@@ -41,22 +43,24 @@ void UAHiggsTree::GetRecoPFJet(const edm::Event& iEvent , const edm::EventSetup&
 
   JetVector.clear();
    
- //  Handle<JetTagCollection> bjetsHandle;
- //  iEvent.getByLabel(BJetCollection_,bjetsHandle);
- //  const JetTagCollection &bjets = *(bjetsHandle.product());
+     Handle<reco::PFJetCollection> hJetProduct;
+     iEvent.getByLabel(PFJetCollection_, hJetProduct);
+ 
+ 
+     Handle<reco::JetTagCollection> hTrackCountingHighEffBJetTags;
+      iEvent.getByLabel("TCHE"+PFJetCollection_, hTrackCountingHighEffBJetTags);
+// BJetCollection_
 
-//   JetTagCollection::const_iterator bjet = bjets.begin(); 
+  //  const reco::PFJetCollection inJets = *(hJetProduct.product());  
 
-   Handle<PFJetCollection> PFJets;
-   iEvent.getByLabel(PFJetCollection_,PFJets);
-  
-   Handle<double>  rho;
-   iEvent.getByLabel(InputTag("kt6PFJets:rho"),rho);
-  
-//   for(PFJetCollection::const_iterator jet=PFJets->begin();jet!=PFJets->end();jet++,bjet++){
-   for(PFJetCollection::const_iterator jet=PFJets->begin();jet!=PFJets->end();jet++){
-         
+
+  // loop through all jets
+   for (reco::PFJetCollection::const_iterator jet = hJetProduct->begin(); 
+       jet != hJetProduct->end(); ++jet) {
     
+    reco::PFJetRef jetRef(hJetProduct, jet - hJetProduct->begin());    
+    reco::JetBaseRef jetBaseRef(jetRef);
+
      double discriminator=-100;
       
      MyJet myjet;
@@ -69,7 +73,7 @@ void UAHiggsTree::GetRecoPFJet(const edm::Event& iEvent , const edm::EventSetup&
      myjet.py             = jet->py();
      myjet.pz             = jet->pz();
      myjet.Area           = jet->jetArea();
-     myjet.rho            = *(rho.product());
+   //  myjet.rho            = *(rho.product());
      myjet.ChargedHadronEnergy = jet->chargedHadronEnergy();
      myjet.NeutralHadronEnergy = jet->neutralHadronEnergy();
      myjet.ChargedEmEnergy = jet->chargedEmEnergy();
@@ -79,7 +83,7 @@ void UAHiggsTree::GetRecoPFJet(const edm::Event& iEvent , const edm::EventSetup&
      myjet.NeutralMultiplicity = jet->neutralMultiplicity();
      myjet.MuonMultiplicity = jet->muonMultiplicity();   
 
-    // cout<<PFJetCollection_<<" pt, eta : "<<jet->pt()<<" , "<<jet->eta()<<endl;
+   //  cout<<PFJetCollection_<<" pt, eta : "<<jet->pt()<<" , "<<jet->eta()<<endl;
 
 
 
@@ -88,13 +92,43 @@ void UAHiggsTree::GetRecoPFJet(const edm::Event& iEvent , const edm::EventSetup&
  //    bjet++;
  //    }
  //    else{discriminator=-100;bjet++;}
+       
+     myjet.discriminator  = (*(hTrackCountingHighEffBJetTags.product()))[jetBaseRef];  
+
+     //Get neutral candidates
+     
+      Double_t px =0;
+      Double_t py =0;
+      Double_t pz =0;
+      
+     
+      std::vector<reco::PFCandidatePtr> vcand = jet->getPFConstituents();
+      for(unsigned int i=0; i<vcand.size();i++){
+         
+	 if(jet->getPFConstituents().at(i).isAvailable()){
+         reco::PFCandidatePtr cand = jet->getPFConstituents().at(i);
+	 
+	 if((cand.get())->charge() == 0){
+	    px += (cand.get())-> px();
+	    py += (cand.get())-> py();
+	    pz += (cand.get())-> pz();
+	   
+	    }
+	 
+	 }
+	}
+     
+     myjet.neutralPx = px;
+     myjet.neutralPy = py;
+     myjet.neutralPz = pz;
     
-     myjet.discriminator  = discriminator;
-  
+     
+     
+     
      // ----Get Tracks associated to PF Jet
      myjet.nTracks = 0;
      
-     if(jet->getTrackRefs().isAvailable()){
+  /*   if(jet->getTrackRefs().isAvailable()){
      
        reco::TrackRefVector vtracks = jet->getTrackRefs();
        myjet.nTracks = vtracks.size();
@@ -168,8 +202,8 @@ void UAHiggsTree::GetRecoPFJet(const edm::Event& iEvent , const edm::EventSetup&
      
       } // end loop over track for 1 jet
       } // track collection available
-   //   cout<<myjet.nTracks<<endl;
-     JetVector.push_back(myjet);
+   //   cout<<myjet.nTracks<<endl;*/
+     JetVector.push_back(myjet);  
   
    }//loop over jets
 
@@ -187,7 +221,7 @@ void UAHiggsTree::InitRecoPFJet( vector<string> PFJets, TTree* tree )
 }
 
 
-void UAHiggsTree::GetAllPFJets( const edm::Event& iEvent, const edm::EventSetup& iSetup, const vector<string> PFJets, vector<MyJet> allPFJets[5] )
+void UAHiggsTree::GetAllPFJets( const edm::Event& iEvent, const edm::EventSetup& iSetup, const vector<string> PFJets, vector<MyJet> allPFJets[15] )
 {
   for (unsigned int i=0; i!= PFJets.size(); i++){
        GetRecoPFJet(iEvent,iSetup,PFJets.at(i),allPFJets[i]);

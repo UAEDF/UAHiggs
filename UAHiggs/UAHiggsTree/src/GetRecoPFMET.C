@@ -47,8 +47,7 @@ void UAHiggsTree::GetRecoPFMET(const edm::Event& iEvent, const edm::EventSetup& 
       mymet.pt=met_iter->pt();
       mymet.phi=met_iter->phi();
       mymet.eta=met_iter->eta();
-      
-      
+      mymet.significance = met_iter->significance();
       METVector.push_back(mymet);
          
 

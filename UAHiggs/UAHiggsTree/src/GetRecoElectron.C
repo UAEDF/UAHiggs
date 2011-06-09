@@ -20,11 +20,11 @@
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 
 // Genaral Tracks and Vertex
-//#include "DataFormats/TrackReco/interface/Track.h"
-//#include "DataFormats/TrackReco/interface/TrackFwd.h"
-//#include "DataFormats/VertexReco/interface/Vertex.h"
+#include "DataFormats/TrackReco/interface/Track.h"
+#include "DataFormats/TrackReco/interface/TrackFwd.h"
+#include "DataFormats/VertexReco/interface/Vertex.h"
 //#include "DataFormats/VertexReco/src/Vertex.cc"
-//#include "DataFormats/VertexReco/interface/VertexFwd.h"
+#include "DataFormats/VertexReco/interface/VertexFwd.h"
 
 // Gsf Electron
 #include "DataFormats/EgammaCandidates/interface/Electron.h"
@@ -50,6 +50,16 @@
 // Isolation
 #include "DataFormats/RecoCandidate/interface/IsoDeposit.h"
 
+
+// Boris 3D IP stuff's
+#include "TrackingTools/IPTools/interface/IPTools.h"
+#include "TrackingTools/TransientTrack/interface/TransientTrack.h"
+#include "TrackingTools/TransientTrack/interface/TransientTrackBuilder.h"
+#include "TrackingTools/Records/interface/TransientTrackRecord.h"
+#include "WWAnalysis/Tools/interface/VertexReProducer.h"
+
+
+
 // UAHiggsTree UAHiggs class declaration
 #include "UAHiggs/UAHiggsTree/interface/UAHiggsTree.h"
 
@@ -64,8 +74,13 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
 {
    using namespace std;
    using namespace edm;
+   using namespace reco;
 
    ElecVector.clear();
+
+   // BORIS 3D IP stuff: Declaration
+   ESHandle<TransientTrackBuilder> theTTBuilder;
+   iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",theTTBuilder);
 
    // Get Gsf Electron Collection 
    Handle<reco::GsfElectronCollection> gsfElectronsHandle;
@@ -218,7 +233,126 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
         electron.GsfTrack.vtxdz.push_back(  etrack->dz( vtxid_xyz[i] )  );
      }
 
+     // Boris 3D IP Stuff
+     int iVtx = 0;
+     electron.vtxid.clear();
+     electron.tip.clear();
+     electron.tipErr.clear();
+     electron.ip.clear();
+     electron.ipErr.clear();
+     electron.tip2.clear();
+     electron.tip2Err.clear();
+     electron.ip2.clear();
+     electron.ip2Err.clear();
      
+     // ... redo electron trajectory
+     reco::TransientTrack tt = theTTBuilder->build(iElectron->gsfTrack());
+
+     // ... get beamspot + first entry in IP respecting BS
+     edm::Handle<reco::BeamSpot> bs;
+     iEvent.getByLabel(edm::InputTag("offlineBeamSpot"),bs);
+     reco::Vertex bsvtx = reco::Vertex(reco::Vertex::Point(bs->position().x(),bs->position().y(),bs->position().z()),reco::Vertex::Error());
+     Measurement1D ip     = IPTools::absoluteTransverseImpactParameter(tt,bsvtx).second;
+     Measurement1D ip3D   = IPTools::absoluteImpactParameter3D(tt,bsvtx).second;
+     electron.vtxid.push_back( iVtx );
+     ++iVtx;
+     electron.tip.push_back(    ip.value()  );
+     electron.tipErr.push_back( ip.error() );
+     electron.ip.push_back(     ip3D.value() );
+     electron.ipErr.push_back(  ip3D.error() );
+     electron.tip2.push_back(    ip.value()  );
+     electron.tip2Err.push_back( ip.error() );
+     electron.ip2.push_back(     ip3D.value() );
+     electron.ip2Err.push_back(  ip3D.error() );
+
+     // ... Loop on vtx collections
+     for (unsigned int ivc=0; ivc!= vertexs.size(); ivc++){
+
+       // ... get vertex collection
+       edm::Handle<reco::VertexCollection> vertices;
+       iEvent.getByLabel(vertexs.at(ivc),vertices);
+       //cout << vertexs.at(ivc) << " -> size = " << vertices->end()-vertices->begin() <<  endl;  
+
+       // ... prepare refitting
+       VertexReProducer revertex(vertices, iEvent); 
+       Handle<reco::BeamSpot>        pvbeamspot; 
+       iEvent.getByLabel(revertex.inputBeamSpot(), pvbeamspot);
+
+        // ... Loop on vtx in curent collection
+         for(VertexCollection::const_iterator pvtx=vertices->begin(); pvtx!= vertices->end() ; ++pvtx)
+         {
+
+           reco::Vertex vertexYesB;
+           reco::Vertex vertexNoB;
+           reco::TrackCollection newTkCollection;
+
+           vertexYesB = *pvtx ;   
+
+           // ... Remove lepton track
+           bool foundMatch(false);
+           for (reco::Vertex::trackRef_iterator itk = pvtx->tracks_begin(); itk!=pvtx->tracks_end(); ++itk) 
+           {
+              bool refMatching;
+              if(iElectron->closestCtfTrack().ctfTrack.isNonnull())
+                refMatching = (itk->get() == &*(iElectron->closestCtfTrack().ctfTrack) );
+              else
+                refMatching = false;	
+            float shFraction = iElectron->closestCtfTrack().shFracInnerHits;
+            if(refMatching && shFraction > 0.5){
+                foundMatch = true;
+            }else{
+                newTkCollection.push_back(*itk->get());
+            }
+          }//track collection for vertexNoB is set
+
+          //cout << "checking mu matching" << endl;
+          if(!foundMatch) {
+	    //cout << "WARNING: no electron matching found" << endl;
+	    vertexNoB = vertexYesB;
+          }else{      
+            vector<TransientVertex> pvs = revertex.makeVertices(newTkCollection, *pvbeamspot, iSetup) ;
+            //cout << pvs.size() << endl;
+            if(pvs.empty()) {
+                vertexNoB = reco::Vertex(reco::Vertex::Point(bs->position().x(),bs->position().y(),bs->position().z()),
+                        reco::Vertex::Error());
+            } else {
+	      //vertexNoB = findClosestVertex<TransientVertex>(zPos,pvs);
+	      vertexNoB = pvs.front(); //take the first in the list
+            }
+          }
+
+          // ... Compute 3D IP
+ 
+          Measurement1D ip     = IPTools::absoluteTransverseImpactParameter(tt,vertexYesB).second;
+          Measurement1D ip3D   = IPTools::absoluteImpactParameter3D(tt,vertexYesB).second;
+          Measurement1D ip_2   = IPTools::absoluteTransverseImpactParameter(tt,vertexNoB).second;
+          Measurement1D ip3D_2 = IPTools::absoluteImpactParameter3D(tt,vertexNoB).second;
+
+          electron.vtxid.push_back( iVtx );
+          ++iVtx;
+          electron.tip.push_back(    ip.value()  );
+          electron.tipErr.push_back( ip.error() );
+          electron.ip.push_back(     ip3D.value() );
+          electron.ipErr.push_back(  ip3D.error() );
+          electron.tip2.push_back(    ip_2.value()  );
+          electron.tip2Err.push_back( ip_2.error() );
+          electron.ip2.push_back(     ip3D_2.value() );
+          electron.ip2Err.push_back(  ip3D_2.error() );
+
+/*
+          if (foundMatch){
+            cout << ip3D.value() << " " << ip3D_2.value() << endl;
+          } 
+*/
+
+         } // END ... Loop on vtx in curent collection
+
+       } // END ... Loop on vtx collections
+
+
+
+     } else {
+       cout << "No GST TRACK ????? " << endl;  
      }
 
     
@@ -267,7 +401,13 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
     
     
     
+       // ----------------supercluster ------------
+     Double_t theta = 2*TMath::ATan(TMath::Exp(-(iElectron->superCluster()->eta())));
     
+    electron.ScE     = iElectron -> superCluster() -> energy ()  ;
+    electron.ScEsinTheta = (iElectron -> superCluster() -> energy () )* fabs(TMath::Sin(theta))  ;
+     //cout<<fabs(TMath::Sin(theta))<<","<<TMath::Sin(theta)<<endl;
+     
     
     
      //Isolation Variables
@@ -295,6 +435,7 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
      electron.dcot_conv   = convInfo.dcot();
      //cout<<convInfo.dist()<<"    "<<convInfo.dcot()<<endl;
      
+     electron.nBrems  = iElectron -> numberOfBrems();
      
      
     // Id boolean (don't use them now)
@@ -302,7 +443,15 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
     try{
     
      //Read eID results
-      std::vector<edm::Handle<edm::ValueMap<float> > > eIDValueMap(4); 
+      std::vector<edm::Handle<edm::ValueMap<float> > > eIDValueMap(1); 
+      
+      if ( iEvent.getByLabel( "electronIDLH" , eIDValueMap[0] ) ) {
+         const edm::ValueMap<float> & eIDmapLikelihood = * eIDValueMap[0] ;
+         electron.likelihoodId =  eIDmapLikelihood[eRef];
+         }
+       
+    /*  
+      
       //Robust-Loose 
       iEvent.getByLabel( "eidRobustLoose" , eIDValueMap[0] ); 
       const edm::ValueMap<float> & eIDmapRL = * eIDValueMap[0] ;
@@ -322,7 +471,8 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
        electron.eidRobustTight =        eIDmapRT[eRef] ;
        electron.eidLoose       =        eIDmapL[eRef]  ;
        electron.eidTight       =        eIDmapT[eRef] ;
-            
+          
+	    */
      
     
     }
@@ -330,11 +480,7 @@ void UAHiggsTree::GetRecoElectron(const edm::Event& iEvent, const edm::EventSetu
    //  printf("Can't store Tk isolation variables from Majid\n");
    }
      
-     
-    
- 
-     
-     ElecVector.push_back(electron);
+       ElecVector.push_back(electron);
      ++iEl;
 
    } // End Loop on Gsf Electron

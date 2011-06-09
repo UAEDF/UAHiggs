@@ -12,6 +12,7 @@ rootcint -f eventdict.cc -c -I${PWD}/../../.. \
 	    UAHiggs/UAHiggsTree/interface/MyBeamSpot.h \
 	    UAHiggs/UAHiggsTree/interface/MyVertex.h \
 	    UAHiggs/UAHiggsTree/interface/MyTracks.h \
+	    UAHiggs/UAHiggsTree/interface/MyNeutralPart.h \
 	    UAHiggs/UAHiggsTree/interface/MyElectron.h \
 	    UAHiggs/UAHiggsTree/interface/MyMuon.h \
             UAHiggs/UAHiggsTree/interface/MyJet.h \

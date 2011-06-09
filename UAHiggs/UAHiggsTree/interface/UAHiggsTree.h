@@ -57,6 +57,7 @@ using namespace std;
 #include "UAHiggs/UAHiggsTree/interface/MyBeamSpot.h"
 #include "UAHiggs/UAHiggsTree/interface/MyVertex.h" 
 #include "UAHiggs/UAHiggsTree/interface/MyTracks.h" 
+#include "UAHiggs/UAHiggsTree/interface/MyNeutralPart.h" 
 #include "UAHiggs/UAHiggsTree/interface/MyElectron.h" 
 #include "UAHiggs/UAHiggsTree/interface/MyMuon.h" 
 #include "UAHiggs/UAHiggsTree/interface/MyMET.h" 
@@ -116,6 +117,7 @@ class UAHiggsTree : public edm::EDAnalyzer {
      
       virtual void InitRecoVertex( vector<string>, TTree*); 
       virtual void InitRecoTrack ( vector<string>, TTree*); 
+      virtual void InitNeutralPart ( vector<string>, TTree*); 
       
       
       // ----------Functions------------------------------
@@ -143,6 +145,10 @@ class UAHiggsTree : public edm::EDAnalyzer {
 
       virtual void GetRecoTrack(const edm::Event& , const edm::EventSetup& ,
                                  const string    , vector<MyTracks>& );
+
+      
+      virtual void GetNeutralPart(const edm::Event& iEvent , const edm::EventSetup& ,
+                            const string  , vector<MyNeutralPart>&  );
 
       virtual void GetRecoElectron(const edm::Event& , const edm::EventSetup& ,
                                                      const string , vector<MyElectron>&); 
@@ -188,13 +194,14 @@ class UAHiggsTree : public edm::EDAnalyzer {
       virtual void GetAllGenMETs   (const edm::Event&, const edm::EventSetup& ,const vector<string>, vector<MyGenMET> allGenMETs[5]);
       
       virtual void GetAllCaloJets  (const edm::Event&, const edm::EventSetup& , const vector<string>, vector<MyJet>   allCaloJets[5]);
-      virtual void GetAllPFJets    (const edm::Event&, const edm::EventSetup& , const vector<string>, vector<MyJet>   allPFJets[5]);
+      virtual void GetAllPFJets    (const edm::Event&, const edm::EventSetup& , const vector<string>, vector<MyJet>   allPFJets[15]);
       virtual void GetAllTrackJets (const edm::Event&, const edm::EventSetup& , const vector<string>, vector<MyJet>   allTrackJets[5]);
       virtual void GetAllGenJets   (const edm::Event&, const edm::EventSetup& ,const vector<string>, vector<MyGenJet> allGenJets[5]);
       
       virtual void GetAllVertexs (const edm::Event&, const edm::EventSetup& ,const vector<string>, vector<MyVertex> allVertexs[5]);
       virtual void GetAllTracks  (const edm::Event&, const edm::EventSetup& ,const vector<string>, vector<MyTracks> allTracks[5]);
-     
+      virtual void GetAllNeutralParts  (const edm::Event&, const edm::EventSetup& ,const vector<string>, vector<MyNeutralPart> allNeutrals[5]);
+      virtual void GetChargedMET(const edm::Event&, const edm::EventSetup& );
      
       
       // --- Filters for Electrons, Muons, and pairs -----------------
@@ -212,8 +219,12 @@ class UAHiggsTree : public edm::EDAnalyzer {
 
       
       Int_t ntot;
+      Double_t ntot_kfac;
+      Int_t run;
       Int_t n_single_presel;
+      Double_t n_single_presel_kfac;
       Int_t n_pair_presel;
+      Double_t n_pair_presel_kfac;
       Int_t n_random_rej;
       Double_t preskimFraction;
       
@@ -242,10 +253,13 @@ class UAHiggsTree : public edm::EDAnalyzer {
       vector<string> trackjets;
        
       vector<string> hlt_bits;
+      vector<string> hlt_bits_complete;
+      
       vector<string> L1_bits;
       
       vector<string> vertexs;
       vector<string> tracks;
+      vector<string> neutrals;
       
       // Data Collection
       edm::InputTag genPartColl_ ;
@@ -308,14 +322,19 @@ class UAHiggsTree : public edm::EDAnalyzer {
       vector<MyMET>      allPFMETs[5];
       vector<MyMET>      allTcMETs[5];
       vector<MyGenMET>   allGenMETs[5];
+      vector<Int_t>      iVtxChargedMET;
+      vector<MyMET>      ChargedMET; 
+      vector<MyMET>      ChargedPlusNeutralMET; 
       
       vector<MyJet>      allCaloJets[5];
-      vector<MyJet>      allPFJets[10];
+      vector<MyJet>      allPFJets[15];
       vector<MyJet>      allTrackJets[5];
       vector<MyGenJet>   allGenJets[5];
     
-      vector<MyVertex>   allVertexs[5];
-      vector<MyTracks>   allTracks[5];
+      vector<MyVertex>        allVertexs[5];
+      vector<MyTracks>        allTracks[5];
+      vector<MyNeutralPart>   allNeutrals[5];
+      
       
       vector<MyMuon>     globalMuon;
 

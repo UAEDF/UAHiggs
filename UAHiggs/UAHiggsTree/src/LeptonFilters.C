@@ -27,13 +27,16 @@
 bool UAHiggsTree::PassLeptonFilter(vector<MyElectron> allElectrons[5],vector<MyMuon> allMuons[5], double ptCut ){
     bool keep = false;
         for(vector<MyElectron>::iterator it_ele = allElectrons[0].begin() ; it_ele != allElectrons[0].end() ; ++it_ele){
-            if(it_ele->pt >= ptCut) keep = true; break;
-    	}     
+            if(it_ele->pt >= ptCut) keep = true; 
+    	 //   cout<<"ele: "<<it_ele->pt<<","<<it_ele->Part.charge<<endl;
+	//    cout<<keep<<endl;
+	}     
         for(vector<MyMuon>::iterator it_mu = allMuons[0].begin() ; it_mu != allMuons[0].end() ; ++it_mu){
-            if(it_mu->pt >= ptCut) keep = true; break;
-    	} 
-    
-   
+            if(it_mu->pt >= ptCut) keep = true; 
+    	 //   cout<<"mu: "<<it_mu->pt<<","<<it_mu->Part.charge<<endl;
+         //   cout<<keep<<endl;
+        } 
+  //  cout<<"keep inside func: "<<keep<<endl;
     return keep;
 
 
@@ -41,12 +44,33 @@ bool UAHiggsTree::PassLeptonFilter(vector<MyElectron> allElectrons[5],vector<MyM
 
 }
 
-
-
 bool UAHiggsTree::PassLeptonPairFilter(vector<MyElectron> allElectrons[5],vector<MyMuon> allMuons[5], double ptCut ){
-     bool keep = false;
+
+  int  nLeptonPlus = 0 ;
+  int  nLeptonMin  = 0 ;
+
+  for(vector<MyElectron>::iterator itele = allElectrons[0].begin() ; itele != allElectrons[0].end() ; ++itele){
+    if( itele->pt >= ptCut) {
+    //  cout<<"ele: "<<itele->pt<<","<<itele->Part.charge<<endl;
+      if( itele->Part.charge > 0 ) { ++nLeptonPlus ; }
+      else                         { ++nLeptonMin  ; }
+    }
+  }
+
+  for(vector<MyMuon>::iterator itmu = allMuons[0].begin() ; itmu != allMuons[0].end() ; ++itmu){
+    if( itmu->pt >= ptCut) {
+    //  cout<<"mu: "<<itmu->pt<<","<<itmu->Part.charge<<endl;
+      if( itmu->Part.charge > 0 ) { ++nLeptonPlus ; }
+      else                        { ++nLeptonMin  ; }
+    }
+  }
+//  cout<<nLeptonPlus<<","<<nLeptonMin<<endl;
+  if (  nLeptonPlus > 0 && nLeptonMin > 0 ) return true ;
+  return false ;
+
+}
     
-  
+/*  
    //  ------make electron-electron pairs ---------
   int i=0;
   int j=0;
@@ -86,7 +110,7 @@ bool UAHiggsTree::PassLeptonPairFilter(vector<MyElectron> allElectrons[5],vector
 	 }
   
    return keep;
-
   
   
   }
+*/

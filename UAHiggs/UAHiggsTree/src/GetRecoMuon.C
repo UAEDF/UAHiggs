@@ -30,7 +30,12 @@
 #include "DataFormats/MuonReco/interface/Muon.h"
 #include "DataFormats/MuonReco/interface/MuonSelectors.h"
 
-
+// Boris 3D IP stuff's
+#include "TrackingTools/IPTools/interface/IPTools.h"
+#include "TrackingTools/TransientTrack/interface/TransientTrack.h"
+#include "TrackingTools/TransientTrack/interface/TransientTrackBuilder.h"
+#include "TrackingTools/Records/interface/TransientTrackRecord.h"
+#include "WWAnalysis/Tools/interface/VertexReProducer.h"
 
 
 // UAHiggsTree UAHiggs class declaration
@@ -43,6 +48,11 @@ void UAHiggsTree::GetRecoMuon(const edm::Event& iEvent, const edm::EventSetup& i
    using namespace std;
    using namespace edm;
    using namespace reco;
+
+   // BORIS 3D IP stuff: Declaration
+   ESHandle<TransientTrackBuilder> theTTBuilder;
+   iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",theTTBuilder);
+
 
    MuonVector.clear();
 
@@ -257,9 +267,116 @@ void UAHiggsTree::GetRecoMuon(const edm::Event& iEvent, const edm::EventSetup& i
         muon.innerTrack.vtxdz.push_back(  inTrack->dz( vtxid_xyz[i] )  );
      }
 
-    }
-     
-     else {
+     // Boris 3D IP Stuff
+     int iVtx = 0;
+     muon.vtxid.clear();
+     muon.tip.clear();
+     muon.tipErr.clear();
+     muon.ip.clear();
+     muon.ipErr.clear();
+     muon.tip2.clear();
+     muon.tip2Err.clear();
+     muon.ip2.clear();
+     muon.ip2Err.clear();
+
+     // ... redo muon trajectory
+     reco::TransientTrack tt = theTTBuilder->build(iMuon->innerTrack());
+     // ... get beamspot + first entry in IP respecting BS
+     edm::Handle<reco::BeamSpot> bs;
+     iEvent.getByLabel(edm::InputTag("offlineBeamSpot"),bs);
+     reco::Vertex bsvtx = reco::Vertex(reco::Vertex::Point(bs->position().x(),bs->position().y(),bs->position().z()),reco::Vertex::Error());
+          Measurement1D ip     = IPTools::absoluteTransverseImpactParameter(tt,bsvtx).second;
+          Measurement1D ip3D   = IPTools::absoluteImpactParameter3D(tt,bsvtx).second;
+          muon.vtxid.push_back( iVtx );
+          ++iVtx;
+          muon.tip.push_back(    ip.value()  );
+          muon.tipErr.push_back( ip.error() );
+          muon.ip.push_back(     ip3D.value() );
+          muon.ipErr.push_back(  ip3D.error() );
+          muon.tip2.push_back(    ip.value()  );
+          muon.tip2Err.push_back( ip.error() );
+          muon.ip2.push_back(     ip3D.value() );
+          muon.ip2Err.push_back(  ip3D.error() );
+
+
+     // ... Loop on vtx collections
+     for (unsigned int ivc=0; ivc!= vertexs.size(); ivc++){
+
+       // ... get vertex collection
+       edm::Handle<reco::VertexCollection> vertices;
+       iEvent.getByLabel(vertexs.at(ivc),vertices);
+       //cout << vertexs.at(ivc) << " -> size = " << vertices->end()-vertices->begin() <<  endl;  
+
+       // ... prepare refitting
+       VertexReProducer revertex(vertices, iEvent); 
+       Handle<reco::BeamSpot>        pvbeamspot; 
+       iEvent.getByLabel(revertex.inputBeamSpot(), pvbeamspot);
+   
+         // ... Loop on vtx in curent collection
+         for(VertexCollection::const_iterator pvtx=vertices->begin(); pvtx!= vertices->end() ; ++pvtx)
+         {
+
+           reco::Vertex vertexYesB;
+           reco::Vertex vertexNoB;
+           reco::TrackCollection newTkCollection;
+
+           vertexYesB = *pvtx ;   
+
+           // ... Remove lepton track
+           bool foundMatch(false);
+           for (reco::Vertex::trackRef_iterator itk = pvtx->tracks_begin(); itk!=pvtx->tracks_end(); ++itk) 
+           {
+              bool refMatching = (itk->get() == &*(iMuon->innerTrack()) );
+              if(refMatching){
+                foundMatch = true;
+              }else{
+                newTkCollection.push_back(*itk->get());
+              }     
+           }//track collection for vertexNoB is set
+
+          //cout << "checking mu matching" << endl;
+          if(!foundMatch) {
+	    //cout << "WARNING: no muon matching found" << endl;
+	    vertexNoB = vertexYesB;
+          }else{      
+            vector<TransientVertex> pvs = revertex.makeVertices(newTkCollection, *pvbeamspot, iSetup) ;
+            //cout << pvs.size() << endl;
+            if(pvs.empty()) {
+                vertexNoB = reco::Vertex(reco::Vertex::Point(bs->position().x(),bs->position().y(),bs->position().z()),
+                        reco::Vertex::Error());
+            } else {
+	      //vertexNoB = findClosestVertex<TransientVertex>(zPos,pvs);
+	      vertexNoB = pvs.front(); //take the first in the list
+            }
+          }
+
+          // ... Compute 3D IP
+ 
+          Measurement1D ip     = IPTools::absoluteTransverseImpactParameter(tt,vertexYesB).second;
+          Measurement1D ip3D   = IPTools::absoluteImpactParameter3D(tt,vertexYesB).second;
+          Measurement1D ip_2   = IPTools::absoluteTransverseImpactParameter(tt,vertexNoB).second;
+          Measurement1D ip3D_2 = IPTools::absoluteImpactParameter3D(tt,vertexNoB).second;
+
+          muon.vtxid.push_back( iVtx );
+          ++iVtx;
+          muon.tip.push_back(    ip.value()  );
+          muon.tipErr.push_back( ip.error() );
+          muon.ip.push_back(     ip3D.value() );
+          muon.ipErr.push_back(  ip3D.error() );
+          muon.tip2.push_back(    ip_2.value()  );
+          muon.tip2Err.push_back( ip_2.error() );
+          muon.ip2.push_back(     ip3D_2.value() );
+          muon.ip2Err.push_back(  ip3D_2.error() );
+/*
+          if (foundMatch){
+            cout << ip3D.value() << " " << ip3D_2.value() << endl;
+          } 
+*/
+         } // END ... Loop on vtx in curent collection
+
+       } // END ... Loop on vtx collections
+
+     } else {
      
       muon.innerTrack.d0 = -999;
       for ( int i = 0 ; i != vtxid ; i++ )
@@ -267,6 +384,17 @@ void UAHiggsTree::GetRecoMuon(const edm::Event& iEvent, const edm::EventSetup& i
           muon.innerTrack.vtxid.push_back( i );
           muon.innerTrack.vtxdxy.push_back( -999 ) ;
           muon.innerTrack.vtxdz.push_back( -999 );
+          muon.vtxid.push_back( i ) ;
+          muon.tip.push_back(    -999 ) ;
+          muon.tipErr.push_back( -999 ) ;
+          muon.ip.push_back(     -999 ) ;
+          muon.ipErr.push_back(  -999 ) ;
+          muon.tip2.push_back(   -999 ) ; 
+          muon.tip2Err.push_back(-999 ) ; 
+          muon.ip2.push_back(    -999 ) ; 
+          muon.ip2Err.push_back( -999 ) ; 
+
+
        }
      
     }

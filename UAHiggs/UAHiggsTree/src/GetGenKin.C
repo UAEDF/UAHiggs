@@ -60,7 +60,7 @@ void UAHiggsTree::GetGenKin(const edm::Event& iEvent)
    }
    catch (...){;}
 
-
+   /*
    // MC Process Id and PtHat for RECO
    Handle<HepMCProduct> hepMCHandle;
    iEvent.getByLabel(hepMCColl_, hepMCHandle ) ;
@@ -86,7 +86,7 @@ void UAHiggsTree::GetGenKin(const edm::Event& iEvent)
    GenKin.x2 = x2 ;
    GenKin.Q  = Q  ;
    GenKin.Part1Id = id1 ; 
-   GenKin.Part2Id = id2 ; 
+   GenKin.Part2Id = id2 ; */
 
    // Gen MET: From GenMETCollection  
 

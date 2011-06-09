@@ -40,6 +40,8 @@ void UAHiggsTree::GetRecoVertex(const edm::Event& iEvent, const edm::EventSetup&
    VertexVector.clear();
    MyVertex myvertex;
 
+   if ( VertexCollection_ == "offlinePrimaryVerticesDA" )  iVtxChargedMET.clear();
+
    Handle<reco::VertexCollection> vtxcoll ;
    iEvent.getByLabel(VertexCollection_,vtxcoll);
 
@@ -48,7 +50,10 @@ void UAHiggsTree::GetRecoVertex(const edm::Event& iEvent, const edm::EventSetup&
    for(VertexCollection::const_iterator p=vtxcoll->begin(); p!= vtxcoll->end() ; ++p)
    {
 
-      myvertex.id        = vtxid++;
+      myvertex.id        = vtxid;
+      if ( VertexCollection_ == "offlinePrimaryVerticesDA" ) iVtxChargedMET.push_back(vtxid);
+      ++vtxid; 
+
       myvertex.x         = p->x()  ;
       myvertex.y         = p->y()  ;
       myvertex.z         = p->z()  ;

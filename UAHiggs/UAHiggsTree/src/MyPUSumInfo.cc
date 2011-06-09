@@ -20,14 +20,16 @@ void MyPUSumInfo::Reset(){
   sumpT_highpT.clear();
   ntrks_lowpT.clear();
   ntrks_highpT.clear();
-
+  median_rho = -999;
+  rho_eta.clear();
 }
 
 void MyPUSumInfo::Print(){
 
   cout<<"MC PU information: "<<endl;
 
-  cout << "nPU    : " << this->nPU     <<endl;
+  cout << "nPU         : " << this->nPU     <<endl;
+  cout << "median rho  : " << median_rho << endl;
   if ( nPU >= 0 ) {
     for ( int ivtx = 0; ivtx<nPU ; ++ivtx) {
       cout << "PileUp event #    : " << ivtx     << endl;
@@ -36,6 +38,7 @@ void MyPUSumInfo::Print(){
       cout << "  --> sumpT_highpT: " << sumpT_highpT.at(ivtx) << endl;
       cout << "  --> ntrks_lowpT : " << ntrks_lowpT.at(ivtx) << endl;
       cout << "  --> ntrks_highpT: " << ntrks_highpT.at(ivtx) << endl;
+      
     }
   }
 

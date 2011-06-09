@@ -58,186 +58,61 @@ process.source = cms.Source("PoolSource",
 #fileNames = cms.untracked.vstring('file:/user/xjanssen/data/CMSSW_3_8_4_patch2/DataCopy_384p2/__WWTo2L2Nu_TuneZ2_7TeV-pythia6__Fall10-START38_V12-v1__GEN-SIM-RECO/DataCopy_384p2__CMSSW_3_8_4_patch2__WWTo2L2Nu_TuneZ2_7TeV-pythia6__Fall10-START38_V12-v1__GEN-SIM-RECO_1_1_SMC.root')
 fileNames = cms.untracked.vstring(
 #'dcap:///pnfs/iihe/cms/store/user/xjanssen/data/CMSSW_3_9_7/DataCopy_397/__Electron__Run2010B-Dec22ReReco_v1__RECO/DataCopy_397__CMSSW_3_9_7__Electron__Run2010B-Dec22ReReco_v1__RECO_1_1_Cru.root',				  
-#'file:/user/selvaggi/step2_RAW2DIGI_L1Reco_RECO_9_1_XqK.root'
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_100_1_5mB.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_101_1_0lI.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_10_1_jLy.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_102_1_QSr.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_103_1_eKQ.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_104_1_C1L.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_105_1_CxP.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_106_1_YiG.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_107_1_JGk.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_108_1_RjO.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_109_1_5Bb.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_11_2_qLm.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_1_1_uau.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_12_1_wBD.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_13_1_cCv.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_14_1_coy.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_15_1_tvK.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_16_1_1JP.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_17_1_ywv.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_18_1_GOS.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_19_1_zmN.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_20_1_Dcy.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_21_1_gCI.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_2_1_Pmm.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_22_1_BN4.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_23_1_rIa.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_24_1_8rf.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_25_1_NP6.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_26_1_cg7.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_27_1_Iqv.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_28_1_zXu.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_29_1_wEC.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_30_1_qTT.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_31_1_Dt1.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_3_1_9on.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_32_1_Efl.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_33_1_ysN.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_34_1_W4Z.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_35_1_1cf.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_36_1_Udr.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_37_1_LGq.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_38_1_9dQ.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_39_1_VRo.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_40_1_qSn.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_41_1_IlM.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_4_1_wQ4.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_42_2_nfj.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_43_1_5UF.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_44_1_K8K.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_45_1_mZD.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_46_1_XC7.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_47_1_Cdj.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_48_1_Dzq.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_49_1_YkG.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_50_1_Sxq.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_51_1_q1q.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_5_1_R6Z.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_52_1_gEr.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_53_1_Uw2.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_54_1_jPj.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_55_1_0Gf.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_56_1_vri.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_57_1_Jap.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_58_1_8BX.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_59_1_1y7.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_60_1_b5R.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_61_1_7XI.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_6_1_ZW3.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_62_1_PC9.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_63_1_xiS.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_64_1_qW0.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_65_1_F3d.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_66_1_uA2.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_67_3_LPj.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_68_1_m5m.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_69_1_UTb.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_70_1_2Os.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_71_1_JrB.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_7_1_b5A.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_72_1_pHC.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_73_1_Hj8.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_74_1_EK1.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_75_1_GW0.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_76_1_82g.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_77_1_VEE.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_78_1_CG5.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_79_1_w7D.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_80_1_AoM.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_81_1_42c.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_8_1_cMS.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_82_1_nTR.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_83_1_qJZ.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_84_1_N1n.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_85_1_agY.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_86_1_bCr.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_87_1_4yh.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_88_2_CGi.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_89_1_LIa.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_90_1_k2U.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_91_1_08M.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_9_1_ICb.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_92_1_grD.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_93_1_gvv.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_94_1_U2r.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_95_1_fgv.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_96_1_nya.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_97_1_pag.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_98_1_yCq.root',
-#'file:/user/selvaggi/datasets/387/step2_RAW2DIGI_L1Reco_RECO_99_1_Ozl.root'
 #'file:/user/selvaggi/step2_RAW2DIGI_L1Reco_RECO_9_4_HKd.root'			 
 #'file:/user/selvaggi/BA62B277-02E4-DF11-941B-001EC9ED7E8F.root',				 
 #'file:/user/selvaggi/7EFE3196-04E4-DF11-B926-00266CF25F34.root'
 #'dcap:///pnfs/iihe/cms/store/user/xjanssen/data/CMSSW_3_9_7/DataCopy_397/__GluGluToHToWWTo2L2Nu_M-160_7TeV-powheg-pythia6__Winter10-E7TeV_ProbDist_2011Flat_BX156_START39_V8-v1__GEN-SIM-RECO/DataCopy_397__CMSSW_3_9_7__GluGluToHToWWTo2L2Nu_M-160_7TeV-powheg-pythia6__Winter10-E7TeV_ProbDist_2011Flat_BX156_START39_V8-v1__GEN-SIM-RECO_1_1_RJI.root')					 
 #'dcap:///pnfs/iihe/cms/store/user/xjanssen/data/CMSSW_3_9_7/DataCopy_397/__GluGluToHToWWTo2L2Nu_M-160_7TeV-powheg-pythia6__Winter10-E7TeV_ProbDist_2011Flat_BX156_START39_V8-v1__AODSIM/DataCopy_397__CMSSW_3_9_7__GluGluToHToWWTo2L2Nu_M-160_7TeV-powheg-pythia6__Winter10-E7TeV_ProbDist_2011Flat_BX156_START39_V8-v1__AODSIM_1_2_auo.root'				 )
-'file:/user/selvaggi/test_H160_Spring11.root')
-#'dcap:///pnfs/iihe/cms/ph/sc4/store/mc/Spring11/TTJets_TuneZ2_7TeV-madgraph-tauola/AODSIM/PU_S1_START311_V1G1-v1/0000/00BACB8D-114E-E011-A14C-485B39800C04.root')
-#'file:/user/selvaggi/test_MuEG.root')
+#'file:/user/selvaggi/'file:/user/selvaggi/test_H160_Spring11.root')
+#'file:/user/selvaggi/'file:/user/selvaggi/test_DoubleMu.root'
+#'file:/user/selvaggi/test_2011data/0C4C6809-EC53-E011-B373-003048F118AA.root',
+#'file:/user/selvaggi/test_2011data/10BEBABB-AE52-E011-BC0E-0030487C7392.root',
+#'file:/user/selvaggi/test_2011data/14717021-5453-E011-BFA3-001D09F29146.root',
+#'file:/user/selvaggi/test_2011data/1C5B9D31-8D54-E011-85EE-0030487CD7B4.root',
+#'file:/user/selvaggi/test_2011data/1E542106-9454-E011-940B-0030487CD14E.root',
+#'file:/user/selvaggi/test_2011data/2AE3BC0B-9954-E011-86CB-003048F11C5C.root',
+#'file:/user/selvaggi/test_2011data/2C4072F5-8B54-E011-9481-0030487CD7E0.root',
+#'file:/user/selvaggi/test_2011data/2EFC0B8D-1554-E011-AD06-0030487CBD0A.root',
+#'file:/user/selvaggi/test_2011data/34346E5D-6854-E011-9353-000423D987E0.root',
+#'file:/user/selvaggi/test_2011data/367129C0-D453-E011-9BE9-0030487CD6F2.root',
+#'file:/user/selvaggi/test_2011data/40A4ED22-0C54-E011-98C2-001617DBD5AC.root',
+#'file:/user/selvaggi/test_2011data/40D5C869-1854-E011-AEF7-0030487C8E00.root',
+#'file:/user/selvaggi/test_2011data/44DDA8D2-4554-E011-8524-000423D33970.root',
+#'file:/user/selvaggi/test_2011data/54623440-0C55-E011-894C-001D09F2906A.root',
+#'file:/user/selvaggi/test_2011data/5696FE52-8753-E011-A826-0030487CD6E8.root',
+#'file:/user/selvaggi/test_2011data/5A2F688C-C354-E011-AF51-0030487C608C.root',
+#'file:/user/selvaggi/test_2011data/5ADB6543-EB53-E011-AD21-003048F110BE.root',
+#'file:/user/selvaggi/test_2011data/5CB739D0-9452-E011-BEF7-001D09F2924F.root',
+#'file:/user/selvaggi/test_2011data/6056C9A5-3554-E011-B033-001D09F253C0.root',
+#'file:/user/selvaggi/test_2011data/64FA48EE-9754-E011-B022-000423D996C8.root',
+#'file:/user/selvaggi/test_2011data/68438EE0-4054-E011-AB93-003048CFB40C.root',
+#'file:/user/selvaggi/test_2011data/82CAF258-8654-E011-890A-003048F1BF68.root',
+#'file:/user/selvaggi/test_2011data/82D09EAF-1355-E011-8683-001D09F2841C.root',
+#'file:/user/selvaggi/test_2011data/963910BD-5E54-E011-97C7-000423D9890C.root',
+#'file:/user/selvaggi/test_2011data/9C908216-A954-E011-A230-003048CFB40C.root',
+#'file:/user/selvaggi/test_2011data/9E483420-8A53-E011-8AF7-001D09F24FBA.root',
+#'file:/user/selvaggi/test_2011data/A47B0830-9053-E011-ADAE-0030487CD13A.root',
+#'file:/user/selvaggi/test_2011data/AA4AFBD2-F753-E011-8640-003048F024E0.root',
+#'file:/user/selvaggi/test_2011data/AC7C51CA-F853-E011-B24F-001617E30D4A.root',
+#'file:/user/selvaggi/test_2011data/B0613FDA-1555-E011-9778-003048F118D2.root',
+#'file:/user/selvaggi/test_2011data/B289BC36-AE54-E011-B242-001D09F24498.root',
+#'file:/user/selvaggi/test_2011data/B6CE0D8F-CB53-E011-A605-003048F118AC.root',
+#'file:/user/selvaggi/test_2011data/C2B9928F-FD54-E011-B0CC-001D09F23A84.root',
+#'file:/user/selvaggi/test_2011data/C45F1631-4054-E011-9DFF-001D09F291D7.root',
+#'file:/user/selvaggi/test_2011data/C487B619-EE54-E011-BD7C-0030487CD178.root',
+#'file:/user/selvaggi/test_2011data/C80C856D-8A53-E011-9C96-001617C3B6CC.root',
+#'file:/user/selvaggi/test_2011data/C8B7E91D-F154-E011-B7BA-001617E30F50.root',
+#'file:/user/selvaggi/test_2011data/D21DCE6D-5F51-E011-A17D-0030487C7828.root',
+#'file:/user/selvaggi/test_2011data/D236C873-8751-E011-8FF5-0030487A18D8.root',
+#'file:/user/selvaggi/test_2011data/E2F8B39E-0955-E011-8157-001D09F23944.root',
+#'file:/user/selvaggi/test_2011data/F28C7DA0-0454-E011-98A9-003048D2C0F2.root',
+#'file:/user/selvaggi/test_2011data/F430BC90-E453-E011-86FB-001D09F23944.root',
+#'file:/user/selvaggi/test_2011data/F8799441-3B54-E011-A426-001D09F2A690.root',
+#'file:/user/selvaggi/test_2011data/F88D52FF-F054-E011-AA2E-001D09F24DDA.root')
+'dcap://maite.iihe.ac.be/pnfs/iihe/cms/ph/sc4/store/data/Run2011A/DoubleMu/AOD/PromptReco-v2/000/162/803/009F5D68-9A69-E011-AFAA-003048F1182E.root')
 )
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
-
-
-# Data output ----------------------------------------------------------------------- 
-process.out = cms.OutputModule("PoolOutputModule",
-    fileName = cms.untracked.string('cmsdata.root'),
-    outputCommands  = cms.untracked.vstring('keep *')
-)
-
-
-# DA vertex -------------------------------------------------------------------------
-
-from RecoVertex.PrimaryVertexProducer.OfflinePrimaryVertices_cfi import *
-
-#process.load("Alignment.CommonAlignmentProducer.FakeAlignmentSource_cfi")
-#process.preferFakeAlign = cms.ESPrefer("FakeAlignmentSource") 
-
-
-process.offlinePrimaryVerticesDA = cms.EDProducer("PrimaryVertexProducer",
-    verbose = cms.untracked.bool(False),
-    algorithm = cms.string('AdaptiveVertexFitter'),
-    TrackLabel = cms.InputTag("generalTracks"),
-    useBeamConstraint = cms.bool(True),
-    beamSpotLabel = cms.InputTag("offlineBeamSpot"),
-    minNdof  = cms.double(0.0),
-    PVSelParameters = cms.PSet(
-        maxDistanceToBeam = cms.double(2.0)
-    ),
-    TkFilterParameters = cms.PSet(
-        algorithm=cms.string('filter'),
-        maxNormalizedChi2 = cms.double(5.0),
-        minPixelLayersWithHits=cms.int32(2),
-        minSiliconLayersWithHits = cms.int32(5),
-        maxD0Significance = cms.double(5.0), 
-        minPt = cms.double(0.0),
-        trackQuality = cms.string("any")
-    ),
-
-    TkClusParameters = cms.PSet(
-        algorithm   = cms.string("DA"),
-        TkDAClusParameters = cms.PSet( 
-            coolingFactor = cms.double(0.8),  #  rather slow annealing for now
-            Tmin = cms.double(4.),            #  end of annealing
-            vertexSize = cms.double(0.01)     #  ~ resolution
-        )
-    )
-)
-
-from PhysicsTools.SelectorUtils.pvSelector_cfi import pvSelector
-
-process.goodOfflinePrimaryVerticesDA = cms.EDFilter(
-    "PrimaryVertexObjectFilter",
-    filterParams = pvSelector.clone( minNdof = cms.double(7.0), maxZ = cms.double(24.0) ),
-    src=cms.InputTag('offlinePrimaryVerticesDA')
-    )
-
-
-
-
-
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
 
 # L1 extra --------------------------------------------------------------------------
 #process.load("L1Trigger.L1ExtraFromDigis.l1extra_cff")
@@ -285,8 +160,9 @@ process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 #process.GlobalTag.globaltag = 'START38_V12::All'
 #process.GlobalTag.globaltag = 'START39_V8::All'
-process.GlobalTag.globaltag = 'START311_V1G1::All'
-#process.GlobalTag.globaltag = 'GR_H_V15::All'
+#process.GlobalTag.globaltag = 'START311_V1G1::All'
+#process.GlobalTag.globaltag = 'GR_P_V14::All'
+process.GlobalTag.globaltag = 'GR_P_V17::All'
 
 # ------ Jet Enenergy Corrections ----------
 process.load('JetMETCorrections.Configuration.DefaultJEC_cff')
@@ -295,16 +171,19 @@ process.load('RecoJets.Configuration.RecoPFJets_cff')
 #process.load('JetMETCorrections.Configuration.JetCorrectionProducersAllAlgos_cff')
 
 
+process.ak5PFResidual.era = cms.string('JEC10V1')
+
 # ------ Calculate jet area A
 #process.load('RecoJets.JetProducers.ak5PFJets_cfi')
 process.ak5PFJets.doAreaFastjet = True
-#process.ak5PFJets.Rho_EtaMax = cms.double(5.0)
+#process.ak5PFJets.Rho_EtaMax = cms.double(4.5)
 
 process.ak5PFJetsEta = process.ak5PFJets.clone()
 process.ak5PFJetsEta.doAreaFastjet = True
-#process.ak5PFJetsEta.Rho_EtaMax = cms.double(5.0)
-#process.ak5PFJetsEta.Ghost_EtaMax= cms.double(5.0)
+#process.ak5PFJetsEta.Rho_EtaMax = cms.double(4.5)
+#process.ak5PFJetsEta.Ghost_EtaMax= cms.double(7.5)
 #process.ak5PFJetsEta.GhostArea = cms.double(0.005)
+
 
 #------- Calculate event rho
 #process.load('RecoJets.JetProducers.kt4PFJets_cfi')
@@ -316,6 +195,7 @@ process.kt6PFJets.Ghost_EtaMax = cms.double(5.0)
 process.kt6PFJetsIso = process.kt6PFJets.clone()
 process.kt6PFJetsIso.doRhoFastjet = True
 process.kt6PFJetsIso.Rho_EtaMax= cms.double(2.5)
+
 
 process.kt6PFJetsEta = process.kt6PFJets.clone()
 process.kt6PFJetsEta.doRhoFastjet = True
@@ -337,6 +217,12 @@ rhoTag    = cms.string('kt6PFJetsEta'),
 doUniform = cms.bool(False)
 )
 
+process.ak5PFJetsL1Hyb  =  cms.EDProducer('L1HybridSubtractor',
+src    = cms.InputTag('ak5PFJets'),
+jetType    = cms.string('PFJet'),
+rhoTag    = cms.string('kt6PFJets'),
+corrFile  = cms.string('CondFormats/JetMETObjects/data/Fall10_L1Hybrid_AK5PF_v1.txt')
+)
 
 process.ak5PFJetsNoPuL1Area  =  cms.EDProducer('HiL1Subtractor',
 src        = cms.InputTag('ak5PFJetsNoPu'),
@@ -344,88 +230,6 @@ jetType    = cms.string('PFJet'),
 rhoTag     = cms.string('kt6PFJetsNoPu'),
 doUniform  = cms.bool(True)
 )
-
-
-process.ak5PFJetsL1Hyb  =  cms.EDProducer('L1HybridSubtractor',
-src    = cms.InputTag('ak5PFJets'),
-jetType    = cms.string('PFJet'),
-rhoTag    = cms.string('kt6PFJets'),
-corrFile  = cms.string('src/CondFormats/JetMETObjects/data/Fall10_L1Hybrid_AK5PF_v1.txt')
-)
-
-
-#------------------------------- PFnoPU jets ----------------------
-
-from PhysicsTools.PatAlgos.tools.jetTools import *
-
-process.load("PhysicsTools.PFCandProducer.pfNoPileUp_cff")  
-process.pfPileUp.Enable = True    
-process.pfPileUp.Vertices = "goodOfflinePrimaryVerticesDA"
-
-
-# pat sequence
-process.load("PhysicsTools.PatAlgos.patSequences_cff")
-
-# Configure PAT to use PF2PAT instead of AOD sources
-# this function will modify the PAT sequences. It is currently 
-# not possible to run PF2PAT+PAT and standart PAT at the same time
-from PhysicsTools.PatAlgos.tools.pfTools import *
-postfix = "PFlow"
-
-usePF2PAT(process,runPF2PAT=True, jetAlgo='AK5', runOnMC=False, postfix=postfix)
-process.pfPileUpPFlow.Enable = True
-process.pfPileUpPFlow.checkClosestZVertex = cms.bool(False)
-process.pfPileUpPFlow.Vertices = cms.InputTag('goodOfflinePrimaryVerticesDA')
-process.pfJetsPFlow.doAreaFastjet = True
-process.pfJetsPFlow.doRhoFastjet = False
-
-# Compute the mean pt per unit area (rho) from the
-# PFchs inputs
-from RecoJets.JetProducers.kt4PFJets_cfi import kt4PFJets
-process.kt6PFJetsPFlow = kt4PFJets.clone(
-    rParam = cms.double(0.6),
-    src = cms.InputTag('pfNoElectron'+postfix),
-    doAreaFastjet = cms.bool(True),
-    doRhoFastjet = cms.bool(True),
-    voronoiRfact = cms.double(0.9)
-    )
-process.patJetCorrFactorsPFlow.rho = cms.InputTag("kt6PFJetsPFlow", "rho")
-process.patJetCorrFactorsPFlow.levels = ['L1FastJet','L2Relative','L3Absolute']
-
-# Add the PV selector and KT6 producer to the sequence
-getattr(process,"patPF2PATSequence"+postfix).replace(
-    getattr(process,"pfNoElectron"+postfix),
-    getattr(process,"pfNoElectron"+postfix)*process.kt6PFJetsPFlow )
-
-process.patseq = cms.Sequence(    
-    process.goodOfflinePrimaryVerticesDA*
-    getattr(process,"patPF2PATSequence"+postfix)
-    )
-
-# Adjust the event content
-process.out.outputCommands += [
-    'keep *_selectedPat*_*_*',
-    'keep *_goodOfflinePrimaryVerticesDA*_*_*',    
-    'keep double_*PFlow*_*_PAT'
-]
-
-
-
-
-
-
-
-
-
-
-
-process.ak5PFJetsNoPu = process.ak5PFJets.clone(src = "pfNoPileUp")  
-process.kt6PFJetsNoPu = process.kt6PFJets.clone(src = "pfNoPileUp")
-
-process.ak5PFJetsNoPuL1FastJet      = cms.Sequence(process.kt6PFJetsNoPu * process.ak5PFJetsNoPu *  process.ak5PFJetsNoPuL1Area)
-process.ak5PFJetsNoPuL1FastL2L3     = process.ak5PFJetsL2L3.clone(src = 'ak5PFJetsNoPuL1Area')
-process.ak5PFJetsNoPuL1FastJetL2L3  = cms.Sequence(process.kt6PFJetsNoPu  *process.ak5PFJetsNoPu *  process.ak5PFJetsNoPuL1FastL2L3)
-
 
 #------- Configure Jet Energy Correction Producer
 #process.load('JetMETCorrections.Configuration.JetCorrectionProducersAllAlgos_cff')
@@ -446,11 +250,10 @@ process.ak5PFJetsNoPuL1FastJetL2L3  = cms.Sequence(process.kt6PFJetsNoPu  *proce
 #process.load('JetMETCorrections.Configuration.JetCorrectionProducers_cff')
 #process.load('JetMETCorrections.Configuration.JetCorrectionServicesAllAlgos_cff')
 
-#process.ak5PFL2Relative.useCondDB = False
-#process.ak5PFL3Absolute.useCondDB = False
-#process.ak5PFResidual.useCondDB = False
-#process.ak5PFL1Offset.useCondDB = False
-#process.ak5PFL1FastJet.useCondDB = False
+process.ak5PFL2Relative.useCondDB = False
+process.ak5PFL3Absolute.useCondDB = False
+process.ak5PFResidual.useCondDB = False
+process.ak5PFResidual.era = cms.string('Jec10V1')
 
 process.ak5PFL1Offset.useCondDB = False
 process.ak5PFL1Fastjet.useCondDB  = False
@@ -458,32 +261,43 @@ process.ak5PFL1Fastjet.useCondDB  = False
 process.ak5PFJetsL1Offset   = process.ak5PFJetsL2L3.clone(correctors = ['ak5PFL1Offset'])
 process.ak5PFJetsL1Area     = process.ak5PFJetsL2L3.clone(correctors = ['ak5PFL1Fastjet'])
 
-
-process.ak5PFJetsL1FastJet     = cms.Sequence(process.kt6PFJets    * process.ak5PFJets * process.ak5PFJetsL1Area)
+process.ak5PFJetsL1FastJet  = cms.Sequence(process.kt6PFJets* process.ak5PFJets * process.ak5PFJetsL1Area)
 process.ak5PFJetsL1FastJetEta  = cms.Sequence(process.kt6PFJetsEta * process.ak5PFJetsEta * process.ak5PFJetsL1FastEta)
 
-process.ak5PFJetsL1OffsetL2L3  = process.ak5PFJetsL1L2L3.clone()
+process.ak5PFJetsL2L3 = process.ak5PFJetsL2L3Residual.clone()
+process.ak5PFJetsL1FastL2L3 = process.ak5PFJetsL1FastL2L3Residual.clone()
+
+process.ak5PFJetsL1OffsetL2L3  = process.ak5PFJetsL1L2L3Residual.clone()
 process.ak5PFJetsL1FastJetL2L3 = cms.Sequence(process.kt6PFJets *process.ak5PFJets *  process.ak5PFJetsL1FastL2L3)
 
-process.ak5PFJetsL1FastEtaL2L3    = process.ak5PFJetsL2L3.clone(src = 'ak5PFJetsL1FastEta')
+process.ak5PFJetsL1FastEtaL2L3 = process.ak5PFJetsL2L3Residual.clone(src = 'ak5PFJetsL1FastEta')
 process.ak5PFJetsL1FastJetEtaL2L3 = cms.Sequence(process.kt6PFJetsEta *process.ak5PFJetsEta *  process.ak5PFJetsL1FastEtaL2L3)
 
-
-process.ak5PFJetsL1HybL2L3  = process.ak5PFJetsL2L3.clone(src = 'ak5PFJetsL1Hyb')
+process.ak5PFJetsL1HybL2L3  = process.ak5PFJetsL2L3Residual.clone(src = 'ak5PFJetsL1Hyb')
 process.ak5PFJetsL1HybridL2L3 = cms.Sequence(process.kt6PFJets *process.ak5PFJets *  process.ak5PFJetsL1HybL2L3)
 
 
 
 
 
+#------------------------------- PFnoPU jets ----------------------
 
+from PhysicsTools.PatAlgos.tools.jetTools import *
+
+process.load("PhysicsTools.PFCandProducer.pfNoPileUp_cff")  
+process.pfPileUp.Enable = True    
+process.pfPileUp.Vertices = "goodOfflinePrimaryVerticesDA"
+
+process.ak5PFJetsNoPu = process.ak5PFJets.clone(src = "pfNoPileUp")  
+process.kt6PFJetsNoPu = process.kt6PFJets.clone(src = "pfNoPileUp")
+
+process.ak5PFJetsNoPuL1FastJet      = cms.Sequence(process.kt6PFJetsNoPu * process.ak5PFJetsNoPu *  process.ak5PFJetsNoPuL1Area)
+process.ak5PFJetsNoPuL1FastL2L3     = process.ak5PFJetsL2L3.clone(src = 'ak5PFJetsNoPuL1Area')
+process.ak5PFJetsNoPuL1FastJetL2L3  = cms.Sequence(process.kt6PFJetsNoPu  *process.ak5PFJetsNoPu *  process.ak5PFJetsNoPuL1FastL2L3)
 
 
 
 # ---- With DA Vertex -------
-
-
-
 
 process.ak5CaloL1OffsetDA = cms.ESSource(
     'L1OffsetCorrectionService',
@@ -501,11 +315,13 @@ process.ak5PFL1OffsetDA = process.ak5CaloL1OffsetDA.clone(algorithm = 'AK5PF')
 
 process.ak5PFL1DAL2L3 = cms.ESSource(
     'JetCorrectionServiceChain',
-    correctors = cms.vstring('ak5PFL1OffsetDA','ak5PFL2Relative','ak5PFL3Absolute')
+    correctors = cms.vstring('ak5PFL1OffsetDA','ak5PFL2Relative','ak5PFL3Absolute','ak5PFResidual')
     )
 
 process.ak5PFJetsL1OffsetDA       = process.ak5PFJetsL2L3.clone(correctors = ['ak5PFL1OffsetDA'])
 process.ak5PFJetsL1OffsetDAL2L3   = process.ak5PFJetsL2L3.clone(correctors = ['ak5PFL1DAL2L3']) 
+
+
 
 #--------------- b- tagging ------------
 
@@ -612,11 +428,12 @@ process.noscraping = cms.EDFilter("FilterOutScraping",
 				)
 
 
-
 #----------------- Likelihood Electron Id --------------------------
 
 process.load("RecoEgamma.ElectronIdentification.electronIdLikelihoodExt_cfi")
 process.electronIDLH = process.eidLikelihoodExt.clone()
+
+
 
 
 
@@ -631,14 +448,16 @@ process.load("TrackingTools.TransientTrack.TransientTrackBuilder_cfi")
 
 
 
+
+
 # HWW Preselection ------------------------------------------------------------------
 
 #process.load("HiggsAnalysis.HiggsToWW2Leptons.HWWPreselectionSequence_cff")
 
 # K-Factor Producer -----------------------------------------------------------------
 
-process.load("HiggsAnalysis.HiggsToWW2Leptons.HWWKFactorProducer_cfi")
-process.KFactorProducer.inputFilename = cms.untracked.string('HiggsAnalysis/HiggsToWW2Leptons/data/scalefactor.mh160.dat')
+#process.load("HiggsAnalysis.HiggsToWW2Leptons.HWWKFactorProducer_cfi")
+#process.KFactorProducer.inputFilename = cms.untracked.string('HiggsAnalysis/HiggsToWW2Leptons/data/160_7TeV.dat')
 
 #HLT filter from PreSelection 
 
@@ -650,8 +469,8 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
   , fileName = cms.untracked.string('UAHiggsTree.root')
 
 # Modules to execute
-  , StoreGenPart     = cms.bool(True)
-  , StoreGenKine     = cms.bool(True)
+  , StoreGenPart     = cms.bool(False)
+  , StoreGenKine     = cms.bool(False)
   , doJetVertexAlpha = cms.bool(False)
 
 
@@ -672,7 +491,8 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
   , hcalIsolation = cms.InputTag("egammaTowerIsolation")
   , trckIsolation = cms.InputTag("egammaElectronTkRelIsolation")
   , bjets         = cms.InputTag("trackCountingHighEffBJetTags")
-                          
+ 
+ 
 # Data Collections --------------------
 
   , requested_gsfelectrons = cms.vstring('gsfElectrons')#),'isolatedElectrons','selectedElectrons')
@@ -700,17 +520,21 @@ process.UAHiggsTree = cms.EDAnalyzer('UAHiggsTree'
 					# 'ak5PFJetsNoPuL1Area',
 					 'ak5PFJetsNoPuL1FastL2L3'
                                          )#'kt6PFJetsL2L3','kt6PFJetsPUL2L3',)
-  
+                                         
   , requested_trackjets    = cms.vstring('ak5TrackJets')
 
-  , requested_hlt_bits     = cms.vstring('HLT_DoubleMu5_v',
-                                         'HLT_Mu21_v',
-                                         'HLT_IsoMu17_v',
-					 'HLT_Mu5_Ele17_v',
-					 'HLT_Mu11_Ele8_v',
-                                         'HLT_Ele17_SW_TightCaloEleId_Ele8HE_L1R_v'
-                                         )
-  , requested_L1_bits      = cms.vstring('L1_SingleMuOpen','L1_SingleMu0','L1_SingleMu7','L1_DoubleMu3','L1_SingleMu20','L1_SingleMu3','L1_DoubleMuOpen','L1_SingleEG1','L1_SingleEG2','L1_SingleEG5','L1_SingleEG8','L1_SingleEG20','L1_DoubleEG5')
+  , requested_hlt_bits     = cms.vstring('HLT_DoubleMu7_v',
+					'HLT_Mu24_v',
+					'HLT_IsoMu17_v',
+					'HLT_Ele17_CaloIdL_CaloIsoVL_Ele8_CaloIdL_CaloIsoVL_v',
+					'HLT_Mu17_Ele8_CaloIdL_v',
+					'HLT_Mu8_Ele17_CaloIdL_v',
+					)
+  , requested_L1_bits      = cms.vstring('L1_DoubleMu0',
+                                         'L1_DoubleMu3',
+					 'L1_SingleEG12',
+					 'L1_SingleMu7',
+					 'L1_Mu3_EG5' )
 
   , requested_vertexs      = cms.vstring('offlinePrimaryVertices','offlinePrimaryVerticesDA')#,'offlinePrimaryVerticesWithBS')
   , requested_tracks       = cms.vstring('generalTracks')#,'pixelTracks')
@@ -728,6 +552,63 @@ process.chargedPlusNeutralMetProducer = process.chargedMetProducer.clone()
 process.chargedPlusNeutralMetProducer.addNeutrals = True
 
 
+# DA vertex -------------------------------------------------------------------------
+
+from RecoVertex.PrimaryVertexProducer.OfflinePrimaryVertices_cfi import *
+
+#process.load("Alignment.CommonAlignmentProducer.FakeAlignmentSource_cfi")
+#process.preferFakeAlign = cms.ESPrefer("FakeAlignmentSource") 
+
+
+process.offlinePrimaryVerticesDA = cms.EDProducer("PrimaryVertexProducer",
+    verbose = cms.untracked.bool(False),
+    algorithm = cms.string('AdaptiveVertexFitter'),
+    TrackLabel = cms.InputTag("generalTracks"),
+    useBeamConstraint = cms.bool(True),
+    beamSpotLabel = cms.InputTag("offlineBeamSpot"),
+    minNdof  = cms.double(0.0),
+    PVSelParameters = cms.PSet(
+        maxDistanceToBeam = cms.double(2.0)
+    ),
+    TkFilterParameters = cms.PSet(
+        algorithm=cms.string('filter'),
+        maxNormalizedChi2 = cms.double(5.0),
+        minPixelLayersWithHits=cms.int32(2),
+        minSiliconLayersWithHits = cms.int32(5),
+        maxD0Significance = cms.double(5.0), 
+        minPt = cms.double(0.0),
+        trackQuality = cms.string("any")
+    ),
+
+    TkClusParameters = cms.PSet(
+        algorithm   = cms.string("DA"),
+        TkDAClusParameters = cms.PSet( 
+            coolingFactor = cms.double(0.8),  #  rather slow annealing for now
+            Tmin = cms.double(4.),            #  end of annealing
+            vertexSize = cms.double(0.01)     #  ~ resolution
+        )
+    )
+)
+
+
+
+from PhysicsTools.SelectorUtils.pvSelector_cfi import pvSelector
+
+process.goodOfflinePrimaryVerticesDA = cms.EDFilter(
+    "PrimaryVertexObjectFilter",
+    filterParams = pvSelector.clone( minNdof = cms.double(7.0), maxZ = cms.double(24.0) ),
+    src=cms.InputTag('offlinePrimaryVerticesDA')
+    )
+
+
+
+
+
+
+# Data output ----------------------------------------------------------------------- 
+#process.out = cms.OutputModule("PoolOutputModule",
+#    fileName = cms.untracked.string('cmsdata.root')
+#)
 
 
 # PAth (what to do) ------------------------------------------------------------------
@@ -737,15 +618,14 @@ process.path = cms.Path( process.hltPhysicsDeclared*
 		       #  process.GenPartDecay * 
                        #  process.GenPartTree *
                        #  process.GenPartList *  
-                         process.KFactorProducer *
+#                        process.KFactorProducer *
 #        	         process.higgsToWW2LeptonsPreselectionSequence *
 #                         process.recoAllTrackJets *
 #                         process.produceAk5GenJets*
                          process.offlinePrimaryVerticesDA*		        
                          process.chargedMetProducer*
                          process.chargedPlusNeutralMetProducer*
-		         process.goodOfflinePrimaryVerticesDA*		        
-			 process.patseq*
+			 process.goodOfflinePrimaryVerticesDA*		        
 			 process.pfNoPileUpSequence*
 			 process.electronIDLH*
 			 process.kt6PFJetsIso*
@@ -764,10 +644,11 @@ process.path = cms.Path( process.hltPhysicsDeclared*
 			 process.ak5PFJetsNoPuL1FastJetL2L3*
                          process.JetBtaggingIP*
 		         process.UAHiggsTree
-			    
-                       )
+			  
+			  
+			     )
 
 # EndPath (what to store) ------------------------------------------------------------
-process.outpath = cms.EndPath(process.out)
+#process.outpath = cms.EndPath(process.out)
 
 

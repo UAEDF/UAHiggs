@@ -23,28 +23,45 @@ void UAHiggsTree::GetHLTrig(const edm::Event& iEvent, const edm::EventSetup& iSe
 {
   using namespace std;
   using namespace edm;
-  
-
-edm::InputTag srcTriggerResults_("TriggerResults"); 
+ 
+ 
+  edm::InputTag srcTriggerResults_("TriggerResults"); 
   if (srcTriggerResults_.process().empty()) {
     edm::InputTag srcTriggerEvent("hltTriggerSummaryAOD");
     edm::Handle<trigger::TriggerEvent> triggerEvent;
     iEvent.getByLabel(srcTriggerEvent,triggerEvent);
     string hltProcName = triggerEvent.provenance()->processName();
-    // cout<<"HLTriggerAnalyzer::analyze() INFO: HLT process="<<hltProcName<<endl;
+   //  cout<<"HLTriggerAnalyzer::analyze() INFO: HLT process="<<hltProcName<<endl;
     srcTriggerResults_ = edm::InputTag(srcTriggerResults_.label()+"::"+hltProcName);
   }
-  // cout << srcTriggerResults_ << endl;
-  // Fetch HLT Data Object
+ 
   edm::Handle<edm::TriggerResults> trgResults;
   iEvent.getByLabel(srcTriggerResults_,trgResults);
   const edm::TriggerNames& trgNames = iEvent.triggerNames(*trgResults);
+ // for(unsigned i=0 ; i < trgNames.triggerNames().size() ; ++i)cout<<trgNames.triggerNames().at(i)<<endl;
  
-  // Loop on requested triggers by user (config file)
-  for(vector<string>::iterator requested_hlt_bit=hlt_bits.begin() ; requested_hlt_bit!=hlt_bits.end();requested_hlt_bit++){
+ if(isValidHltConfig_){
+   hlt_bits_complete.clear();
+   for(vector<string>::iterator requested_hlt_bit=hlt_bits.begin() ; requested_hlt_bit!=hlt_bits.end();requested_hlt_bit++){
+     for(unsigned i=0 ; i < trgNames.triggerNames().size() ; ++i){
+     string str1 = *requested_hlt_bit;
+     string str2 = trgNames.triggerNames().at(i);
+     size_t found = str1.find("_v");
+     //cout<<str1<<","<<str2<<","<<found<<","<<str1.compare(0,found,str2,0,found)<<endl;
+     
+     if(str1.compare(0,found,str2,0,found)==0)hlt_bits_complete.push_back(trgNames.triggerNames().at(i));
+     }
+   }
+  }
+  
+  isValidHltConfig_ =false;
+
+    // Loop on requested triggers by user (config file)
+  for(vector<string>::iterator requested_hlt_bit=hlt_bits_complete.begin() ; requested_hlt_bit!=hlt_bits_complete.end();requested_hlt_bit++){
     HLTrig.HLTmap[*requested_hlt_bit]= hasFired(*requested_hlt_bit, trgNames,*trgResults);
     HLTrig.HLTprescale[*requested_hlt_bit]= hltConfig.prescaleValue(iEvent,iSetup,*requested_hlt_bit);
-    // cout << (*requested_hlt_bit).c_str() << " = " << hasFired(*requested_hlt_bit, trgNames,*trgResults) << endl ;
+  //  if(hasFired(*requested_hlt_bit, trgNames,*trgResults)){  cout << (*requested_hlt_bit).c_str() << " = " << hasFired(*requested_hlt_bit, trgNames,*trgResults) <<" ,prescale: "<< hltConfig.prescaleValue(iEvent,iSetup,*requested_hlt_bit)<<endl ;
+  // }
   }
 
 

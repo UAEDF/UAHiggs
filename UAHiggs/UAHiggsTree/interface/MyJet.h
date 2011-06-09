@@ -12,6 +12,11 @@ class MyJet : public TObject {
   public :
     MyJet(){;}
     ~MyJet(){;}
+    Double_t neutralPx;
+    Double_t neutralPy;
+    Double_t neutralPz;
+   
+    
     Double_t e,pt,eta,phi,px,py,pz;
     Double_t alpha,beta,discriminator;
     Double_t ChargedHadronEnergy;

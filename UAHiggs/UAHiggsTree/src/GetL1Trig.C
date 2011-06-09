@@ -98,7 +98,7 @@ void UAHiggsTree::GetL1Trig(const edm::Event& iEvent, const edm::EventSetup& iSe
    for(vector<string>::iterator requested_L1_bit=L1_bits.begin();requested_L1_bit!=L1_bits.end();requested_L1_bit++){
       for(map<int,string>::iterator itmap=L1_map.begin();itmap!=L1_map.end();itmap++){
          if(itmap->second == *requested_L1_bit){
-	 //  cout << *requested_L1_bit << " = " << L1GTRR->decisionWord()[itmap->first] << endl;
+	//   cout << *requested_L1_bit << " = " << L1GTRR->decisionWord()[itmap->first] << endl;
 	   L1Trig.L1map[*requested_L1_bit] = L1GTRR->decisionWord()[itmap->first];
            }
          }    
