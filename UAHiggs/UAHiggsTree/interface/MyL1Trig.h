@@ -16,6 +16,11 @@ class MyL1Trig : public TObject {
   
   map<string,bool> L1map;
 
+void Reset(){
+  for (int i = 0; i < 128; i++) PhysTrigWord[i] =  false ;
+  for (int i = 0; i < 64 ; i++) TechTrigWord[i] =  false ;
+  this->L1map.clear();
+}
 
  
 

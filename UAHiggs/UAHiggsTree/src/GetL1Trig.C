@@ -41,6 +41,8 @@ void UAHiggsTree::GetL1Trig(const edm::Event& iEvent, const edm::EventSetup& iSe
 {
    using namespace std;
 
+   L1Trig.Reset();
+
   // Tests
 
 /*

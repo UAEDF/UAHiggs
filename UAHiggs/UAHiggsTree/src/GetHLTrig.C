@@ -23,7 +23,8 @@ void UAHiggsTree::GetHLTrig(const edm::Event& iEvent, const edm::EventSetup& iSe
 {
   using namespace std;
   using namespace edm;
- 
+
+  HLTrig.Reset(); 
  
   edm::InputTag srcTriggerResults_("TriggerResults"); 
   if (srcTriggerResults_.process().empty()) {

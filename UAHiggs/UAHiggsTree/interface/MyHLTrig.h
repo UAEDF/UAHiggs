@@ -9,10 +9,16 @@ class MyHLTrig : public TObject {
 
   public :
   MyHLTrig(){;}
-  ~MyHLTrig(){;}
+  ~MyHLTrig(){this->Reset();}
 
   map<string,bool> HLTmap;
   map<string,double> HLTprescale;
+
+void Reset(){
+  this->HLTmap.clear();
+  this->HLTprescale.clear();
+}
+
 
   private:
 
